@@ -25,9 +25,36 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://srichinnam.space"),
+  icons: {
+    icon: "/favicon.svg",
+  },
   title: "Sri Maniteja Chinnam | Full-Stack Engineer",
   description:
     "Full-stack engineer building things with Next.js, TypeScript, and AI.",
+  openGraph: {
+    title: "Sri Maniteja Chinnam | Full-Stack Engineer",
+    description:
+      "Full-stack engineer focused on Next.js, TypeScript, and AI-powered products.",
+    url: "https://srichinnam.space",
+    siteName: "Sri Maniteja Chinnam",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Sri Maniteja Chinnam — Full-Stack Engineer",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sri Maniteja Chinnam | Full-Stack Engineer",
+    description:
+      "Full-stack engineer focused on Next.js, TypeScript, and AI-powered products.",
+    images: ["/og-image.svg"],
+  },
 };
 
 export default function RootLayout({

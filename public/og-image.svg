@@ -1,0 +1,186 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="40%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1d253a"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.1" r="0.8">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.45"/>
+      <stop offset="45%" stop-color="#22c55e" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#020617" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="rgba(148, 163, 184, 0.18)" stroke-width="1"/>
+    </pattern>
+    <filter id="cardShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="30" stdDeviation="60" flood-color="#000000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.55"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- angled accent bar -->
+  <g opacity="0.22">
+    <rect x="-120" y="360" width="900" height="110" rx="28" transform="rotate(-12 -120 360)"
+          fill="url(#accentGradient)"/>
+    <rect x="460" y="-80" width="650" height="110" rx="28" transform="rotate(12 460 -80)"
+          fill="url(#accentGradient)" opacity="0.65"/>
+  </g>
+
+  <!-- main card -->
+  <g filter="url(#cardShadow)">
+    <rect x="150" y="130" width="900" height="370" rx="32"
+          fill="rgba(15,23,42,0.95)" stroke="rgba(148,163,184,0.55)" stroke-width="1.2"/>
+    <rect x="150" y="130" width="900" height="72" rx="32"
+          fill="rgba(15,23,42,0.98)"/>
+    <rect x="170" y="150" width="140" height="32" rx="16"
+          fill="rgba(15,23,42,1)" stroke="rgba(148,163,184,0.5)" stroke-width="1"/>
+    <text x="190" y="171"
+          font-family="JetBrains Mono, Menlo, monospace"
+          font-size="14"
+          fill="#e5e7eb">
+      sri-portfolio
+    </text>
+    <circle cx="890" cy="166" r="4.5" fill="#22c55e"/>
+    <text x="903" y="171"
+          font-family="JetBrains Mono, Menlo, monospace"
+          font-size="13"
+          fill="#9ca3af">
+      deployed · vercel
+    </text>
+
+    <!-- name + role -->
+    <text x="190" y="245"
+          font-family="Fraunces, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="44"
+          font-weight="900"
+          letter-spacing="0.08em"
+          fill="#f9fafb">
+      SRI MANITEJA CHINNAM
+    </text>
+
+    <rect x="190" y="270" width="300" height="32" rx="16"
+          fill="rgba(15,23,42,1)" stroke="rgba(148,163,184,0.5)" stroke-width="1"/>
+    <text x="205" y="292"
+          font-family="JetBrains Mono, Menlo, monospace"
+          font-size="15"
+          fill="#a5b4fc">
+      full-stack engineer  AI
+    </text>
+
+    <rect x="190" y="314" width="340" height="30" rx="15"
+          fill="rgba(15,23,42,1)" stroke="rgba(148,163,184,0.35)" stroke-width="1"/>
+    <text x="205" y="334"
+          font-family="JetBrains Mono, Menlo, monospace"
+          font-size="13"
+          fill="#e5e7eb">
+      const focus = "LLM apps that ship";
+    </text>
+
+    <!-- tech stack pills -->
+    <g>
+      <rect x="190" y="360" width="96" height="30" rx="15"
+            fill="rgba(15,23,42,1)" stroke="rgba(56,189,248,0.6)" stroke-width="1"/>
+      <text x="212" y="380"
+            font-family="DM Sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13"
+            font-weight="600"
+            fill="#e0f2fe">
+        Next.js
+      </text>
+
+      <rect x="294" y="360" width="104" height="30" rx="15"
+            fill="rgba(15,23,42,1)" stroke="rgba(34,197,94,0.6)" stroke-width="1"/>
+      <text x="314" y="380"
+            font-family="DM Sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13"
+            font-weight="600"
+            fill="#dcfce7">
+        TypeScript
+      </text>
+
+      <rect x="406" y="360" width="132" height="30" rx="15"
+            fill="rgba(15,23,42,1)" stroke="rgba(168,85,247,0.7)" stroke-width="1"/>
+      <text x="426" y="380"
+            font-family="DM Sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+            font-size="13"
+            font-weight="600"
+            fill="#f5f3ff">
+        LangChain · RAG
+      </text>
+    </g>
+
+    <!-- right side: terminal style -->
+    <g transform="translate(610, 210)">
+      <rect x="0" y="0" width="360" height="230" rx="18"
+            fill="rgba(15,23,42,1)" stroke="rgba(148,163,184,0.55)" stroke-width="1"/>
+      <rect x="0" y="0" width="360" height="38" rx="18"
+            fill="rgba(15,23,42,1)" stroke="rgba(55,65,81,0.9)" stroke-width="1"/>
+      <circle cx="24" cy="19" r="5" fill="#f97373"/>
+      <circle cx="42" cy="19" r="5" fill="#facc15"/>
+      <circle cx="60" cy="19" r="5" fill="#22c55e"/>
+
+      <text x="26" y="70"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#a5b4fc">
+        $ whoami
+      </text>
+      <text x="26" y="92"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#e5e7eb">
+        maniteja  full-stack engineer
+      </text>
+
+      <text x="26" y="124"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#a5b4fc">
+        $ cat stack.json
+      </text>
+      <text x="26" y="146"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#e5e7eb">
+        { next, ts, node, postgres, langchain, bedrock }
+      </text>
+
+      <text x="26" y="178"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#a5b4fc">
+        $ status
+      </text>
+      <text x="26" y="200"
+            font-family="JetBrains Mono, Menlo, monospace"
+            font-size="13"
+            fill="#bbf7d0">
+        open_to_new_roles · remote · US-based
+      </text>
+    </g>
+  </g>
+
+  <!-- subtle corner label -->
+  <text x="70" y="570"
+        font-family="JetBrains Mono, Menlo, monospace"
+        font-size="13"
+        fill="rgba(148,163,184,0.88)">
+    srichinnam.space · v2.1.0
+  </text>
+  <text x="70" y="592"
+        font-family="JetBrains Mono, Menlo, monospace"
+        font-size="12"
+        fill="rgba(148,163,184,0.78)">
+    Next.js · TypeScript · AI / RAG
+  </text>
+</svg>
