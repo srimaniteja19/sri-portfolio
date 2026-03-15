@@ -10,6 +10,7 @@ const navLinks = [
   { href: "#github", label: "github" },
   { href: "#about", label: "about" },
   { href: "#contact", label: "contact" },
+  { href: "/hire", label: "hire" },
 ];
 
 export function Header() {

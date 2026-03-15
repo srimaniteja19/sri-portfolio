@@ -12,6 +12,9 @@ export function Footer() {
         </div>
       </div>
       <div className="flex gap-5">
+        <a href="/hire" className="transition-colors hover:text-[var(--ink)]">
+          hire
+        </a>
         <a href="https://github.com/srimaniteja19" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[var(--ink)]">
           github
         </a>
