@@ -35,7 +35,11 @@ export function Header() {
   useEffect(() => {
     if (!themeOpen) return;
     const close = (e: MouseEvent) => {
-      if (themeDropdownRef.current && !themeDropdownRef.current.contains(e.target as Node)) setThemeOpen(false);
+      if (
+        themeDropdownRef.current &&
+        !themeDropdownRef.current.contains(e.target as Node)
+      )
+        setThemeOpen(false);
     };
     document.addEventListener("click", close);
     return () => document.removeEventListener("click", close);
@@ -50,7 +54,11 @@ export function Header() {
         fontFamily: "var(--font-jetbrains-mono), monospace",
       }}
     >
-      <Link href="#" className="flex items-center gap-1 font-bold text-[0.8rem]" style={{ color: "var(--ink)" }}>
+      <Link
+        href="#"
+        className="flex items-center gap-1 font-bold text-[0.8rem]"
+        style={{ color: "var(--ink)" }}
+      >
         <span style={{ color: "var(--mint)", fontSize: "1.1rem" }}>[</span>
         maniteja
         <span style={{ color: "var(--mint)", fontSize: "1.1rem" }}>]</span>
@@ -71,18 +79,34 @@ export function Header() {
                 className="absolute left-0 top-full z-50 mt-1 min-w-[180px] border-2 py-2"
                 style={{ background: "var(--bg)", borderColor: "var(--ink)" }}
               >
-                <div className="px-3 pb-1.5 text-[0.5rem] font-bold uppercase tracking-wider" style={{ color: "var(--dim)" }}>
+                <div
+                  className="px-3 pb-1.5 text-[0.5rem] font-bold uppercase tracking-wider"
+                  style={{ color: "var(--dim)" }}
+                >
                   // pick your vibe
                 </div>
                 {THEMES.map((t) => (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => { setTheme(t.id); setThemeOpen(false); }}
+                    onClick={() => {
+                      setTheme(t.id);
+                      setThemeOpen(false);
+                    }}
                     className="flex w-full items-center gap-2 border-t px-3 py-2 text-left text-[0.6rem] font-bold uppercase transition hover:bg-[var(--ink)] hover:text-[var(--bg)]"
-                    style={{ borderColor: "rgba(10,10,9,0.1)", color: theme === t.id ? "var(--bg)" : "var(--ink)", background: theme === t.id ? "var(--ink)" : "transparent" }}
+                    style={{
+                      borderColor: "rgba(10,10,9,0.1)",
+                      color: theme === t.id ? "var(--bg)" : "var(--ink)",
+                      background: theme === t.id ? "var(--ink)" : "transparent",
+                    }}
                   >
-                    <span className="h-2 w-2 shrink-0 rounded-full border" style={{ borderColor: "currentColor", background: t.swatch }} />
+                    <span
+                      className="h-2 w-2 shrink-0 rounded-full border"
+                      style={{
+                        borderColor: "currentColor",
+                        background: t.swatch,
+                      }}
+                    />
                     {t.label}
                   </button>
                 ))}
@@ -103,14 +127,22 @@ export function Header() {
         <div className="flex items-center gap-2">
           <div
             className="hidden items-center gap-1.5 rounded border-2 px-2.5 py-1 md:flex"
-            style={{ borderColor: "var(--ink)", background: "var(--mint)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase" }}
+            style={{
+              borderColor: "var(--ink)",
+              background: "var(--mint)",
+              fontSize: "0.58rem",
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+            }}
           >
-            <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full" style={{ background: "var(--ink)" }} />
-            available
+            <span
+              className="h-1.5 w-1.5 animate-pulse-dot rounded-full"
+              style={{ background: "var(--ink)" }}
+            />
+            open to new roles
           </div>
-          <span className="hidden rounded border px-2 py-0.5 text-[0.56rem] md:block" style={{ color: "var(--dim)", borderColor: "rgba(10,10,9,0.15)" }}>
-            v2.1.0
-          </span>
+
           <a
             href="mailto:srimaniteja.ch@gmail.com"
             className="hidden rounded-[100px] border-2 bg-[var(--ink)] px-4 py-1.5 text-[0.72rem] font-bold text-[var(--bg)] transition hover:bg-[var(--mint)] hover:text-[var(--ink)] md:inline-block"
@@ -130,7 +162,9 @@ export function Header() {
             type="button"
             onClick={() => setThemeOpen((o) => !o)}
             className="hidden h-8 w-8 items-center justify-center rounded border text-sm md:flex"
-            style={{ borderColor: themeOpen ? "var(--ink)" : "rgba(10,10,9,0.15)" }}
+            style={{
+              borderColor: themeOpen ? "var(--ink)" : "rgba(10,10,9,0.15)",
+            }}
             aria-label="Theme"
           >
             ◐
@@ -148,21 +182,39 @@ export function Header() {
                 type="button"
                 onClick={() => setThemeOpen((o) => !o)}
                 className="text-left font-bold"
-                style={{ color: "var(--dim)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.72rem" }}
+                style={{
+                  color: "var(--dim)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.72rem",
+                }}
               >
                 ./theme
               </button>
               {themeOpen && (
-                <div className="mt-2 border-l-2 pl-3" style={{ borderColor: "var(--ink)" }}>
+                <div
+                  className="mt-2 border-l-2 pl-3"
+                  style={{ borderColor: "var(--ink)" }}
+                >
                   {THEMES.map((t) => (
                     <button
                       key={t.id}
                       type="button"
-                      onClick={() => { setTheme(t.id); setThemeOpen(false); }}
+                      onClick={() => {
+                        setTheme(t.id);
+                        setThemeOpen(false);
+                      }}
                       className="flex w-full items-center gap-2 py-1.5 text-left text-[0.6rem] font-bold uppercase"
-                      style={{ color: theme === t.id ? "var(--mint)" : "var(--dim)" }}
+                      style={{
+                        color: theme === t.id ? "var(--mint)" : "var(--dim)",
+                      }}
                     >
-                      <span className="h-2 w-2 shrink-0 rounded-full border" style={{ borderColor: "currentColor", background: t.swatch }} />
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-full border"
+                        style={{
+                          borderColor: "currentColor",
+                          background: t.swatch,
+                        }}
+                      />
                       {t.label}
                     </button>
                   ))}
@@ -170,11 +222,24 @@ export function Header() {
               )}
             </div>
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setMobileOpen(false)} style={{ color: "var(--dim)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.72rem" }}>
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                style={{
+                  color: "var(--dim)",
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  fontSize: "0.72rem",
+                }}
+              >
                 ./{link.label}
               </Link>
             ))}
-            <a href="mailto:srimaniteja.ch@gmail.com" className="rounded-[100px] border-2 bg-[var(--ink)] px-4 py-1.5 text-[0.72rem] font-bold text-[var(--bg)]" style={{ borderColor: "var(--ink)" }}>
+            <a
+              href="mailto:srimaniteja.ch@gmail.com"
+              className="rounded-[100px] border-2 bg-[var(--ink)] px-4 py-1.5 text-[0.72rem] font-bold text-[var(--bg)]"
+              style={{ borderColor: "var(--ink)" }}
+            >
               hire me ↗
             </a>
           </div>
