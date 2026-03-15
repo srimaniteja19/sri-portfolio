@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ContentProvider } from "@/components/content-provider";
@@ -80,6 +81,7 @@ export default async function RootLayout({
           <ContentProvider content={content}>
             <KonamiOverlay />
             {children}
+            <Analytics />
           </ContentProvider>
         </ThemeProvider>
       </body>
