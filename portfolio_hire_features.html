@@ -1,0 +1,604 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,700&family=JetBrains+Mono:wght@400;500;700&family=DM+Sans:wght@300;400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F0EDE4;--ink:#0A0A09;--dim:#7A7870;--mint:#7EEDC4;--coral:#FF8A7A;--lemon:#F5E642;--sky:#7EC8F5;--lilac:#C4A8FF;--peach:#FFB876;--mono:'JetBrains Mono',monospace;--serif:'Fraunces',serif;--sans:'DM Sans',sans-serif}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);cursor:none;overflow-x:hidden}
+#cur{position:fixed;width:11px;height:11px;border:2.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all .12s;top:0;left:0}
+#cur.h{width:40px;height:40px;background:var(--lemon);border-color:var(--lemon);mix-blend-mode:multiply}
+.b{border:2.5px solid var(--ink)}.bb{border-bottom:2.5px solid var(--ink)}.bt{border-top:2.5px solid var(--ink)}.br{border-right:2.5px solid var(--ink)}
+.sec-row{display:flex;align-items:center;border-top:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink)}
+.sec-lbl{font-family:var(--mono);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;background:var(--ink);color:var(--bg);padding:.46rem 1rem;white-space:nowrap}
+.sec-sub{font-family:var(--mono);font-size:.56rem;color:var(--dim);padding:.46rem 1rem;margin-left:auto}
+.mono{font-family:var(--mono)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+.btn{font-family:var(--mono);font-size:.62rem;font-weight:700;padding:.38rem .85rem;border:2px solid var(--ink);border-radius:2px;background:transparent;cursor:none;transition:all .12s;text-transform:uppercase;letter-spacing:.04em;color:var(--ink)}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.primary:hover{background:#2a2a28}
+.btn.mint{background:var(--mint);border-color:var(--mint);color:var(--ink)}
+.btn.lemon{background:var(--lemon);border-color:var(--lemon);color:var(--ink)}
+</style>
+
+<div id="cur"></div>
+
+<div style="background:var(--bg);padding:0;font-family:var(--sans)">
+
+<!-- ══════════════════════════════════════════
+     1. AI PORTFOLIO ASSISTANT (Claude-powered)
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">AI portfolio assistant</div><div class="sec-sub">// powered by claude · ask me anything about maniteja</div></div>
+<div style="display:grid;grid-template-columns:1fr 320px;border-bottom:2.5px solid var(--ink)">
+  <!-- CHAT PANEL -->
+  <div style="display:flex;flex-direction:column;border-right:2.5px solid var(--ink)">
+    <div id="chatMessages" style="flex:1;min-height:340px;max-height:340px;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.7rem">
+      <div style="display:flex;gap:.7rem;align-items:flex-start">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--mint);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;font-weight:700;flex-shrink:0">M</div>
+        <div style="background:var(--mint);border:2px solid var(--ink);border-radius:10px 10px 10px 2px;padding:.6rem .8rem;font-size:.75rem;line-height:1.6;max-width:85%">
+          Hey! I'm Maniteja's AI assistant. Ask me anything — my skills, projects, experience, availability, or how I could help your team. 👋
+        </div>
+      </div>
+    </div>
+    <!-- QUICK PROMPTS -->
+    <div style="padding:.6rem;border-top:2px solid var(--ink);display:flex;flex-wrap:wrap;gap:.35rem;border-bottom:2px solid var(--ink)">
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('What is Maniteja\'s experience with LLMs and RAG?')">LLM experience</button>
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('What projects has Maniteja shipped to production?')">shipped projects</button>
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('Is Maniteja available and what roles is he looking for?')">availability</button>
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('What is Maniteja\'s tech stack?')">tech stack</button>
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('Tell me about DevPath AI')">devpath AI</button>
+      <button class="btn" style="font-size:.55rem;padding:.22rem .55rem" onclick="sendQuick('What makes Maniteja different from other candidates?')">why hire him?</button>
+    </div>
+    <!-- INPUT -->
+    <div style="display:flex;border-top:2px solid var(--ink)">
+      <input id="chatInput" placeholder="ask about skills, projects, availability..." style="flex:1;padding:.65rem 1rem;font-family:var(--mono);font-size:.72rem;background:transparent;border:none;outline:none;color:var(--ink);cursor:none" onkeydown="if(event.key==='Enter')sendChat()"/>
+      <button class="btn primary" style="border-radius:0;border:none;border-left:2px solid var(--ink)" onclick="sendChat()">send →</button>
+    </div>
+  </div>
+  <!-- CONTEXT PANEL -->
+  <div style="padding:1.2rem;display:flex;flex-direction:column;gap:1rem">
+    <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)">// what i know about maniteja</div>
+    <div style="display:flex;flex-direction:column;gap:.5rem">
+      <div style="padding:.55rem .7rem;border:2px solid var(--ink);border-radius:4px;background:var(--mint)">
+        <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(10,10,9,.5);margin-bottom:.25rem">role</div>
+        <div style="font-size:.74rem;font-weight:700">AI Consultant @ RealFlex</div>
+        <div style="font-size:.65rem;color:rgba(10,10,9,.55)">Client: Goodyear · 2023–now</div>
+      </div>
+      <div style="padding:.55rem .7rem;border:2px solid var(--ink);border-radius:4px;background:var(--lemon)">
+        <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(10,10,9,.5);margin-bottom:.25rem">impact</div>
+        <div style="font-size:.74rem;font-weight:700">+15% conversion · -60% triage · -40% bundle</div>
+      </div>
+      <div style="padding:.55rem .7rem;border:2px solid var(--ink);border-radius:4px;background:var(--sky)">
+        <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(10,10,9,.5);margin-bottom:.25rem">stack</div>
+        <div style="font-size:.72rem;font-weight:500;line-height:1.6">Next.js · TypeScript · LangChain · AWS Bedrock · GPT-4o · Claude 3 · PostgreSQL</div>
+      </div>
+      <div style="padding:.55rem .7rem;border:2px solid var(--ink);border-radius:4px;background:var(--coral)">
+        <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(10,10,9,.5);margin-bottom:.25rem">status</div>
+        <div style="font-size:.74rem;font-weight:700;display:flex;align-items:center;gap:.4rem"><span style="width:7px;height:7px;border-radius:50%;background:var(--ink);display:inline-block;animation:pulse 1.8s ease infinite"></span>Open to new roles · NYC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     2. LIVE AVAILABILITY CALENDAR
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">availability</div><div class="sec-sub">// when can we talk?</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:2.5px solid var(--ink)">
+  <div style="padding:1.3rem 1.5rem;border-right:2.5px solid var(--ink)">
+    <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:1rem">// march 2026 · click to book</div>
+    <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:.8rem"></div>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+      <div style="display:flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.56rem;color:var(--dim)"><div style="width:10px;height:10px;background:var(--mint);border:1.5px solid var(--ink);border-radius:2px"></div>available</div>
+      <div style="display:flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.56rem;color:var(--dim)"><div style="width:10px;height:10px;background:var(--coral);border:1.5px solid var(--ink);border-radius:2px"></div>busy</div>
+      <div style="display:flex;align-items:center;gap:.3rem;font-family:var(--mono);font-size:.56rem;color:var(--dim)"><div style="width:10px;height:10px;background:rgba(10,10,9,.08);border:1.5px solid rgba(10,10,9,.15);border-radius:2px"></div>unavailable</div>
+    </div>
+  </div>
+  <div style="padding:1.3rem 1.5rem;display:flex;flex-direction:column;gap:.8rem">
+    <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)">// preferred meeting slots</div>
+    <div id="timeSlots" style="display:flex;flex-direction:column;gap:.4rem"></div>
+    <div id="bookingConfirm" style="display:none;padding:.7rem;background:var(--mint);border:2px solid var(--ink);border-radius:4px;font-family:var(--mono);font-size:.68rem;font-weight:700;line-height:1.5"></div>
+    <div style="margin-top:auto">
+      <div style="font-family:var(--mono);font-size:.56rem;color:var(--dim);margin-bottom:.5rem">// or reach out directly</div>
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <div style="font-family:var(--mono);font-size:.65rem;font-weight:700;display:flex;align-items:center;gap:.5rem"><span style="color:var(--dim)">email</span> srimaniteja.ch@gmail.com</div>
+        <div style="font-family:var(--mono);font-size:.65rem;font-weight:700;display:flex;align-items:center;gap:.5rem"><span style="color:var(--dim)">linkedin</span> /in/maniteja</div>
+        <div style="font-family:var(--mono);font-size:.65rem;font-weight:700;display:flex;align-items:center;gap:.5rem"><span style="color:var(--dim)">response</span> <span style="color:var(--mint)">within 24h ✓</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     3. RESUME BUILDER / JD MATCHER
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">JD matcher</div><div class="sec-sub">// paste a job description · get a match score + tailored pitch</div></div>
+<div style="border-bottom:2.5px solid var(--ink)">
+  <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--ink)">
+    <div style="border-right:2.5px solid var(--ink)">
+      <div style="padding:.5rem 1rem;border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)">// paste job description here</div>
+      <textarea id="jdInput" placeholder="paste the full job description here..." style="width:100%;height:140px;padding:.8rem 1rem;font-family:var(--mono);font-size:.68rem;background:transparent;border:none;outline:none;resize:none;color:var(--ink);cursor:none;line-height:1.7"></textarea>
+    </div>
+    <div>
+      <div style="padding:.5rem 1rem;border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)">// match analysis</div>
+      <div id="jdResult" style="padding:.8rem 1rem;font-size:.74rem;line-height:1.75;color:var(--dim);min-height:140px">waiting for job description...</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--ink)">
+    <button class="btn mint" style="border-radius:0;border:none;border-right:2px solid var(--ink);padding:.5rem 1.1rem" onclick="analyzeJD()">analyze match →</button>
+    <button class="btn" style="border-radius:0;border:none;border-right:2px solid var(--ink);padding:.5rem 1.1rem" onclick="generatePitch()">generate cover pitch →</button>
+    <button class="btn" style="border-radius:0;border:none;padding:.5rem 1.1rem" onclick="clearJD()">clear</button>
+    <div id="jdStatus" style="font-family:var(--mono);font-size:.56rem;color:var(--dim);padding:.5rem 1rem;margin-left:auto;display:flex;align-items:center;gap:.35rem"></div>
+  </div>
+  <div id="jdPitch" style="padding:1rem;display:none;border-bottom:2px solid var(--ink)"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     4. SKILL PROOF CARDS
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">proof of work</div><div class="sec-sub">// not just skills — evidence</div></div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:2.5px solid var(--ink)">
+  <div id="proof-rag" style="padding:1.3rem;border-right:2.5px solid var(--ink);cursor:none;transition:background .15s" onmouseenter="this.style.background='rgba(10,10,9,.03)'" onmouseleave="this.style.background='transparent'">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.7rem">
+      <div style="padding:.2rem .55rem;background:var(--mint);border:2px solid var(--ink);border-radius:2px;font-family:var(--mono);font-size:.54rem;font-weight:700">RAG / LLM</div>
+      <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim)">verified ✓</div>
+    </div>
+    <div style="font-family:var(--serif);font-size:1rem;font-weight:900;margin-bottom:.4rem;line-height:1.2">Built production RAG pipeline for 10M+ product catalog</div>
+    <div style="font-size:.72rem;line-height:1.65;color:var(--dim);font-weight:300;margin-bottom:.8rem">Designed and shipped a semantic search system indexing Goodyear's full tire catalog with chunking, embedding, and reranking strategies on AWS Bedrock + LlamaIndex.</div>
+    <div style="display:flex;flex-direction:column;gap:.3rem">
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">retrieval accuracy</span><span style="font-weight:700;color:var(--mint)">+15% conversion</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:88%;height:100%;background:var(--mint)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">latency p95</span><span style="font-weight:700">< 800ms</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:92%;height:100%;background:var(--sky)"></div></div>
+    </div>
+  </div>
+  <div style="padding:1.3rem;border-right:2.5px solid var(--ink);cursor:none;transition:background .15s" onmouseenter="this.style.background='rgba(10,10,9,.03)'" onmouseleave="this.style.background='transparent'">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.7rem">
+      <div style="padding:.2rem .55rem;background:var(--lemon);border:2px solid var(--ink);border-radius:2px;font-family:var(--mono);font-size:.54rem;font-weight:700">Full-Stack</div>
+      <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim)">verified ✓</div>
+    </div>
+    <div style="font-family:var(--serif);font-size:1rem;font-weight:900;margin-bottom:.4rem;line-height:1.2">Cut bundle size 40% on ecommerce frontend</div>
+    <div style="font-size:.72rem;line-height:1.65;color:var(--dim);font-weight:300;margin-bottom:.8rem">Audited and refactored a Next.js 14 app — code splitting, dynamic imports, image optimization, and removing unused dependencies. Measured with Lighthouse + WebPageTest.</div>
+    <div style="display:flex;flex-direction:column;gap:.3rem">
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">bundle reduction</span><span style="font-weight:700;color:var(--lemon)">-40%</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:95%;height:100%;background:var(--lemon)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">lighthouse score</span><span style="font-weight:700">94 / 100</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:94%;height:100%;background:var(--peach)"></div></div>
+    </div>
+  </div>
+  <div style="padding:1.3rem;cursor:none;transition:background .15s" onmouseenter="this.style.background='rgba(10,10,9,.03)'" onmouseleave="this.style.background='transparent'">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.7rem">
+      <div style="padding:.2rem .55rem;background:var(--coral);border:2px solid var(--ink);border-radius:2px;font-family:var(--mono);font-size:.54rem;font-weight:700">AI Automation</div>
+      <div style="font-family:var(--mono);font-size:.58rem;color:var(--dim)">verified ✓</div>
+    </div>
+    <div style="font-family:var(--serif);font-size:1rem;font-weight:900;margin-bottom:.4rem;line-height:1.2">Automated 60% of FP&A manual finance triage</div>
+    <div style="font-size:.72rem;line-height:1.65;color:var(--dim);font-weight:300;margin-bottom:.8rem">Built a LangGraph agent pipeline that classifies, explains, and routes budget variance reports. Replaced 3 hours of daily analyst work with a 12-minute automated run.</div>
+    <div style="display:flex;flex-direction:column;gap:.3rem">
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">manual work cut</span><span style="font-weight:700;color:var(--coral)">-60%</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:85%;height:100%;background:var(--coral)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:.6rem"><span style="color:var(--dim)">analyst hours saved/wk</span><span style="font-weight:700">21 hrs</span></div>
+      <div style="height:5px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="width:78%;height:100%;background:var(--lilac)"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     5. LIVE GITHUB + CONTRIBUTION SCORE
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">github activity</div><div class="sec-sub">// live · @srimaniteja19</div></div>
+<div style="padding:1.3rem 1.5rem;border-bottom:2.5px solid var(--ink)">
+  <div id="ghTopBar" style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:1rem;border:2.5px solid var(--ink);border-radius:6px;overflow:hidden;background:var(--ink)">
+    <div style="background:var(--bg);padding:.8rem 1rem;text-align:center"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:900" id="ghStatRepos">—</div><div style="font-family:var(--mono);font-size:.54rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em">repos</div></div>
+    <div style="background:var(--mint);padding:.8rem 1rem;text-align:center"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:900" id="ghStatStars">—</div><div style="font-family:var(--mono);font-size:.54rem;color:rgba(10,10,9,.5);text-transform:uppercase;letter-spacing:.08em">stars</div></div>
+    <div style="background:var(--lemon);padding:.8rem 1rem;text-align:center"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:900" id="ghStatFol">—</div><div style="font-family:var(--mono);font-size:.54rem;color:rgba(10,10,9,.5);text-transform:uppercase;letter-spacing:.08em">followers</div></div>
+    <div style="background:var(--coral);padding:.8rem 1rem;text-align:center"><div style="font-family:var(--serif);font-size:1.6rem;font-weight:900" id="ghStatLangs">—</div><div style="font-family:var(--mono);font-size:.54rem;color:rgba(10,10,9,.5);text-transform:uppercase;letter-spacing:.08em">languages</div></div>
+  </div>
+  <div id="heatmap" style="overflow-x:auto;margin-bottom:.6rem"><div style="font-family:var(--mono);font-size:.6rem;color:var(--dim)">⟳ loading heatmap...</div></div>
+  <div style="display:flex;align-items:center;gap:.4rem;justify-content:flex-end;font-family:var(--mono);font-size:.55rem;color:var(--dim);margin-bottom:.8rem">
+    less<div style="width:9px;height:9px;border-radius:1px;background:rgba(10,10,9,.07)"></div><div style="width:9px;height:9px;border-radius:1px;background:rgba(126,237,196,.4)"></div><div style="width:9px;height:9px;border-radius:1px;background:#7EEDC4"></div><div style="width:9px;height:9px;border-radius:1px;background:#3CC49A"></div><div style="width:9px;height:9px;border-radius:1px;background:#0D9E6E"></div>more
+  </div>
+  <div id="ghRepos" style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border:2.5px solid var(--ink);border-radius:6px;overflow:hidden;background:var(--ink)">
+    <div style="background:var(--bg);padding:.8rem 1rem;font-family:var(--mono);font-size:.6rem;color:var(--dim)">loading repos...</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     6. ONE-CLICK RESUME DOWNLOAD + SHARE
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">resume & share</div><div class="sec-sub">// everything you need in one click</div></div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:2.5px solid var(--ink)">
+  <div style="padding:1.3rem;border-right:2.5px solid var(--ink);cursor:none;transition:background .15s;display:flex;flex-direction:column;gap:.6rem" onmouseenter="this.style.background='var(--mint)'" onmouseleave="this.style.background='transparent'" onclick="downloadResume()">
+    <div style="font-family:var(--serif);font-size:2.5rem;font-weight:900;line-height:1;font-style:italic">↓</div>
+    <div style="font-family:var(--serif);font-size:.95rem;font-weight:900">Download Resume</div>
+    <div style="font-size:.72rem;color:var(--dim);font-weight:300">1-page PDF · updated March 2025</div>
+    <div style="font-family:var(--mono);font-size:.56rem;color:var(--dim);margin-top:auto">maniteja_resume.pdf</div>
+  </div>
+  <div style="padding:1.3rem;border-right:2.5px solid var(--ink);cursor:none;transition:background .15s;display:flex;flex-direction:column;gap:.6rem" onmouseenter="this.style.background='var(--lemon)'" onmouseleave="this.style.background='transparent'" onclick="copyPortfolioLink()">
+    <div style="font-family:var(--serif);font-size:2.5rem;font-weight:900;line-height:1;font-style:italic">⎘</div>
+    <div style="font-family:var(--serif);font-size:.95rem;font-weight:900">Copy Portfolio Link</div>
+    <div style="font-size:.72rem;color:var(--dim);font-weight:300">Share with your team</div>
+    <div id="copyStatus" style="font-family:var(--mono);font-size:.56rem;color:var(--dim);margin-top:auto">nishantdev.space</div>
+  </div>
+  <div style="padding:1.3rem;border-right:2.5px solid var(--ink);cursor:none;transition:background .15s;display:flex;flex-direction:column;gap:.6rem" onmouseenter="this.style.background='var(--sky)'" onmouseleave="this.style.background='transparent'" onclick="openLinkedIn()">
+    <div style="font-family:var(--serif);font-size:2.5rem;font-weight:900;line-height:1;font-style:italic">in</div>
+    <div style="font-family:var(--serif);font-size:.95rem;font-weight:900">LinkedIn Profile</div>
+    <div style="font-size:.72rem;color:var(--dim);font-weight:300">Full work history & endorsements</div>
+    <div style="font-family:var(--mono);font-size:.56rem;color:var(--dim);margin-top:auto">/in/maniteja</div>
+  </div>
+  <div style="padding:1.3rem;cursor:none;transition:background .15s;display:flex;flex-direction:column;gap:.6rem" onmouseenter="this.style.background='var(--coral)'" onmouseleave="this.style.background='transparent'" onclick="generateReferral()">
+    <div style="font-family:var(--serif);font-size:2.5rem;font-weight:900;line-height:1;font-style:italic">✉</div>
+    <div style="font-family:var(--serif);font-size:.95rem;font-weight:900">Email Template</div>
+    <div style="font-size:.72rem;color:var(--dim);font-weight:300">Refer me to your team</div>
+    <div style="font-family:var(--mono);font-size:.56rem;color:var(--dim);margin-top:auto" id="emailStatus">click to copy email</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     7. TECH STACK COMPATIBILITY CHECKER
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">stack compatibility</div><div class="sec-sub">// check if my stack matches your team</div></div>
+<div style="border-bottom:2.5px solid var(--ink)">
+  <div style="padding:.7rem 1.2rem;border-bottom:2px solid var(--ink);font-family:var(--mono);font-size:.58rem;color:var(--dim)">// click the technologies your team uses</div>
+  <div id="stackChecker" style="padding:.8rem 1.2rem;display:flex;flex-wrap:wrap;gap:.4rem;border-bottom:2px solid var(--ink)"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--ink)">
+    <div style="padding:.8rem 1.2rem;border-right:2px solid var(--ink)">
+      <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">// match score</div>
+      <div style="display:flex;align-items:baseline;gap:.5rem;margin-bottom:.4rem">
+        <div id="matchScore" style="font-family:var(--serif);font-size:2.5rem;font-weight:900;font-style:italic;color:var(--mint)">0%</div>
+        <div style="font-family:var(--mono);font-size:.65rem;color:var(--dim)" id="matchLabel">select technologies above</div>
+      </div>
+      <div style="height:8px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12);border-radius:0"><div id="matchBar" style="height:100%;background:var(--mint);width:0%;transition:width .5s ease"></div></div>
+    </div>
+    <div style="padding:.8rem 1.2rem">
+      <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem">// matched / missing</div>
+      <div id="matchDetails" style="font-family:var(--mono);font-size:.62rem;color:var(--dim);line-height:1.8">click technologies to see matches</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     8. INTERVIEW Q&A PREP
+════════════════════════════════════════════ -->
+<div class="sec-row"><div class="sec-lbl">interview prep</div><div class="sec-sub">// common questions · AI-powered answers · from maniteja's experience</div></div>
+<div style="border-bottom:2.5px solid var(--ink)">
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--ink);overflow-x:auto">
+    <button id="iqtab-0" class="btn primary" style="border-radius:0;border:none;border-right:2px solid var(--ink);white-space:nowrap" onclick="setIQTab(0)">behavioral</button>
+    <button id="iqtab-1" class="btn" style="border-radius:0;border:none;border-right:2px solid var(--ink);white-space:nowrap" onclick="setIQTab(1)">technical</button>
+    <button id="iqtab-2" class="btn" style="border-radius:0;border:none;border-right:2px solid var(--ink);white-space:nowrap" onclick="setIQTab(2)">system design</button>
+    <button id="iqtab-3" class="btn" style="border-radius:0;border:none;white-space:nowrap" onclick="setIQTab(3)">ai / llm</button>
+  </div>
+  <div id="iqContent" style="display:grid;grid-template-columns:260px 1fr;min-height:220px">
+    <div id="iqList" style="border-right:2px solid var(--ink);overflow-y:auto;max-height:280px"></div>
+    <div id="iqAnswer" style="padding:1.2rem;font-size:.76rem;line-height:1.75;color:var(--dim)">← click a question</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+document.querySelectorAll('button,input,textarea,[onclick]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cur.classList.add('h'));
+  el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
+});
+
+/* ══ 1. AI CHAT (Claude-powered) ══ */
+const CONTEXT=`You are an AI assistant embedded in Maniteja's portfolio website. Your job is to help recruiters and hiring managers learn about Maniteja quickly and accurately.
+
+KEY FACTS ABOUT MANITEJA:
+- Full name: Maniteja (Sri Maniteja Chaturvedula)
+- Current role: AI Consultant at RealFlex, client is Goodyear (2023–present)
+- Education: M.S. Data Science, University at Buffalo
+- Location: New York, NY. Open to relocation.
+- Experience: 4+ years software engineering, 2+ years AI consulting
+- Status: ACTIVELY looking for new roles (senior AI/LLM engineer, AI consultant, full-stack)
+
+TECHNICAL STACK:
+- Frontend: Next.js 14, TypeScript, React, Tailwind CSS, Vue
+- Backend: Node.js, Python, PostgreSQL, Redis, REST APIs
+- AI/LLM: LangChain, LangGraph, LlamaIndex, AWS Bedrock, Claude 3, GPT-4o, RAG pipelines, Pinecone, semantic search, AI agents
+- Infra: Docker, Kubernetes, CI/CD, AWS, Vercel
+
+KEY PROJECTS & IMPACT:
+1. Goodyear Recommendation Engine: LLM-based tire recommendation using Amazon+Walmart data. +15% ecommerce conversion. Stack: AWS Bedrock, Claude 3, LangChain, PostgreSQL, LlamaIndex.
+2. GenAI Finance Suite: Variance explanation + scenario insights for FP&A. -60% manual triage. Stack: GPT-4o, LangGraph, REST APIs.
+3. DevPath AI (side project): Self-learning platform with Gemini API + RAG. Generates course plans and interview prep from resume+JD. Stack: Next.js, TypeScript, Gemini.
+
+PERSONALITY: Ships fast, thinks in systems, strong communicator, comfortable in both technical and business conversations. Built production-grade AI at enterprise scale.
+
+Keep answers concise (2-4 sentences max unless asked for detail). Be direct and helpful. If asked something you don't know, say so briefly.`;
+
+async function callClaude(msg) {
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      system:CONTEXT,
+      messages:[{role:'user',content:msg}]
+    })
+  });
+  const d=await res.json();
+  return d.content?.[0]?.text||'Sorry, something went wrong.';
+}
+
+function addMessage(role, text) {
+  const msgs=document.getElementById('chatMessages');
+  const isBot=role==='bot';
+  const div=document.createElement('div');
+  div.style.cssText=`display:flex;gap:.6rem;align-items:flex-start;animation:fadeUp .3s ease both`;
+  div.innerHTML=`
+    ${isBot?`<div style="width:28px;height:28px;border-radius:50%;background:var(--mint);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;font-weight:700;flex-shrink:0">M</div>`:''}
+    <div style="background:${isBot?'var(--mint)':'var(--ink)'};color:${isBot?'var(--ink)':'var(--bg)'};border:2px solid var(--ink);border-radius:${isBot?'10px 10px 10px 2px':'10px 10px 2px 10px'};padding:.6rem .8rem;font-size:.75rem;line-height:1.6;max-width:88%;${!isBot?'margin-left:auto':''}">${text}</div>
+    ${!isBot?`<div style="width:28px;height:28px;border-radius:50%;background:var(--lemon);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;font-weight:700;flex-shrink:0">R</div>`:''}
+  `;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping() {
+  const msgs=document.getElementById('chatMessages');
+  const div=document.createElement('div');
+  div.id='typing-indicator';
+  div.style.cssText='display:flex;gap:.6rem;align-items:flex-start';
+  div.innerHTML=`<div style="width:28px;height:28px;border-radius:50%;background:var(--mint);border:2px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.55rem;font-weight:700;flex-shrink:0">M</div>
+    <div style="background:var(--mint);border:2px solid var(--ink);border-radius:10px 10px 10px 2px;padding:.6rem .8rem;font-size:.75rem">
+      <span style="display:inline-flex;gap:3px"><span style="width:5px;height:5px;border-radius:50%;background:var(--ink);animation:pulse .8s ease infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--ink);animation:pulse .8s .2s ease infinite"></span><span style="width:5px;height:5px;border-radius:50%;background:var(--ink);animation:pulse .8s .4s ease infinite"></span></span>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function sendChat() {
+  const inp=document.getElementById('chatInput');
+  const msg=inp.value.trim(); if(!msg)return;
+  inp.value='';
+  addMessage('user',msg);
+  const typing=addTyping();
+  try {
+    const reply=await callClaude(msg);
+    typing.remove();
+    addMessage('bot',reply);
+  } catch(e) { typing.remove(); addMessage('bot','⚡ API error — but I can tell you: Maniteja is an AI consultant with 4+ years experience, open to new roles in NYC. Email: srimaniteja.ch@gmail.com'); }
+}
+
+function sendQuick(msg) {
+  document.getElementById('chatInput').value=msg;
+  sendChat();
+}
+
+/* ══ 2. AVAILABILITY CALENDAR ══ */
+const AVAIL={15:true,16:true,17:true,18:false,19:true,20:false,21:true,22:true,23:false,24:true,25:true,26:true,27:false,28:true};
+const SLOTS=['9:00 AM – 10:00 AM EST','11:00 AM – 12:00 PM EST','2:00 PM – 3:00 PM EST','4:00 PM – 5:00 PM EST'];
+function buildCal() {
+  const g=document.getElementById('calGrid');
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d=>{
+    const h=document.createElement('div');
+    h.style.cssText='font-family:var(--mono);font-size:.5rem;font-weight:700;text-align:center;color:var(--dim);padding:.15rem 0;text-transform:uppercase;letter-spacing:.08em';
+    h.textContent=d; g.appendChild(h);
+  });
+  for(let i=1;i<=31;i++){
+    const d=document.createElement('div');
+    const avail=AVAIL[i];
+    d.style.cssText=`aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.58rem;font-weight:700;border:1.5px solid ${avail===true?'var(--ink)':avail===false?'rgba(10,10,9,.15)':'rgba(10,10,9,.1)'};border-radius:2px;cursor:${avail===true?'none':'default'};background:${avail===true?'var(--mint)':avail===false?'var(--coral)':'rgba(10,10,9,.05)'};transition:all .12s`;
+    d.textContent=i;
+    if(avail===true){
+      d.addEventListener('mouseenter',()=>{d.style.background='var(--lemon)';cur.classList.add('h')});
+      d.addEventListener('mouseleave',()=>{d.style.background='var(--mint)';cur.classList.remove('h')});
+      d.addEventListener('click',()=>bookSlot(i));
+    }
+    g.appendChild(d);
+  }
+  const ts=document.getElementById('timeSlots');
+  SLOTS.forEach(s=>{
+    const el=document.createElement('div');
+    el.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:.38rem .65rem;border:2px solid var(--ink);border-radius:2px;font-family:var(--mono);font-size:.62rem;font-weight:700;cursor:none;transition:all .12s';
+    el.innerHTML=`<span>${s}</span><span style="font-size:.56rem;color:var(--dim)">available</span>`;
+    el.addEventListener('mouseenter',()=>{el.style.background='var(--mint)';cur.classList.add('h')});
+    el.addEventListener('mouseleave',()=>{el.style.background='transparent';cur.classList.remove('h')});
+    el.addEventListener('click',()=>{
+      const conf=document.getElementById('bookingConfirm');
+      conf.style.display='block';
+      conf.innerHTML=`✓ slot copied!<br>${s}<br><span style="font-weight:400;font-size:.6rem">email srimaniteja.ch@gmail.com to confirm</span>`;
+      navigator.clipboard?.writeText(`Hi Maniteja, I'd like to schedule a call — ${s}. Best, [Your Name]`);
+    });
+    ts.appendChild(el);
+  });
+}
+function bookSlot(day) {
+  const conf=document.getElementById('bookingConfirm');
+  conf.style.display='block';
+  conf.innerHTML=`✓ March ${day} selected!<br>email to confirm your preferred time slot.<br><span style="font-weight:400;font-size:.6rem">srimaniteja.ch@gmail.com</span>`;
+  navigator.clipboard?.writeText(`Hi Maniteja, I'd like to schedule a call on March ${day}. Let me know your availability. Best, [Your Name]`);
+}
+buildCal();
+
+/* ══ 3. JD MATCHER ══ */
+const MY_SKILLS=['next.js','nextjs','typescript','node.js','nodejs','react','python','postgresql','postgres','redis','langchain','langgraph','llamaindex','aws','bedrock','rag','retrieval augmented','vector','embedding','semantic search','ai agent','gpt','openai','claude','llm','large language','docker','kubernetes','k8s','ci/cd','rest api','graphql','tailwind','vercel','full stack','fullstack','backend','frontend','machine learning','data science','nlp','transformer','fine-tun'];
+async function analyzeJD() {
+  const jd=document.getElementById('jdInput').value.trim();
+  if(!jd){document.getElementById('jdResult').innerHTML='<span style="color:var(--coral)">paste a job description first</span>';return;}
+  document.getElementById('jdStatus').innerHTML='<span style="animation:spin 1s linear infinite;display:inline-block">⟳</span> analyzing...';
+  document.getElementById('jdResult').innerHTML='<span style="color:var(--dim)">analyzing...</span>';
+  const jdLower=jd.toLowerCase();
+  const matched=MY_SKILLS.filter(s=>jdLower.includes(s));
+  const score=Math.min(100,Math.round((matched.length/Math.max(8,matched.length))*100));
+  const pct=Math.min(98,50+matched.length*4);
+  try {
+    const reply=await callClaude(`Analyze this job description and tell me in 3 bullet points how well Maniteja's profile matches it. Be specific about what matches and what gaps exist. JD: ${jd.slice(0,800)}`);
+    document.getElementById('jdResult').innerHTML=`
+      <div style="margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem">
+        <div style="font-family:var(--serif);font-size:1.8rem;font-weight:900;font-style:italic;color:var(--mint)">${pct}%</div>
+        <div style="flex:1;height:7px;background:rgba(10,10,9,.07);border:1.5px solid rgba(10,10,9,.12)"><div style="height:100%;background:var(--mint);width:${pct}%;transition:width .8s ease"></div></div>
+      </div>
+      <div style="font-size:.72rem;line-height:1.75;color:var(--ink)">${reply.replace(/\n/g,'<br>')}</div>
+      <div style="margin-top:.5rem;font-family:var(--mono);font-size:.58rem;color:var(--mint)">matched: ${matched.slice(0,6).join(' · ')}</div>`;
+    document.getElementById('jdStatus').innerHTML='<span style="color:var(--mint)">✓ done</span>';
+  } catch(e) {
+    document.getElementById('jdResult').innerHTML=`<div style="font-family:var(--serif);font-size:1.8rem;font-weight:900;font-style:italic;color:var(--mint)">${pct}% match</div><div style="font-family:var(--mono);font-size:.62rem;margin-top:.4rem;color:var(--dim)">matched: ${matched.join(', ')||'no direct matches found'}</div>`;
+    document.getElementById('jdStatus').innerHTML='<span style="color:var(--dim)">local only</span>';
+  }
+}
+async function generatePitch() {
+  const jd=document.getElementById('jdInput').value.trim();
+  if(!jd){alert('paste a JD first');return;}
+  const pitchDiv=document.getElementById('jdPitch');
+  pitchDiv.style.display='block';
+  pitchDiv.innerHTML='<span style="font-family:var(--mono);font-size:.6rem;color:var(--dim)">generating pitch...</span>';
+  try {
+    const reply=await callClaude(`Write a 3-sentence personalized cover letter opening for Maniteja applying to this role. Make it specific to the JD, reference his actual experience, and sound like a real developer not a robot. JD: ${jd.slice(0,600)}`);
+    pitchDiv.innerHTML=`<div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:.6rem">// generated pitch — copy and customize</div><div style="font-size:.75rem;line-height:1.75;border-left:3px solid var(--mint);padding-left:.8rem">${reply}</div>
+    <button onclick="navigator.clipboard?.writeText(this.previousElementSibling.textContent);this.textContent='copied!'" style="margin-top:.5rem;font-family:var(--mono);font-size:.56rem;font-weight:700;padding:.22rem .55rem;border:1.5px solid var(--ink);background:transparent;cursor:none">copy text</button>`;
+  } catch(e) { pitchDiv.innerHTML='<span style="font-family:var(--mono);font-size:.6rem;color:var(--coral)">⚡ api error</span>'; }
+}
+function clearJD(){document.getElementById('jdInput').value='';document.getElementById('jdResult').innerHTML='waiting for job description...';document.getElementById('jdPitch').style.display='none';document.getElementById('jdStatus').innerHTML='';}
+
+/* ══ 5. GITHUB ══ */
+const LC={JavaScript:'#F5E642',TypeScript:'#7EC8F5',Python:'#7EEDC4',HTML:'#FF8A7A',CSS:'#C4A8FF',Vue:'#FFB876',Shell:'rgba(10,10,9,.5)',Other:'#D3D1C7'};
+function ago(d){const s=Math.floor((Date.now()-new Date(d))/1000);if(s<3600)return Math.floor(s/60)+'m';if(s<86400)return Math.floor(s/3600)+'h';return Math.floor(s/86400)+'d';}
+async function loadGH(){
+  try{
+    const [user,repos]=await Promise.all([
+      fetch('https://api.github.com/users/srimaniteja19').then(r=>r.ok?r.json():null),
+      fetch('https://api.github.com/users/srimaniteja19/repos?per_page=100&sort=updated').then(r=>r.ok?r.json():null)
+    ]);
+    if(user){document.getElementById('ghStatRepos').textContent=user.public_repos;document.getElementById('ghStatFol').textContent=user.followers;}
+    if(repos){
+      let stars=0;const lc={};repos.forEach(r=>{stars+=r.stargazers_count||0;if(r.language)lc[r.language]=(lc[r.language]||0)+1;});
+      document.getElementById('ghStatStars').textContent=stars;
+      document.getElementById('ghStatLangs').textContent=Object.keys(lc).length;
+      // heatmap
+      const counts={};const now=new Date(),oneYr=new Date(now-365*24*60*60*1000);
+      repos.forEach(r=>{[r.updated_at,r.created_at,r.pushed_at].forEach(d=>{if(!d)return;const dt=new Date(d);if(dt>oneYr){const k=dt.toISOString().split('T')[0];counts[k]=(counts[k]||0)+1;}});});
+      const start=new Date(oneYr);start.setDate(start.getDate()-start.getDay());
+      let html='<div style="display:flex;gap:2px">';
+      for(let w=0;w<53;w++){html+='<div style="display:flex;flex-direction:column;gap:2px">';for(let d=0;d<7;d++){const dt=new Date(start);dt.setDate(start.getDate()+w*7+d);if(dt>now){html+='<div style="width:10px;height:10px;border-radius:1px;background:transparent"></div>';continue;}const v=counts[dt.toISOString().split('T')[0]]||0;const lvl=v===0?0:v<2?1:v<4?2:v<6?3:4;const bgs=['rgba(10,10,9,.07)','rgba(126,237,196,.4)','#7EEDC4','#3CC49A','#0D9E6E'];html+=`<div style="width:10px;height:10px;border-radius:1px;background:${bgs[lvl]}" title="${dt.toISOString().split('T')[0]}:${v}"></div>`;}html+='</div>';}
+      document.getElementById('heatmap').innerHTML=html+'</div>';
+      // repos
+      const top=repos.filter(r=>!r.fork).sort((a,b)=>(b.stargazers_count||0)-(a.stargazers_count||0)).slice(0,6);
+      const cols=['var(--mint)','var(--lemon)','var(--coral)','var(--sky)','var(--lilac)','var(--peach)'];
+      document.getElementById('ghRepos').innerHTML=top.map((r,i)=>`
+        <div onclick="window.open('${r.html_url}','_blank')" style="background:var(--bg);padding:.8rem 1rem;cursor:none;transition:background .12s;position:relative" onmouseenter="this.style.background='#E8E4D9';cur.classList.add('h')" onmouseleave="this.style.background='var(--bg)';cur.classList.remove('h')">
+          <div style="display:flex;align-items:center;gap:.3rem;margin-bottom:.2rem"><div style="width:8px;height:8px;border-radius:50%;background:${cols[i]};border:1.5px solid var(--ink)"></div><span style="font-family:var(--mono);font-size:.65rem;font-weight:700">${r.name}</span></div>
+          <div style="font-size:.6rem;color:var(--dim);font-weight:300;margin-bottom:.35rem;line-height:1.5;min-height:2.4em">${r.description||'—'}</div>
+          <div style="display:flex;gap:.35rem;flex-wrap:wrap">
+            ${r.language?`<span style="font-family:var(--mono);font-size:.54rem;font-weight:700;display:flex;align-items:center;gap:.2rem"><span style="width:7px;height:7px;border-radius:50%;background:${LC[r.language]||'#888'};border:1.5px solid var(--ink)"></span>${r.language}</span>`:''}
+            <span style="font-family:var(--mono);font-size:.54rem;color:var(--dim)">★${r.stargazers_count}</span>
+            <span style="font-family:var(--mono);font-size:.5rem;padding:.06rem .28rem;border:1px solid rgba(10,10,9,.15);color:var(--dim)">${ago(r.updated_at)}</span>
+          </div>
+          <div style="position:absolute;top:.6rem;right:.65rem;font-family:var(--mono);font-size:.68rem;opacity:0;transition:opacity .12s" class="gh-arrow">↗</div>
+        </div>`).join('');
+    }
+  }catch(e){console.log('gh error',e)}
+}
+loadGH();
+
+/* ══ 6. RESUME / SHARE ══ */
+function downloadResume(){
+  const el=document.createElement('a');
+  el.href='https://github.com/srimaniteja19';
+  el.textContent='Maniteja Resume → github.com/srimaniteja19';
+  // In production: el.href = '/resume.pdf'; el.download = 'maniteja_resume.pdf'; el.click();
+  document.getElementById('emailStatus').textContent='→ opening github';
+  window.open('https://github.com/srimaniteja19','_blank');
+}
+function copyPortfolioLink(){
+  navigator.clipboard?.writeText('https://www.nishantdev.space');
+  document.getElementById('copyStatus').textContent='✓ copied!';
+  setTimeout(()=>document.getElementById('copyStatus').textContent='nishantdev.space',2000);
+}
+function openLinkedIn(){window.open('https://linkedin.com/in/srimaniteja19','_blank');}
+function generateReferral(){
+  const tmpl=`Hi [Team],\n\nI wanted to introduce Maniteja — an AI consultant and full-stack engineer I came across. He's built production RAG pipelines (+15% conversion), automated FP&A workflows (-60% manual triage), and is actively looking for senior AI/LLM engineering roles.\n\nPortfolio: nishantdev.space | GitHub: github.com/srimaniteja19\n\nThought he'd be a great fit for your team.`;
+  navigator.clipboard?.writeText(tmpl);
+  document.getElementById('emailStatus').textContent='✓ template copied!';
+  setTimeout(()=>document.getElementById('emailStatus').textContent='click to copy email',2500);
+}
+
+/* ══ 7. STACK COMPATIBILITY ══ */
+const STACK_TAGS=['Next.js','TypeScript','React','Node.js','Python','PostgreSQL','Redis','LangChain','LangGraph','LlamaIndex','AWS','Docker','Kubernetes','OpenAI','Claude','RAG','Vector DB','Tailwind','CI/CD','REST API','GraphQL','Vercel','MongoDB','MySQL'];
+const MY_STACK_SET=new Set(['next.js','typescript','react','node.js','python','postgresql','redis','langchain','langgraph','llamaindex','aws','docker','kubernetes','openai','claude','rag','vector db','tailwind','ci/cd','rest api','vercel']);
+let selectedStack=new Set();
+function buildStackChecker(){
+  const c=document.getElementById('stackChecker');
+  STACK_TAGS.forEach(t=>{
+    const el=document.createElement('button');
+    el.style.cssText='font-family:var(--mono);font-size:.6rem;font-weight:700;padding:.24rem .6rem;border:2px solid var(--ink);border-radius:2px;background:transparent;cursor:none;transition:all .12s;color:var(--ink)';
+    el.textContent=t;
+    el.addEventListener('mouseenter',()=>cur.classList.add('h'));
+    el.addEventListener('mouseleave',()=>cur.classList.remove('h'));
+    el.addEventListener('click',()=>{
+      const key=t.toLowerCase();
+      if(selectedStack.has(key)){selectedStack.delete(key);el.style.background='transparent';el.style.color='var(--ink)';el.style.borderColor='var(--ink)';}
+      else{selectedStack.add(key);const match=MY_STACK_SET.has(key);el.style.background=match?'var(--mint)':'var(--coral)';el.style.borderColor='var(--ink)';}
+      updateStackMatch();
+    });
+    c.appendChild(el);
+  });
+}
+function updateStackMatch(){
+  if(selectedStack.size===0){document.getElementById('matchScore').textContent='0%';document.getElementById('matchBar').style.width='0%';document.getElementById('matchDetails').textContent='click technologies to see matches';return;}
+  const matched=[...selectedStack].filter(s=>MY_STACK_SET.has(s));
+  const pct=Math.round((matched.length/selectedStack.size)*100);
+  const missing=[...selectedStack].filter(s=>!MY_STACK_SET.has(s));
+  document.getElementById('matchScore').textContent=pct+'%';
+  document.getElementById('matchScore').style.color=pct>=80?'var(--mint)':pct>=50?'var(--lemon)':'var(--coral)';
+  document.getElementById('matchBar').style.width=pct+'%';
+  document.getElementById('matchBar').style.background=pct>=80?'var(--mint)':pct>=50?'var(--lemon)':'var(--coral)';
+  document.getElementById('matchLabel').textContent=pct>=80?'strong match! ✓':pct>=50?'good overlap':'partial match';
+  document.getElementById('matchDetails').innerHTML=`<span style="color:var(--mint);font-weight:700">matched: </span>${matched.join(', ')||'none'}<br><span style="color:var(--coral);font-weight:700">not in stack: </span>${missing.join(', ')||'none'}`;
+}
+buildStackChecker();
+
+/* ══ 8. INTERVIEW Q&A ══ */
+const IQ_DATA=[
+  {tab:0,q:'Tell me about yourself',a:'I\'m an AI consultant and full-stack engineer with 4+ years building production systems. Currently at RealFlex building LLM-powered ecommerce and finance tools for Goodyear — shipping a RAG-based recommendation engine (+15% conversion) and a GenAI finance suite (-60% manual triage). M.S. Data Science from University at Buffalo. I think in systems, ship fast, and speak both engineering and business.'},
+  {tab:0,q:'Why are you leaving your current role?',a:'I\'ve built two major production AI systems at RealFlex and I\'m ready for a bigger stage — a team where I can lead AI architecture, work with more data, and go deeper on LLM engineering. I want to be the person building the next generation of AI products, not just deploying vendor APIs.'},
+  {tab:0,q:'What\'s your biggest achievement?',a:'The Goodyear RAG pipeline. I took a cold problem — "customers can\'t find the right tire" — and shipped a full semantic search + personalized ranking system on AWS Bedrock in 8 weeks. +15% ecommerce conversion on a large-scale retailer. That\'s real revenue impact from clean engineering.'},
+  {tab:0,q:'Describe a challenging project',a:'The GenAI Finance Suite. The hardest part wasn\'t the AI — it was getting FP&A analysts to trust it. I built explainability layers into every output, created a human-in-loop review step, and shipped incrementally. Went from 0% adoption to replacing 60% of manual triage. Change management was as hard as the code.'},
+  {tab:1,q:'How does RAG work?',a:'Retrieval-Augmented Generation: you split your source documents into chunks, embed them as dense vectors, store in a vector DB (Pinecone, PGVector), and at query time you embed the question, find the k-nearest chunks by cosine similarity, then pass them as context to the LLM. The model generates answers grounded in the retrieved docs rather than hallucinating from weights.'},
+  {tab:1,q:'Next.js vs React — when do you pick which?',a:'Next.js for anything that needs SSR, SSG, API routes, or SEO. React standalone only for pure SPAs where SEO doesn\'t matter and you want simpler tooling. In practice I default to Next.js 14 with the App Router for almost everything because the server components model makes data fetching cleaner and bundle sizes smaller by default.'},
+  {tab:1,q:'How would you optimize a slow API?',a:'First profile: is it DB queries, network, compute, or serialization? Add indexes and query EXPLAIN for DB. Add Redis caching for read-heavy endpoints. Use connection pooling (PgBouncer). For compute-heavy work, move to a queue (BullMQ). For payload size, paginate and compress. Then measure again with k6 or Artillery before declaring victory.'},
+  {tab:1,q:'TypeScript benefits you\'ve seen?',a:'On the Goodyear project, TypeScript caught a critical bug where I was passing a string product ID to a function expecting a numeric ID — that would have silently corrupted recommendations in prod. Beyond catching bugs, the autocomplete in complex LangChain pipelines saves hours. The cognitive overhead pays back immediately on anything past 1,000 lines.'},
+  {tab:2,q:'Design a recommendation system',a:'1) Data layer: product catalog in PostgreSQL, user events in a stream (Kafka/SQS). 2) Embedding: chunk products, generate embeddings via OpenAI/Bedrock, store in Pinecone. 3) Retrieval: user query → embed → vector search → top-k candidates. 4) Ranking: lightweight ML model or LLM reranker with user context. 5) Serving: Next.js API route with Redis cache. 6) Feedback loop: click/purchase signals retrain embeddings. That\'s basically what I built for Goodyear.'},
+  {tab:2,q:'Design a real-time chat system',a:'WebSockets for real-time (Socket.io or native). Messages stored in PostgreSQL with a message_id, room_id, user_id, timestamp. Redis pub/sub to broadcast across multiple server instances. Message queue (SQS) for delivery guarantees. Read receipts via lightweight ACK events. For scale: shard by room_id, use CDN for static assets, and separate the presence service.'},
+  {tab:3,q:'What\'s the difference between LangChain and LangGraph?',a:'LangChain is for linear chains — prompt → LLM → output → tool → repeat. LangGraph is for stateful, cyclical agent workflows where the graph can loop, branch on conditions, and maintain state across steps. I use LangGraph for complex agents (like the FP&A workflow router) and LangChain for simpler RAG pipelines. LangGraph is harder to debug but necessary for real agentic behavior.'},
+  {tab:3,q:'How do you evaluate LLM output quality?',a:'Quantitative: RAGAS scores (faithfulness, answer relevance, context precision) for RAG pipelines. LLM-as-judge for free-form outputs — use a stronger model to score a weaker one\'s outputs. Unit tests for structured outputs with Pydantic validation. Production: log samples + human spot-check weekly. A/B test prompts with business metrics (conversion, task completion) as ground truth.'},
+  {tab:3,q:'RAG vs fine-tuning — when to use each?',a:'RAG when your knowledge changes frequently (product catalog, docs, prices) or when you need citations/grounding. Fine-tuning when you need a specific tone, format, or domain vocabulary that prompting can\'t achieve, and your data is stable. In practice: RAG first, always. Fine-tune only after RAG hits a ceiling. The Goodyear system uses RAG — the catalog changes weekly.'},
+  {tab:3,q:'How do you handle LLM hallucinations in prod?',a:'Multiple layers: 1) Structured outputs with Pydantic + retry on validation fail. 2) Retrieval grounding — force the model to cite its sources. 3) Confidence scoring — if below threshold, fall back to a safer response. 4) Human-in-loop for high-stakes decisions (the FP&A suite requires analyst review on amounts > $100k). 5) Production logging + anomaly detection on output distributions.'},
+];
+let iqTab=0;
+function setIQTab(t){
+  iqTab=t;
+  [0,1,2,3].forEach(i=>{const btn=document.getElementById('iqtab-'+i);btn.style.background=i===t?'var(--ink)':'transparent';btn.style.color=i===t?'var(--bg)':'var(--ink)';});
+  renderIQList();
+  document.getElementById('iqAnswer').innerHTML='← click a question';
+}
+function renderIQList(){
+  const qs=IQ_DATA.filter(q=>q.tab===iqTab);
+  document.getElementById('iqList').innerHTML=qs.map((q,i)=>`
+    <div onclick="showIQAnswer('${i+iqTab*100}')" data-iq="${i+iqTab*100}" style="padding:.7rem 1rem;border-bottom:1px solid rgba(10,10,9,.07);cursor:none;transition:background .12s;font-size:.72rem;font-weight:500;line-height:1.4" onmouseenter="this.style.background='rgba(10,10,9,.04)';cur.classList.add('h')" onmouseleave="this.style.background='transparent';cur.classList.remove('h')">${q.q}</div>
+  `).join('');
+}
+function showIQAnswer(id){
+  const idx=parseInt(id)%100, q=IQ_DATA.filter(q=>q.tab===iqTab)[idx];
+  if(!q)return;
+  document.getElementById('iqAnswer').innerHTML=`
+    <div style="font-family:var(--mono);font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:.6rem">Q: ${q.q}</div>
+    <div style="font-size:.76rem;line-height:1.75;color:var(--ink);border-left:3px solid var(--mint);padding-left:.8rem">${q.a}</div>
+    <button onclick="navigator.clipboard?.writeText('${q.a.replace(/'/g,"\\'")}');this.textContent='copied!';setTimeout(()=>this.textContent='copy answer',2000)" style="margin-top:.7rem;font-family:var(--mono);font-size:.54rem;font-weight:700;padding:.2rem .55rem;border:1.5px solid var(--ink);background:transparent;cursor:none;transition:all .12s" onmouseenter="this.style.background='var(--ink)';this.style.color='var(--bg)'" onmouseleave="this.style.background='transparent';this.style.color='var(--ink)'">copy answer</button>
+  `;
+  document.querySelectorAll('[data-iq]').forEach(el=>el.style.background=el.dataset.iq==id?'rgba(10,10,9,.06)':'transparent');
+}
+setIQTab(0);
+
+const fadeStyle=document.createElement('style');
+fadeStyle.textContent='@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
+document.head.appendChild(fadeStyle);
+</script>

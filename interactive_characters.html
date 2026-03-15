@@ -1,0 +1,558 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,700&family=JetBrains+Mono:wght@400;700&family=DM+Sans:wght@300;400;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0EDE4;--ink:#0A0A09;--dim:#7A7870;
+  --mint:#7EEDC4;--coral:#FF8A7A;--lemon:#F5E642;--sky:#7EC8F5;--lilac:#C4A8FF;--peach:#FFB876;
+}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);cursor:none;overflow-x:hidden}
+#cur{position:fixed;width:11px;height:11px;border:2.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .12s,height .12s,background .12s;top:0;left:0}
+#cur.h{width:40px;height:40px;background:var(--lemon);border-color:var(--lemon);mix-blend-mode:multiply}
+
+/* SCENE */
+.scene{background:var(--bg);border:2.5px solid var(--ink);border-radius:12px;overflow:hidden;position:relative;min-height:420px}
+.scene-floor{position:absolute;bottom:0;left:0;right:0;height:60px;background:rgba(10,10,9,.04);border-top:2.5px solid var(--ink)}
+.scene-ground{position:absolute;bottom:58px;left:0;right:0;height:2.5px;background:var(--ink)}
+
+/* INSTRUCTIONS */
+.instructions{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.inst{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;padding:.24rem .65rem;border:2px solid var(--ink);border-radius:2px;display:flex;align-items:center;gap:.35rem}
+.inst-dot{width:7px;height:7px;border-radius:50%;border:1.5px solid var(--ink)}
+
+/* SPEECH BUBBLE */
+.bubble{position:absolute;background:white;border:2.5px solid var(--ink);border-radius:12px;padding:.5rem .75rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:700;white-space:nowrap;pointer-events:none;z-index:100;opacity:0;transform:scale(0) translateY(10px);transform-origin:bottom center;transition:all .2s cubic-bezier(.34,1.56,.64,1)}
+.bubble.show{opacity:1;transform:scale(1) translateY(0)}
+.bubble::after{content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:9px solid var(--ink)}
+.bubble::before{content:'';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid white;z-index:1}
+
+/* REACTION EMOJIS */
+.reaction{position:absolute;font-size:1.2rem;pointer-events:none;z-index:200;animation:floatUp 1.2s ease forwards}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-60px) scale(1.4)}}
+
+/* CHARACTER WRAPPER */
+.char-wrap{position:absolute;bottom:60px;user-select:none;transition:filter .15s}
+.char-wrap:hover{filter:brightness(1.05)}
+.char-wrap.dragging{z-index:500;filter:drop-shadow(4px 4px 0 rgba(10,10,9,.2))}
+.char-svg{display:block;cursor:none;transition:transform .15s}
+
+/* SCENE PROPS */
+.prop{position:absolute;pointer-events:none}
+
+/* PROGRESS BAR SECTION */
+.mood-section{margin-top:1.2rem;display:grid;grid-template-columns:repeat(6,1fr);gap:2.5px;border:2.5px solid var(--ink);border-radius:8px;overflow:hidden;background:var(--ink)}
+.mood-cell{background:var(--bg);padding:.65rem .8rem}
+.mood-name{font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:700;color:var(--dim);margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.08em}
+.mood-bar-wrap{height:5px;background:rgba(10,10,9,.08);border-radius:0;overflow:hidden}
+.mood-bar{height:100%;transition:width .6s ease}
+.mood-val{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;margin-top:.3rem}
+
+/* CONTROL PANEL */
+.controls{display:flex;gap:.5rem;margin-top:.9rem;flex-wrap:wrap}
+.ctrl-btn{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;padding:.3rem .75rem;border:2px solid var(--ink);border-radius:2px;background:transparent;cursor:none;transition:all .12s;text-transform:uppercase;letter-spacing:.04em}
+.ctrl-btn:hover{background:var(--ink);color:var(--bg)}
+.ctrl-btn.active{background:var(--ink);color:var(--bg)}
+
+@keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes wave{0%,100%{transform:rotate(0deg)}25%{transform:rotate(22deg)}75%{transform:rotate(-12deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes jump{0%,100%{transform:translateY(0)}40%{transform:translateY(-22px)}60%{transform:translateY(-18px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes bounce{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(.85) translateY(4px)}}
+@keyframes dance{0%,100%{transform:rotate(0deg) translateX(0)}25%{transform:rotate(6deg) translateX(3px)}75%{transform:rotate(-6deg) translateX(-3px)}}
+</style>
+
+<div id="cur"></div>
+
+<div style="padding:1.5rem">
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.6rem">
+  <div style="font-family:'Fraunces',serif;font-size:1.4rem;font-weight:900;font-style:italic">the crew. <span style="font-size:.9rem;color:var(--dim);font-style:normal;font-family:'JetBrains Mono',monospace;font-weight:400">// interactive</span></div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--dim)">hover · click · drag · try the buttons</div>
+</div>
+
+<div class="instructions">
+  <div class="inst"><div class="inst-dot" style="background:var(--mint)"></div>hover = react</div>
+  <div class="inst"><div class="inst-dot" style="background:var(--lemon)"></div>click = speak</div>
+  <div class="inst"><div class="inst-dot" style="background:var(--coral)"></div>drag = move</div>
+  <div class="inst"><div class="inst-dot" style="background:var(--sky)"></div>double-click = jump</div>
+  <div class="inst"><div class="inst-dot" style="background:var(--lilac)"></div>right-click = mood</div>
+</div>
+
+<!-- MAIN SCENE -->
+<div class="scene" id="scene">
+  <!-- background props -->
+  <div class="prop" style="right:30px;bottom:62px">
+    <svg width="80" height="100" viewBox="0 0 80 100">
+      <!-- desk -->
+      <rect x="5" y="55" width="70" height="8" rx="3" fill="#2C2C2A"/>
+      <rect x="10" y="63" width="8" height="30" rx="2" fill="#2C2C2A"/>
+      <rect x="62" y="63" width="8" height="30" rx="2" fill="#2C2C2A"/>
+      <!-- monitor -->
+      <rect x="15" y="20" width="50" height="36" rx="5" fill="#0A0A09"/>
+      <rect x="18" y="23" width="44" height="28" rx="3" fill="#1a1a18"/>
+      <rect x="21" y="26" width="18" height="3" rx="1.5" fill="#7EEDC4" opacity=".8"/>
+      <rect x="21" y="31" width="12" height="3" rx="1.5" fill="#C4A8FF" opacity=".7"/>
+      <rect x="21" y="36" width="22" height="3" rx="1.5" fill="#F5E642" opacity=".6"/>
+      <rect x="21" y="41" width="15" height="3" rx="1.5" fill="#FF8A7A" opacity=".7"/>
+      <rect x="37" y="56" width="6" height="5" rx="1" fill="#0A0A09"/>
+      <rect x="30" y="60" width="20" height="3" rx="1.5" fill="#0A0A09"/>
+    </svg>
+  </div>
+  <div class="prop" style="left:25px;bottom:62px">
+    <svg width="50" height="80" viewBox="0 0 50 80">
+      <!-- plant pot -->
+      <rect x="15" y="58" width="20" height="16" rx="3" fill="#FF8A7A" stroke="#0A0A09" stroke-width="1.5"/>
+      <rect x="12" y="56" width="26" height="5" rx="2" fill="#E87060" stroke="#0A0A09" stroke-width="1.5"/>
+      <!-- stem -->
+      <line x1="25" y1="56" x2="25" y2="28" stroke="#2a7a3a" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- leaves -->
+      <ellipse cx="14" cy="42" rx="12" ry="7" fill="#3CC49A" stroke="#0A0A09" stroke-width="1.5" transform="rotate(-30 14 42)"/>
+      <ellipse cx="36" cy="36" rx="12" ry="7" fill="#7EEDC4" stroke="#0A0A09" stroke-width="1.5" transform="rotate(30 36 36)"/>
+      <ellipse cx="25" cy="26" rx="10" ry="14" fill="#3CC49A" stroke="#0A0A09" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <!-- coffee cup prop -->
+  <div class="prop" style="left:180px;bottom:62px">
+    <svg width="30" height="35" viewBox="0 0 30 35">
+      <rect x="4" y="10" width="18" height="18" rx="4" fill="white" stroke="#0A0A09" stroke-width="1.5"/>
+      <path d="M22 15 Q28 15 28 20 Q28 25 22 25" fill="none" stroke="#0A0A09" stroke-width="1.5"/>
+      <rect x="6" y="14" width="14" height="3" rx="1.5" fill="#C4752A" opacity=".7"/>
+      <path d="M8 8 Q10 4 12 8" fill="none" stroke="rgba(10,10,9,.2)" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M13 6 Q15 2 17 6" fill="none" stroke="rgba(10,10,9,.2)" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- CHARACTERS — injected by JS -->
+  <div id="chars"></div>
+
+  <!-- BUBBLES container -->
+  <div id="bubbles"></div>
+</div>
+
+<!-- MOOD METERS -->
+<div class="mood-section" id="moodSection"></div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <button class="ctrl-btn" onclick="triggerAll('wave')">wave all</button>
+  <button class="ctrl-btn" onclick="triggerAll('jump')">jump all</button>
+  <button class="ctrl-btn" onclick="triggerAll('dance')">dance party</button>
+  <button class="ctrl-btn" onclick="triggerAll('shake')">panic mode</button>
+  <button class="ctrl-btn" onclick="triggerAll('spin')">spin</button>
+  <button class="ctrl-btn" onclick="resetAll()">reset</button>
+  <button class="ctrl-btn" id="partyBtn" onclick="partyMode()">party mode 🎉</button>
+</div>
+
+</div>
+
+<script>
+const CHARS = [
+  {
+    id:'c1', name:'Maya', role:'Frontend Dev', color:'#FF8A7A', x:80, skinTone:'#F4C49A',
+    hairColor:'#2C2C2A', hairStyle:'long',
+    outfitColor:'#FF8A7A', pantsColor:'#2C2C2A', shoeColor:'#0A0A09',
+    mood:88, energy:72, vibe:90,
+    phrases:['I ship UIs ✦','Tailwind for life!','CSS is art.','next deploy in 3..2..1','I fixed the layout!','pixel perfect ✓'],
+    hoverAnim:'wave', clickAnim:'jump',
+    moodColor:'#FF8A7A'
+  },
+  {
+    id:'c2', name:'Dev', role:'AI Engineer', color:'#7EEDC4', x:200, skinTone:'#E8A876',
+    hairColor:'#2C2C2A', hairStyle:'curly',
+    outfitColor:'#7EEDC4', pantsColor:'#1a1a18', shoeColor:'#0A0A09',
+    mood:95, energy:85, vibe:78,
+    phrases:['RAG pipeline GO','LLM in prod ✓','embeddings are cool','bedrock or bust','context window full','vector search!'],
+    hoverAnim:'idle', clickAnim:'wave',
+    moodColor:'#7EEDC4'
+  },
+  {
+    id:'c3', name:'Sam', role:'Celebrating', color:'#C4A8FF', x:340, skinTone:'#F4C49A',
+    hairColor:'#E8C87A', hairStyle:'bun',
+    outfitColor:'#C4A8FF', pantsColor:'#534AB7', shoeColor:'#FF8A7A',
+    mood:100, energy:100, vibe:98,
+    phrases:['WE SHIPPED IT!!! ✦','+15% conversion!','prod is green ✓','lets gooooo','PR merged!','deploy successful!'],
+    hoverAnim:'dance', clickAnim:'jump',
+    moodColor:'#C4A8FF'
+  },
+  {
+    id:'c4', name:'Alex', role:'Fullstack Dev', color:'#7EC8F5', x:490, skinTone:'#F4C49A',
+    hairColor:'#7A5C38', hairStyle:'sidepart',
+    outfitColor:'#7EC8F5', pantsColor:'#1a1a18', shoeColor:'#2C2C2A',
+    mood:82, energy:68, vibe:85,
+    phrases:['full stack attack','postgres or die','REST? GraphQL?','bundle size: 40% less','node.js goes brrr','api keys rotated'],
+    hoverAnim:'wave', clickAnim:'dance',
+    moodColor:'#7EC8F5'
+  },
+  {
+    id:'c5', name:'Priya', role:'Data Scientist', color:'#FFB876', x:640, skinTone:'#C4752A',
+    hairColor:'#2C2C2A', hairStyle:'afro',
+    outfitColor:'#FFB876', pantsColor:'#534AB7', shoeColor:'#0A0A09',
+    mood:91, energy:76, vibe:88,
+    phrases:['RAG retrieval ✓','semantic search!','embeddings done','pinecone indexed','llama2 fine-tuned','data clean. finally.'],
+    hoverAnim:'idle', clickAnim:'wave',
+    moodColor:'#FFB876'
+  },
+  {
+    id:'c6', name:'Jordan', role:'Consultant', color:'#F5E642', x:790, skinTone:'#F4C49A',
+    hairColor:'#2C2C2A', hairStyle:'slick',
+    outfitColor:'#F5E642', pantsColor:'#1a1a18', shoeColor:'#2C2C2A',
+    mood:87, energy:92, vibe:80,
+    phrases:["let's ship it →","ROI: delivered","stakeholders happy","deck is 10/10","deal closed ✦","consulting hours +"],
+    hoverAnim:'wave', clickAnim:'jump',
+    moodColor:'#F5E642'
+  }
+];
+
+const scene = document.getElementById('scene');
+const charsDiv = document.getElementById('chars');
+const bubblesDiv = document.getElementById('bubbles');
+const moodSection = document.getElementById('moodSection');
+
+// Build mood section
+moodSection.innerHTML = CHARS.map(c => `
+  <div class="mood-cell">
+    <div class="mood-name">${c.name}</div>
+    <div class="mood-bar-wrap"><div class="mood-bar" id="mb-${c.id}" style="width:${c.mood}%;background:${c.moodColor}"></div></div>
+    <div class="mood-val" id="mv-${c.id}" style="color:${c.moodColor}">${c.mood}%</div>
+  </div>
+`).join('');
+
+function drawChar(c) {
+  const s = c.skinTone, h = c.hairColor, o = c.outfitColor, p = c.pantsColor, sh = c.shoeColor;
+  const skin2 = c.skinTone === '#F4C49A' ? '#E8A876' : c.skinTone === '#E8A876' ? '#C4752A' : '#A05C1A';
+  let hair = '';
+  if (c.hairStyle === 'long') {
+    hair = `<ellipse cx="45" cy="68" rx="23" ry="13" fill="${h}"/>
+      <rect x="22" y="68" width="9" height="32" rx="4.5" fill="${h}"/>
+      <rect x="60" y="68" width="9" height="27" rx="4.5" fill="${h}"/>`;
+  } else if (c.hairStyle === 'curly') {
+    hair = `<ellipse cx="45" cy="64" rx="23" ry="12" fill="${h}"/>
+      <circle cx="33" cy="66" r="9" fill="${h}"/>
+      <circle cx="45" cy="63" r="9" fill="${h}"/>
+      <circle cx="57" cy="66" r="9" fill="${h}"/>`;
+  } else if (c.hairStyle === 'bun') {
+    hair = `<ellipse cx="45" cy="64" rx="21" ry="11" fill="${h}"/>
+      <circle cx="45" cy="56" r="13" fill="${h}"/>
+      <circle cx="45" cy="56" r="7" fill="#D4A840" stroke="#0A0A09" stroke-width="1.5"/>`;
+  } else if (c.hairStyle === 'sidepart') {
+    hair = `<ellipse cx="45" cy="63" rx="24" ry="12" fill="${h}"/>
+      <ellipse cx="33" cy="68" rx="13" ry="10" fill="${h}"/>`;
+  } else if (c.hairStyle === 'afro') {
+    hair = `<circle cx="45" cy="70" r="25" fill="${h}"/>
+      <circle cx="45" cy="63" r="23" fill="${h}"/>`;
+  } else if (c.hairStyle === 'slick') {
+    hair = `<ellipse cx="45" cy="62" rx="23" ry="12" fill="${h}"/>
+      <ellipse cx="34" cy="66" rx="14" ry="10" fill="${h}"/>`;
+  }
+
+  // Jacket/blazer for Jordan
+  const bodyExtra = c.hairStyle === 'slick'
+    ? `<path d="M28 118 L38 145 L45 136 L52 145 L62 118 Z" fill="#0A0A09" opacity=".86"/>
+       <path d="M38 118 L45 136 L52 118" fill="${o}"/>`
+    : '';
+
+  return `<svg id="svg-${c.id}" width="90" height="220" viewBox="0 0 90 220" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible">
+    <!-- shadow -->
+    <ellipse cx="45" cy="210" rx="28" ry="6" fill="rgba(10,10,9,.1)"/>
+    <!-- legs -->
+    <rect x="28" y="175" width="14" height="30" rx="5" fill="${p}"/>
+    <rect x="48" y="175" width="14" height="30" rx="5" fill="${p}"/>
+    <!-- shoes -->
+    <ellipse cx="35" cy="206" rx="13" ry="5" fill="${sh}"/>
+    <ellipse cx="55" cy="206" rx="13" ry="5" fill="${sh}"/>
+    <!-- body -->
+    <rect id="body-${c.id}" x="25" y="112" width="40" height="65" rx="11" fill="${o}"/>
+    ${bodyExtra}
+    <!-- neck -->
+    <rect x="38" y="100" width="14" height="16" rx="5.5" fill="${s}"/>
+    <!-- head -->
+    <ellipse id="head-${c.id}" cx="45" cy="84" rx="22" ry="24" fill="${s}"/>
+    ${c.hairStyle === 'afro' ? `<ellipse cx="45" cy="77" rx="17" ry="20" fill="${s}"/>` : ''}
+    ${hair}
+    <!-- ears -->
+    <ellipse cx="23" cy="84" rx="4.5" ry="6.5" fill="${s}"/>
+    <ellipse cx="67" cy="84" rx="4.5" ry="6.5" fill="${s}"/>
+    <!-- eyes -->
+    <ellipse id="eye-l-${c.id}" cx="36" cy="82" rx="4.2" ry="5" fill="white"/>
+    <circle id="pupil-l-${c.id}" cx="37" cy="83" r="2.8" fill="#1a1a18"/>
+    <ellipse id="eye-r-${c.id}" cx="54" cy="82" rx="4.2" ry="5" fill="white"/>
+    <circle id="pupil-r-${c.id}" cx="55" cy="83" r="2.8" fill="#1a1a18"/>
+    <!-- nose -->
+    <ellipse cx="45" cy="90" rx="3" ry="2" fill="${skin2}" opacity=".5"/>
+    <!-- mouth -->
+    <path id="mouth-${c.id}" d="M37 97 Q45 104 53 97" fill="none" stroke="${skin2}" stroke-width="2" stroke-linecap="round"/>
+    <!-- glasses for Priya -->
+    ${c.id === 'c5' ? `<circle cx="36" cy="82" r="7" fill="none" stroke="#0A0A09" stroke-width="1.5" opacity=".6"/>
+      <circle cx="54" cy="82" r="7" fill="none" stroke="#0A0A09" stroke-width="1.5" opacity=".6"/>
+      <line x1="43" y1="82" x2="47" y2="82" stroke="#0A0A09" stroke-width="1.5"/>` : ''}
+    <!-- earrings for Maya -->
+    ${c.id === 'c1' ? `<circle cx="67" cy="89" r="3.5" fill="#F5E642" stroke="#0A0A09" stroke-width="1"/>` : ''}
+    <!-- earrings for Sam -->
+    ${c.id === 'c3' ? `<circle cx="23" cy="88" r="3.5" fill="${o}" stroke="#0A0A09" stroke-width="1"/>
+      <circle cx="67" cy="88" r="3.5" fill="${o}" stroke="#0A0A09" stroke-width="1"/>` : ''}
+    <!-- hoop earrings for Priya -->
+    ${c.id === 'c5' ? `<circle cx="23" cy="88" r="4" fill="none" stroke="${o}" stroke-width="2"/>
+      <circle cx="67" cy="88" r="4" fill="none" stroke="${o}" stroke-width="2"/>` : ''}
+    <!-- arms -->
+    <g id="arm-l-${c.id}">
+      <path d="M25 128 Q10 145 8 162" fill="none" stroke="${s}" stroke-width="12" stroke-linecap="round"/>
+      <ellipse cx="8" cy="164" rx="7" ry="6" fill="${s}"/>
+    </g>
+    <g id="arm-r-${c.id}" style="transform-origin:65px 128px">
+      <path d="M65 128 Q80 145 82 162" fill="none" stroke="${s}" stroke-width="12" stroke-linecap="round"/>
+      <ellipse cx="82" cy="164" rx="7" ry="6" fill="${s}"/>
+    </g>
+  </svg>`;
+}
+
+// Instantiate characters
+const charEls = {};
+const charStates = {};
+CHARS.forEach(c => {
+  const wrap = document.createElement('div');
+  wrap.className = 'char-wrap';
+  wrap.id = 'wrap-' + c.id;
+  wrap.style.left = c.x + 'px';
+  wrap.style.width = '90px';
+  wrap.innerHTML = drawChar(c);
+  charsDiv.appendChild(wrap);
+  charEls[c.id] = wrap;
+  charStates[c.id] = { mood: c.mood, energy: c.energy, vibe: c.vibe, dragging: false, phraseIdx: 0 };
+
+  // HOVER
+  wrap.addEventListener('mouseenter', () => {
+    cur.classList.add('h');
+    const armR = wrap.querySelector(`#arm-r-${c.id}`);
+    armR.style.animation = 'wave 0.6s ease-in-out 3';
+    armR.style.transformOrigin = '65px 128px';
+    showBubble(c, '👋 hey there!');
+    updateMood(c.id, 5);
+  });
+  wrap.addEventListener('mouseleave', () => {
+    cur.classList.remove('h');
+    hideBubble(c.id);
+  });
+
+  // CLICK — speak a phrase
+  wrap.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const idx = charStates[c.id].phraseIdx % c.phrases.length;
+    charStates[c.id].phraseIdx++;
+    showBubble(c, c.phrases[idx]);
+    doAnim(c.id, 'jump');
+    updateMood(c.id, 8);
+    spawnReaction(wrap, ['✦','⚡','🔥','★'][Math.floor(Math.random()*4)]);
+  });
+
+  // DOUBLE CLICK — big jump + celebration
+  wrap.addEventListener('dblclick', (e) => {
+    e.stopPropagation();
+    showBubble(c, '🎉 woooo!');
+    doAnim(c.id, 'jump');
+    updateMood(c.id, 15);
+    for (let i = 0; i < 4; i++) setTimeout(() => spawnReaction(wrap, ['✦','⭐','🔥','💥','✨'][Math.floor(Math.random()*5)]), i * 150);
+  });
+
+  // RIGHT CLICK — random mood swing
+  wrap.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    const moods = ['😤 too many PRs','🤔 thinking...','😴 need coffee','💡 big idea!','😅 its fine','🚀 lets ship!'];
+    showBubble(c, moods[Math.floor(Math.random()*moods.length)]);
+    doAnim(c.id, 'shake');
+    updateMood(c.id, -10);
+  });
+
+  // DRAG
+  let isDragging = false, dragOffX = 0;
+  wrap.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    isDragging = true;
+    dragOffX = e.clientX - wrap.getBoundingClientRect().left;
+    wrap.classList.add('dragging');
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', stopDrag);
+  });
+  function onDrag(e) {
+    if (!isDragging) return;
+    const sceneBounds = scene.getBoundingClientRect();
+    let newX = e.clientX - sceneBounds.left - dragOffX;
+    newX = Math.max(0, Math.min(sceneBounds.width - 90, newX));
+    wrap.style.left = newX + 'px';
+    // bounce heads when close to each other
+    CHARS.forEach(other => {
+      if (other.id === c.id) return;
+      const otherWrap = charEls[other.id];
+      const dx = Math.abs(newX - parseInt(otherWrap.style.left));
+      if (dx < 70) {
+        showBubble(other, '😮 hey watch it!');
+        doAnim(other.id, 'shake');
+      }
+    });
+  }
+  function stopDrag() {
+    isDragging = false;
+    wrap.classList.remove('dragging');
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', stopDrag);
+  }
+});
+
+function showBubble(c, text) {
+  hideBubble(c.id);
+  const wrap = charEls[c.id];
+  const wLeft = parseInt(wrap.style.left);
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.id = 'bubble-' + c.id;
+  bubble.textContent = text;
+  bubble.style.left = (wLeft - 10) + 'px';
+  bubble.style.bottom = '230px';
+  bubble.style.background = c.color;
+  bubble.style.borderColor = '#0A0A09';
+  bubblesDiv.appendChild(bubble);
+  requestAnimationFrame(() => bubble.classList.add('show'));
+  clearTimeout(wrap._bubbleTimer);
+  wrap._bubbleTimer = setTimeout(() => hideBubble(c.id), 3000);
+}
+
+function hideBubble(id) {
+  const b = document.getElementById('bubble-' + id);
+  if (b) { b.classList.remove('show'); setTimeout(() => b.remove(), 200); }
+}
+
+function spawnReaction(wrap, emoji) {
+  const r = document.createElement('div');
+  r.className = 'reaction';
+  r.textContent = emoji;
+  const wLeft = parseInt(wrap.style.left);
+  r.style.left = (wLeft + 20 + Math.random() * 50) + 'px';
+  r.style.bottom = (220 + Math.random() * 30) + 'px';
+  scene.appendChild(r);
+  setTimeout(() => r.remove(), 1300);
+}
+
+function doAnim(id, type) {
+  const wrap = charEls[id];
+  const svg = wrap.querySelector(`#svg-${id}`);
+  const armR = wrap.querySelector(`#arm-r-${id}`);
+  svg.style.animation = 'none';
+  svg.offsetHeight; // reflow
+  if (type === 'jump') { svg.style.animation = 'jump .55s ease'; svg.style.transformOrigin = 'center bottom'; }
+  else if (type === 'dance') { svg.style.animation = 'dance .4s ease 4'; }
+  else if (type === 'shake') { svg.style.animation = 'shake .35s ease 3'; }
+  else if (type === 'spin') { svg.style.animation = 'spin .6s ease'; }
+  else if (type === 'bounce') { svg.style.animation = 'bounce .4s ease 3'; }
+  else if (type === 'wave') { armR.style.animation = 'wave .5s ease 3'; armR.style.transformOrigin = '65px 128px'; }
+}
+
+function updateMood(id, delta) {
+  const state = charStates[id];
+  state.mood = Math.max(10, Math.min(100, state.mood + delta));
+  const bar = document.getElementById('mb-' + id);
+  const val = document.getElementById('mv-' + id);
+  if (bar) bar.style.width = state.mood + '%';
+  if (val) val.textContent = Math.round(state.mood) + '%';
+}
+
+function triggerAll(anim) {
+  const phrases = {
+    wave: ['👋', 'hey!', 'hello!'],
+    jump: ['🎉','weee!','woo!'],
+    dance: ['🕺','vibes!','🎵'],
+    shake: ['😱','oh no!','PANIC'],
+    spin: ['🌀','dizzy!','spinning']
+  };
+  CHARS.forEach((c, i) => {
+    setTimeout(() => {
+      doAnim(c.id, anim);
+      const p = phrases[anim];
+      if (p) showBubble(c, p[Math.floor(Math.random() * p.length)]);
+      updateMood(c.id, anim === 'shake' ? -8 : anim === 'dance' ? 12 : 5);
+      spawnReaction(charEls[c.id], ['✦','⭐','🔥','💥'][Math.floor(Math.random()*4)]);
+    }, i * 100);
+  });
+}
+
+function resetAll() {
+  CHARS.forEach((c, i) => {
+    const wrap = charEls[c.id];
+    wrap.style.left = c.x + 'px';
+    const svg = wrap.querySelector(`#svg-${c.id}`);
+    svg.style.animation = 'none';
+    hideBubble(c.id);
+    charStates[c.id].mood = c.mood;
+    updateMood(c.id, 0);
+  });
+}
+
+let partyActive = false, partyInterval;
+function partyMode() {
+  partyActive = !partyActive;
+  const btn = document.getElementById('partyBtn');
+  if (partyActive) {
+    btn.classList.add('active');
+    btn.textContent = 'stop party';
+    partyInterval = setInterval(() => {
+      const c = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const anims = ['dance','jump','wave','bounce'];
+      doAnim(c.id, anims[Math.floor(Math.random()*anims.length)]);
+      spawnReaction(charEls[c.id], ['✦','⭐','🔥','💥','🎉','⚡'][Math.floor(Math.random()*6)]);
+      updateMood(c.id, 3);
+    }, 400);
+    triggerAll('dance');
+  } else {
+    btn.classList.remove('active');
+    btn.textContent = 'party mode 🎉';
+    clearInterval(partyInterval);
+    resetAll();
+  }
+}
+
+// Eyes follow cursor
+document.addEventListener('mousemove', (e) => {
+  const sceneBounds = scene.getBoundingClientRect();
+  CHARS.forEach(c => {
+    const wrap = charEls[c.id];
+    const wLeft = parseInt(wrap.style.left) + sceneBounds.left + 45;
+    const wTop = sceneBounds.top + 100;
+    const dx = e.clientX - wLeft;
+    const dy = e.clientY - wTop;
+    const angle = Math.atan2(dy, dx);
+    const dist = Math.min(2, Math.sqrt(dx*dx+dy*dy)/60);
+    const px = Math.cos(angle) * dist;
+    const py = Math.sin(angle) * dist;
+    const pL = wrap.querySelector(`#pupil-l-${c.id}`);
+    const pR = wrap.querySelector(`#pupil-r-${c.id}`);
+    if (pL) { pL.setAttribute('cx', 37 + px); pL.setAttribute('cy', 83 + py); }
+    if (pR) { pR.setAttribute('cx', 55 + px); pR.setAttribute('cy', 83 + py); }
+  });
+
+  // custom cursor
+  const cur = document.getElementById('cur');
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+});
+
+// Idle animations — characters randomly do small things
+setInterval(() => {
+  if (partyActive) return;
+  const c = CHARS[Math.floor(Math.random() * CHARS.length)];
+  const wrap = charEls[c.id];
+  const armR = wrap.querySelector(`#arm-r-${c.id}`);
+  if (armR && Math.random() > 0.6) {
+    armR.style.animation = 'none';
+    armR.offsetHeight;
+    armR.style.animation = 'wave 0.5s ease 1';
+    armR.style.transformOrigin = '65px 128px';
+  }
+}, 2800);
+
+// Occasional random thought bubbles
+setInterval(() => {
+  if (partyActive) return;
+  const c = CHARS[Math.floor(Math.random() * CHARS.length)];
+  const thoughts = ['...','hmm','☕','ping!','merging...','git push ✓','building...'];
+  if (Math.random() > 0.55) showBubble(c, thoughts[Math.floor(Math.random()*thoughts.length)]);
+}, 4000);
+</script>
