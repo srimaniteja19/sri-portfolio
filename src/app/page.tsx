@@ -15,6 +15,7 @@ import { About } from "@/components/about";
 import { CTASection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 import { MouseTrail } from "@/components/mouse-trail";
+import { Hobbies } from "@/components/hobbies";
 
 export default function Home() {
   return (
@@ -44,6 +45,11 @@ export default function Home() {
       <TypingTest />
       <SectionDivider label="learning board" right="// what I want to learn" />
       <LearningBoard />
+      <SectionDivider
+        label="hobbies & life outside code"
+        right="// what i do when the terminal is closed"
+      />
+      <Hobbies />
       <SectionDivider label="fun facts" />
       <FunFacts />
       <SectionDivider label="about" />
