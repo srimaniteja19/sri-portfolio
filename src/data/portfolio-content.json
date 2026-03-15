@@ -1,0 +1,349 @@
+{
+  "header": {
+    "name": "maniteja",
+    "email": "srimaniteja.ch@gmail.com",
+    "navLinks": [
+      {
+        "href": "#work",
+        "label": "work"
+      },
+      {
+        "href": "#skills",
+        "label": "skills"
+      },
+      {
+        "href": "#github",
+        "label": "github"
+      },
+      {
+        "href": "#about",
+        "label": "about"
+      },
+      {
+        "href": "#contact",
+        "label": "contact"
+      },
+      {
+        "href": "/hire",
+        "label": "hire"
+      }
+    ],
+    "openToRolesText": "open to new roles"
+  },
+  "hero": {
+    "subtitle": "full-stack engineer — AI · US-based",
+    "name": "Maniteja",
+    "role": "full-stack engineer",
+    "statusComment": "open_to_new_roles // US · reloc ok",
+    "codeRole": "full-stack engineer",
+    "codeFocus": "LLM apps that ship",
+    "codeStatus": "open_to_new_roles",
+    "codeComment": "// semantic search · RAG · AI agents · ecommerce",
+    "tags": [
+      {
+        "label": "Next.js",
+        "color": "t-mint"
+      },
+      {
+        "label": "TypeScript",
+        "color": "t-lemon"
+      },
+      {
+        "label": "Node.js",
+        "color": "t-coral"
+      },
+      {
+        "label": "PostgreSQL",
+        "color": "t-sky"
+      },
+      {
+        "label": "Redis",
+        "color": "t-lilac"
+      },
+      {
+        "label": "AI/RAG",
+        "color": "t-peach"
+      },
+      {
+        "label": "LangChain",
+        "color": "t-mint"
+      },
+      {
+        "label": "AWS Bedrock",
+        "color": "t-lemon"
+      }
+    ],
+    "focusItems": [
+      {
+        "label": "Building",
+        "value": "DevPath AI · RAG pipelines",
+        "color": "var(--mint)"
+      },
+      {
+        "label": "Learning",
+        "value": "LangGraph, streaming UX",
+        "color": "var(--lemon)"
+      },
+      {
+        "label": "Status",
+        "value": "Open to full-time · contracts",
+        "color": "var(--coral)"
+      },
+      {
+        "label": "Reach",
+        "value": "hire page · email below",
+        "color": "var(--sky)"
+      }
+    ],
+    "stats": [
+      {
+        "n": "4+",
+        "l": "yrs exp",
+        "bar": "var(--mint)"
+      },
+      {
+        "n": "Full",
+        "l": "stack",
+        "bar": "var(--lemon)"
+      },
+      {
+        "n": "AI/ML",
+        "l": "focus",
+        "bar": "var(--coral)"
+      },
+      {
+        "n": "M.S.",
+        "l": "data sci",
+        "bar": "var(--sky)"
+      }
+    ],
+    "proficiency": [
+      {
+        "label": "LangChain",
+        "pct": 92,
+        "col": "var(--mint)"
+      },
+      {
+        "label": "Next.js",
+        "pct": 95,
+        "col": "var(--lemon)"
+      },
+      {
+        "label": "TypeScript",
+        "pct": 90,
+        "col": "var(--sky)"
+      },
+      {
+        "label": "PostgreSQL",
+        "pct": 85,
+        "col": "var(--coral)"
+      },
+      {
+        "label": "AWS Bedrock",
+        "pct": 80,
+        "col": "var(--lilac)"
+      },
+      {
+        "label": "Docker/K8s",
+        "pct": 75,
+        "col": "var(--peach)"
+      }
+    ],
+    "terminalWhoami": "maniteja — full-stack engineer",
+    "terminalStack": "{ next, ts, node, postgres, langchain, bedrock }",
+    "terminalCommit1": "a3f9 feat(rag): +15% retrieval accuracy",
+    "terminalCommit2": "7b12 fix(finance): variance explainer",
+    "githubUrl": "https://github.com/srimaniteja19",
+    "linkedinUrl": "https://www.linkedin.com/in/sri-maniteja-chinnam/"
+  },
+  "experience": {
+    "items": [
+      {
+        "date": "2023 – now",
+        "role": "Full-Stack Engineer",
+        "meta": "backend + AI/ML",
+        "desc": "Building AI-powered products. Next.js, TypeScript, LangChain, RAG pipelines, production systems."
+      },
+      {
+        "date": "2019 – 2023",
+        "role": "Software Engineer",
+        "meta": "backend + cloud · 4+ yrs",
+        "desc": "Production backend systems. REST APIs, distributed systems, cloud infrastructure. Full pivot into LLM/AI."
+      },
+      {
+        "date": "2022 – 2023",
+        "role": "M.S. Data Science",
+        "meta": "graduate studies",
+        "desc": "Foundation for current AI/ML and LLM engineering work."
+      }
+    ],
+    "sidebarStats": [
+      "4+ yrs engineering",
+      "2+ yrs AI/ML",
+      "M.S. Data Science"
+    ]
+  },
+  "education": [
+    {
+      "school": "University at Buffalo, SUNY",
+      "degree": "Master of Science, Data Science",
+      "period": "Aug 2022 - Dec 2023",
+      "location": "Buffalo, NY"
+    },
+    {
+      "school": "Bharath Institute of Technology and Research",
+      "degree": "Bachelor of Technology, Computer Science",
+      "period": "Jun 2018 - Jun 2022",
+      "location": "Chennai, India"
+    }
+  ],
+  "about": {
+    "cells": [
+      {
+        "label": "who i am",
+        "title": "full-stack engineer",
+        "body": "Based in the US. Building AI-powered products at the intersection of clean code and real-world impact.",
+        "color": "mint"
+      },
+      {
+        "label": "what i build",
+        "title": "LLM apps that ship",
+        "body": "RAG pipelines, ecommerce integrations, AI agents, semantic search — things that actually work.",
+        "color": "lemon"
+      },
+      {
+        "label": "side project",
+        "title": "DevPath AI",
+        "body": "Self-learning platform using Gemini API — structured course plans and interview prep kits. Next.js + TypeScript.",
+        "color": "coral"
+      },
+      {
+        "label": "looking for",
+        "title": "interesting roles",
+        "body": "Teams where full-stack and AI go to production. Open to interesting opportunities.",
+        "color": "sky"
+      }
+    ]
+  },
+  "projects": [
+    {
+      "num": "01",
+      "label": "featured",
+      "name": "AI Bookmarking",
+      "desc": "AI-powered bookmark manager. Organize and search your saved links with intelligent tagging and recommendations.",
+      "tags": [
+        "next.js",
+        "typescript",
+        "ai",
+        "vercel"
+      ],
+      "url": "https://ai-bookmarking.vercel.app",
+      "color": "mint"
+    },
+    {
+      "num": "02",
+      "label": "devpath ai",
+      "name": "DevPath AI",
+      "desc": "Self-learning platform. Course plans + interview prep from resume & JD via Gemini API + RAG pipelines.",
+      "tags": [
+        "next.js",
+        "gemini",
+        "rag",
+        "vercel"
+      ],
+      "url": "https://github.com/srimaniteja19/DevPathAI",
+      "color": "lemon",
+      "active": true
+    }
+  ],
+  "contact": {
+    "email": "srimaniteja.ch@gmail.com",
+    "phone": "(716) 923-5404",
+    "github": "https://github.com/srimaniteja19",
+    "linkedin": "https://www.linkedin.com/in/sri-maniteja-chinnam/",
+    "location": "United States",
+    "tagline": "I'm always open to interesting conversations and collaborations. Feel free to reach out!"
+  },
+  "footer": {
+    "name": "maniteja",
+    "location": "united states",
+    "statusText": "systems nominal"
+  },
+  "cta": {
+    "availItems": [
+      "full-time roles",
+      "freelance / contract",
+      "ai consulting",
+      "open source collab"
+    ],
+    "headline": "got a hard problem?",
+    "subline": "Let's build something."
+  },
+  "process": {
+    "steps": [
+      {
+        "num": "01",
+        "title": "Discover",
+        "desc": "Deep dive into requirements, understand the problem space, define success.",
+        "color": "mint",
+        "stripe": "rgba(13,13,13,0.2)"
+      },
+      {
+        "num": "02",
+        "title": "Design",
+        "desc": "Architect the system, wireframe UX, plan data model and API contracts.",
+        "color": "lemon",
+        "stripe": "rgba(13,13,13,0.15)"
+      },
+      {
+        "num": "03",
+        "title": "Build",
+        "desc": "Write clean, tested code. Ship incrementally with CI/CD. Review and iterate.",
+        "color": "coral",
+        "stripe": "rgba(13,13,13,0.15)"
+      },
+      {
+        "num": "04",
+        "title": "Launch",
+        "desc": "Deploy to production, monitor, iterate based on real user feedback.",
+        "color": "sky",
+        "stripe": "rgba(13,13,13,0.15)"
+      }
+    ]
+  },
+  "funFacts": [
+    {
+      "icon": "🧠",
+      "title": "Thinks in systems",
+      "text": "Every problem is a distributed system problem. Even lunch."
+    },
+    {
+      "icon": "🚢",
+      "title": "Ships first, perfects later",
+      "text": "v1 in production beats v∞ in Figma every single time.",
+      "accent": "lemon"
+    },
+    {
+      "icon": "📍",
+      "title": "US-based",
+      "text": "Open to relocation. Anywhere the work is good."
+    },
+    {
+      "icon": "🤝",
+      "title": "Code + product",
+      "text": "Knows both the implementation and how it fits the bigger picture.",
+      "accent": "mint"
+    },
+    {
+      "icon": "📚",
+      "title": "M.S. Data Science",
+      "text": "Theory meets production every day at work."
+    },
+    {
+      "icon": "⚡",
+      "title": "Learning by doing",
+      "text": "DevPath AI, side projects — all built, not just studied.",
+      "accent": "coral"
+    }
+  ]
+}

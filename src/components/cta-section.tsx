@@ -1,13 +1,10 @@
 "use client";
 
-const availItems = [
-  "full-time roles",
-  "freelance / contract",
-  "ai consulting",
-  "open source collab",
-];
+import { useContent } from "@/components/content-provider";
 
 export function CTASection() {
+  const { cta, contact } = useContent();
+  const availItems = cta.availItems;
   return (
     <section id="contact" className="scroll-mt-24">
       <div
@@ -40,7 +37,7 @@ export function CTASection() {
               <br />
               problem?
               <br />
-              <span style={{ color: "var(--lemon)", fontStyle: "normal" }}>let&apos;s ship it.</span>
+              <span style={{ color: "var(--lemon)", fontStyle: "normal" }}>{cta.subline}</span>
             </h2>
             <div className="flex flex-wrap gap-3">
               <a
@@ -51,14 +48,14 @@ export function CTASection() {
                 recruiter tools ↗
               </a>
               <a
-                href="mailto:srimaniteja.ch@gmail.com"
+                href={`mailto:${contact.email}`}
                 className="rounded border-2 border-[var(--lemon)] bg-[var(--lemon)] px-4 py-2.5 text-[0.66rem] font-bold uppercase tracking-wide text-[var(--ink)] transition hover:bg-[#EDD800]"
                 style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
               >
                 email me ↗
               </a>
               <a
-                href="https://github.com/srimaniteja19"
+                href={contact.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded border-2 border-[rgba(255,255,255,0.2)] px-4 py-2.5 text-[0.66rem] font-bold uppercase tracking-wide transition hover:border-[rgba(255,255,255,0.6)] hover:text-white"

@@ -1,24 +1,6 @@
-const projects = [
-  {
-    num: "01",
-    label: "featured",
-    name: "AI Bookmarking",
-    desc: "AI-powered bookmark manager. Organize and search your saved links with intelligent tagging and recommendations.",
-    tags: ["next.js", "typescript", "ai", "vercel"],
-    url: "https://ai-bookmarking.vercel.app",
-    color: "mint",
-  },
-  {
-    num: "02",
-    label: "devpath ai",
-    name: "DevPath AI",
-    desc: "Self-learning platform. Course plans + interview prep from resume & JD via Gemini API + RAG pipelines.",
-    tags: ["next.js", "gemini", "rag", "vercel"],
-    url: "https://github.com/srimaniteja19/DevPathAI",
-    color: "lemon",
-    active: true,
-  },
-];
+"use client";
+
+import { useContent } from "@/components/content-provider";
 
 const colorBg: Record<string, string> = {
   mint: "var(--mint)",
@@ -28,6 +10,7 @@ const colorBg: Record<string, string> = {
 };
 
 export function Projects() {
+  const { projects } = useContent();
   return (
     <section id="work" className="scroll-mt-24">
       <div
@@ -38,6 +21,7 @@ export function Projects() {
         }}
       >
         {/* Featured - spans 2 rows */}
+        {projects[0] && (
         <a
           href={projects[0].url}
           target="_blank"
@@ -117,6 +101,7 @@ export function Projects() {
             ↗
           </span>
         </a>
+        )}
 
         {/* Job Tracker */}
         <a
@@ -158,6 +143,7 @@ export function Projects() {
         </a>
 
         {/* DevPath */}
+        {projects[1] && (
         <a
           href={projects[1].url}
           target="_blank"
@@ -227,6 +213,7 @@ export function Projects() {
             ↗
           </span>
         </a>
+        )}
 
         {/* More on GitHub */}
         <a

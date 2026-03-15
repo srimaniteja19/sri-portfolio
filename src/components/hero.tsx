@@ -1,17 +1,7 @@
 "use client";
 
 import Link from "next/link";
-
-const tags = [
-  { label: "Next.js", color: "t-mint" },
-  { label: "TypeScript", color: "t-lemon" },
-  { label: "Node.js", color: "t-coral" },
-  { label: "PostgreSQL", color: "t-sky" },
-  { label: "Redis", color: "t-lilac" },
-  { label: "AI/RAG", color: "t-peach" },
-  { label: "LangChain", color: "t-mint" },
-  { label: "AWS Bedrock", color: "t-lemon" },
-];
+import { useContent } from "@/components/content-provider";
 
 const tagColors: Record<string, string> = {
   "t-mint": "var(--mint)",
@@ -22,30 +12,13 @@ const tagColors: Record<string, string> = {
   "t-peach": "var(--peach)",
 };
 
-const focusItems = [
-  { label: "Building", value: "DevPath AI · RAG pipelines", color: "var(--mint)" },
-  { label: "Learning", value: "LangGraph, streaming UX", color: "var(--lemon)" },
-  { label: "Status", value: "Open to full-time · contracts", color: "var(--coral)" },
-  { label: "Reach", value: "hire page · email below", color: "var(--sky)" },
-];
-
-const stats = [
-  { n: "4+", l: "yrs exp", bar: "var(--mint)" },
-  { n: "Full", l: "stack", bar: "var(--lemon)" },
-  { n: "AI/ML", l: "focus", bar: "var(--coral)" },
-  { n: "M.S.", l: "data sci", bar: "var(--sky)" },
-];
-
-const proficiency = [
-  { label: "LangChain", pct: 92, col: "var(--mint)" },
-  { label: "Next.js", pct: 95, col: "var(--lemon)" },
-  { label: "TypeScript", pct: 90, col: "var(--sky)" },
-  { label: "PostgreSQL", pct: 85, col: "var(--coral)" },
-  { label: "AWS Bedrock", pct: 80, col: "var(--lilac)" },
-  { label: "Docker/K8s", pct: 75, col: "var(--peach)" },
-];
-
 export function Hero() {
+  const content = useContent();
+  const h = content.hero;
+  const tags = h.tags;
+  const focusItems = h.focusItems;
+  const stats = h.stats;
+  const proficiency = h.proficiency;
   return (
     <section
       className="relative grid min-h-[520px] grid-cols-1 overflow-hidden border-b lg:grid-cols-[1fr_2.5px_360px]"
@@ -55,7 +28,7 @@ export function Hero() {
         className="pointer-events-none absolute top-1/2 left-[-1%] z-0 whitespace-nowrap text-[20vw] font-black italic leading-none tracking-[-0.04em]"
         style={{ fontFamily: "var(--font-fraunces), serif", color: "rgba(10,10,9,0.035)", transform: "translateY(-50%)" }}
       >
-        MANITEJA
+        {h.name.toUpperCase()}
       </div>
 
       {/* Left */}
@@ -69,7 +42,7 @@ export function Hero() {
             style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.62rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em", color: "var(--dim)" }}
           >
             <div className="h-0.5 w-[22px]" style={{ background: "var(--mint)" }} />
-            full-stack engineer — AI · US-based
+            {h.subtitle}
           </div>
 
           <h1
@@ -81,7 +54,7 @@ export function Hero() {
               className="inline-block rounded px-1 py-0.5"
               style={{ background: "var(--lemon)", border: "2.5px solid var(--ink)", fontStyle: "italic" }}
             >
-              Maniteja
+              {h.name}
             </span>
             <span style={{ color: "rgba(10,10,9,0.25)" }}>.</span>
           </h1>
@@ -91,10 +64,10 @@ export function Hero() {
             className="animate-fade-up mt-4 rounded border bg-[rgba(10,10,9,0.04)] p-3"
             style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.72rem", lineHeight: 1.9, borderColor: "rgba(10,10,9,0.1)", animationDelay: "0.2s" }}
           >
-            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> role = <span style={{ color: "var(--sky)" }}>&quot;full-stack engineer&quot;</span></div>
-            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> focus = <span style={{ color: "var(--sky)" }}>&quot;LLM apps that ship&quot;</span></div>
-            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> status = <span style={{ color: "var(--coral)" }}>&quot;open_to_new_roles&quot;</span> <span style={{ color: "rgba(10,10,9,0.28)" }}>// US · reloc ok</span></div>
-            <div style={{ color: "rgba(10,10,9,0.28)" }}>// semantic search · RAG · AI agents · ecommerce</div>
+            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> role = <span style={{ color: "var(--sky)" }}>&quot;{h.codeRole}&quot;</span></div>
+            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> focus = <span style={{ color: "var(--sky)" }}>&quot;{h.codeFocus}&quot;</span></div>
+            <div><span style={{ color: "var(--mint)", fontWeight: 700 }}>const</span> status = <span style={{ color: "var(--coral)" }}>&quot;{h.codeStatus}&quot;</span> <span style={{ color: "rgba(10,10,9,0.28)" }}>{h.statusComment}</span></div>
+            <div style={{ color: "rgba(10,10,9,0.28)" }}>{h.codeComment}</div>
           </div>
 
           {/* Hero stats */}
@@ -127,13 +100,13 @@ export function Hero() {
 
         <div className="animate-fade-up mt-6 flex items-center gap-4" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.68rem", animationDelay: "0.55s" }}>
           <span className="text-[0.58rem] font-bold uppercase" style={{ letterSpacing: "0.1em", color: "var(--dim)" }}>find me</span>
-          <Link href="https://github.com/srimaniteja19" target="_blank" rel="noopener noreferrer" className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
+          <Link href={h.githubUrl} target="_blank" rel="noopener noreferrer" className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
             github
           </Link>
-          <Link href="https://www.linkedin.com/in/sri-maniteja-chinnam/" target="_blank" rel="noopener noreferrer" className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
+          <Link href={h.linkedinUrl} target="_blank" rel="noopener noreferrer" className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
             linkedin
           </Link>
-          <Link href="mailto:srimaniteja.ch@gmail.com" className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
+          <Link href={`mailto:${content.contact.email}`} className="rounded border-2 border-[var(--ink)] px-2.5 py-0.5 text-[0.65rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ color: "var(--ink)" }}>
             email
           </Link>
         </div>
@@ -150,12 +123,12 @@ export function Hero() {
           </div>
           <div className="rounded border bg-[rgba(10,10,9,0.04)] p-2.5" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.68rem", lineHeight: 1.88, borderColor: "rgba(10,10,9,0.1)" }}>
             <div><span className="font-bold" style={{ color: "var(--mint)" }}>$ </span>whoami</div>
-            <div className="pl-3" style={{ color: "#2a9d6e" }}>maniteja — full-stack engineer</div>
+            <div className="pl-3" style={{ color: "#2a9d6e" }}>{h.terminalWhoami}</div>
             <div><span className="font-bold" style={{ color: "var(--mint)" }}>$ </span>cat stack.json</div>
-            <div className="pl-3" style={{ color: "var(--sky)" }}>{`{ next, ts, node, postgres, langchain, bedrock }`}</div>
+            <div className="pl-3" style={{ color: "var(--sky)" }}>{h.terminalStack}</div>
             <div><span className="font-bold" style={{ color: "var(--mint)" }}>$ </span>git log --oneline -2</div>
-            <div className="pl-3" style={{ color: "var(--dim)" }}><span style={{ color: "var(--mint)", fontWeight: 700 }}>a3f9</span> feat(rag): +15% retrieval accuracy</div>
-            <div className="pl-3" style={{ color: "var(--dim)" }}><span style={{ color: "var(--mint)", fontWeight: 700 }}>7b12</span> fix(finance): variance explainer</div>
+            <div className="pl-3" style={{ color: "var(--dim)" }}><span style={{ color: "var(--mint)", fontWeight: 700 }}>{h.terminalCommit1.split(" ")[0]}</span> {h.terminalCommit1.slice(h.terminalCommit1.indexOf(" ") + 1)}</div>
+            <div className="pl-3" style={{ color: "var(--dim)" }}><span style={{ color: "var(--mint)", fontWeight: 700 }}>{h.terminalCommit2.split(" ")[0]}</span> {h.terminalCommit2.slice(h.terminalCommit2.indexOf(" ") + 1)}</div>
             <div><span className="font-bold" style={{ color: "var(--mint)" }}>$ </span>npm run build<span className="ml-0.5 inline-block h-4 w-2 animate-blink" style={{ background: "var(--lemon)", verticalAlign: "text-bottom" }} /></div>
           </div>
         </div>

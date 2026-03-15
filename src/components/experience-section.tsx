@@ -1,25 +1,10 @@
-const items = [
-  {
-    date: "2023 – now",
-    role: "Full-Stack Engineer",
-    meta: "backend + AI/ML",
-    desc: "Building AI-powered products. Next.js, TypeScript, LangChain, RAG pipelines, production systems.",
-  },
-  {
-    date: "2019 – 2023",
-    role: "Software Engineer",
-    meta: "backend + cloud · 4+ yrs",
-    desc: "Production backend systems. REST APIs, distributed systems, cloud infrastructure. Full pivot into LLM/AI.",
-  },
-  {
-    date: "2022 – 2023",
-    role: "M.S. Data Science",
-    meta: "graduate studies",
-    desc: "Foundation for current AI/ML and LLM engineering work.",
-  },
-];
+"use client";
+
+import { useContent } from "@/components/content-provider";
 
 export function ExperienceSection() {
+  const { experience } = useContent();
+  const items = experience.items;
   return (
     <div
       className="grid border-b md:grid-cols-[180px_2.5px_1fr]"
@@ -44,9 +29,9 @@ export function ExperienceSection() {
             color: "var(--dim)",
           }}
         >
-          <div>4+ yrs engineering</div>
-          <div>2+ yrs AI/ML</div>
-          <div>M.S. Data Science</div>
+          {experience.sidebarStats.map((line) => (
+            <div key={line}>{line}</div>
+          ))}
         </div>
       </div>
       <div className="hidden md:block" style={{ background: "var(--ink)" }} />

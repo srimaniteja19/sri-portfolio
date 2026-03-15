@@ -1,35 +1,6 @@
 "use client";
 
-const steps = [
-  {
-    num: "01",
-    title: "Discover",
-    desc: "Deep dive into requirements, understand the problem space, define success.",
-    color: "mint",
-    stripe: "rgba(13,13,13,0.2)",
-  },
-  {
-    num: "02",
-    title: "Design",
-    desc: "Architect the system, wireframe UX, plan data model and API contracts.",
-    color: "lemon",
-    stripe: "rgba(13,13,13,0.15)",
-  },
-  {
-    num: "03",
-    title: "Build",
-    desc: "Write clean, tested code. Ship incrementally with CI/CD. Review and iterate.",
-    color: "coral",
-    stripe: "rgba(13,13,13,0.15)",
-  },
-  {
-    num: "04",
-    title: "Launch",
-    desc: "Deploy to production, monitor, iterate based on real user feedback.",
-    color: "sky",
-    stripe: "rgba(13,13,13,0.15)",
-  },
-];
+import { useContent } from "@/components/content-provider";
 
 const colorBg: Record<string, string> = {
   mint: "var(--mint)",
@@ -39,6 +10,8 @@ const colorBg: Record<string, string> = {
 };
 
 export function ProcessSection() {
+  const { process } = useContent();
+  const steps = process.steps;
   return (
     <section className="scroll-mt-24">
       <div className="grid grid-cols-1 border-b sm:grid-cols-2 lg:grid-cols-4" style={{ borderColor: "var(--ink)" }}>

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "@/components/theme-provider";
+import { useContent } from "@/components/content-provider";
 
 const THEMES = [
   { id: "default" as const, label: "default", swatch: "#F0EDE4" },
@@ -17,16 +18,9 @@ const THEMES = [
   { id: "mono" as const, label: "black & white", swatch: "#000000" },
 ];
 
-const navLinks = [
-  { href: "#work", label: "work" },
-  { href: "#skills", label: "skills" },
-  { href: "#github", label: "github" },
-  { href: "#about", label: "about" },
-  { href: "#contact", label: "contact" },
-  { href: "/hire", label: "hire" },
-];
-
 export function Header() {
+  const { header: content } = useContent();
+  const navLinks = content.navLinks;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
@@ -60,7 +54,7 @@ export function Header() {
         style={{ color: "var(--ink)" }}
       >
         <span style={{ color: "var(--mint)", fontSize: "1.1rem" }}>[</span>
-        maniteja
+        {content.name}
         <span style={{ color: "var(--mint)", fontSize: "1.1rem" }}>]</span>
       </Link>
       <div className="flex items-center gap-2 md:gap-4">
@@ -140,11 +134,11 @@ export function Header() {
               className="h-1.5 w-1.5 animate-pulse-dot rounded-full"
               style={{ background: "var(--ink)" }}
             />
-            open to new roles
+            {content.openToRolesText}
           </div>
 
           <a
-            href="mailto:srimaniteja.ch@gmail.com"
+            href={`mailto:${content.email}`}
             className="hidden rounded-[100px] border-2 bg-[var(--ink)] px-4 py-1.5 text-[0.72rem] font-bold text-[var(--bg)] transition hover:bg-[var(--mint)] hover:text-[var(--ink)] md:inline-block"
             style={{ borderColor: "var(--ink)" }}
           >
@@ -236,7 +230,7 @@ export function Header() {
               </Link>
             ))}
             <a
-              href="mailto:srimaniteja.ch@gmail.com"
+              href={`mailto:${content.email}`}
               className="rounded-[100px] border-2 bg-[var(--ink)] px-4 py-1.5 text-[0.72rem] font-bold text-[var(--bg)]"
               style={{ borderColor: "var(--ink)" }}
             >

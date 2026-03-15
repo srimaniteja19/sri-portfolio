@@ -1,19 +1,9 @@
-const education = [
-  {
-    school: "University at Buffalo, SUNY",
-    degree: "Master of Science, Data Science",
-    period: "Aug 2022 - Dec 2023",
-    location: "Buffalo, NY",
-  },
-  {
-    school: "Bharath Institute of Technology and Research",
-    degree: "Bachelor of Technology, Computer Science",
-    period: "Jun 2018 - Jun 2022",
-    location: "Chennai, India",
-  },
-];
+"use client";
+
+import { useContent } from "@/components/content-provider";
 
 export function Education() {
+  const { education } = useContent();
   return (
     <section id="education" className="scroll-mt-24 px-6 py-20">
       <div className="mx-auto max-w-4xl">

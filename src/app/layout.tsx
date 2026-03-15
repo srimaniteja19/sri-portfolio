@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Fraunces, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/header";
+import { ContentProvider } from "@/components/content-provider";
 import { KonamiOverlay } from "@/components/konami-overlay";
+import { getContent } from "@/lib/content";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -48,11 +49,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getContent();
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -75,9 +77,10 @@ export default function RootLayout({
         style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
       >
         <ThemeProvider>
-          <KonamiOverlay />
-          <Header />
-          {children}
+          <ContentProvider content={content}>
+            <KonamiOverlay />
+            {children}
+          </ContentProvider>
         </ThemeProvider>
       </body>
     </html>

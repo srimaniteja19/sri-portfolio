@@ -1,31 +1,10 @@
-const cells = [
-  {
-    label: "who i am",
-    title: "full-stack engineer",
-    body: "Based in the US. Building AI-powered products at the intersection of clean code and real-world impact.",
-    color: "mint",
-  },
-  {
-    label: "what i build",
-    title: "LLM apps that ship",
-    body: "RAG pipelines, ecommerce integrations, AI agents, semantic search — things that actually work.",
-    color: "lemon",
-  },
-  {
-    label: "side project",
-    title: "DevPath AI",
-    body: "Self-learning platform using Gemini API — structured course plans and interview prep kits. Next.js + TypeScript.",
-    color: "coral",
-  },
-  {
-    label: "looking for",
-    title: "interesting roles",
-    body: "Teams where full-stack and AI go to production. Open to interesting opportunities.",
-    color: "sky",
-  },
-];
+"use client";
+
+import { useContent } from "@/components/content-provider";
 
 export function About() {
+  const { about } = useContent();
+  const cells = about.cells;
   return (
     <section id="about" className="scroll-mt-24 px-0 md:px-0">
       <div
