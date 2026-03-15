@@ -43,10 +43,10 @@ export default function RootLayout({
             __html: `
               (function(){
                 var stored=localStorage.getItem('theme');
-                var valid=['default','dark','matrix','pastel'];
+                var valid=['default','dark','matrix','pastel','ocean','sunset','forest','nord','neon','mono'];
                 var theme=stored&&valid.indexOf(stored)!==-1?stored:'default';
                 document.documentElement.setAttribute('data-theme',theme);
-                document.documentElement.classList.toggle('dark',theme==='dark');
+                document.documentElement.classList.toggle('dark',theme==='dark'||theme==='mono');
               })();
             `,
           }}

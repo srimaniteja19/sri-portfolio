@@ -7,6 +7,12 @@ const THEMES = [
   { id: "dark" as const, label: "dark mode", swatch: "#0A0A09" },
   { id: "matrix" as const, label: "matrix", swatch: "#001a00" },
   { id: "pastel" as const, label: "pastel", swatch: "#FFF5F5" },
+  { id: "ocean" as const, label: "ocean", swatch: "#0a1929" },
+  { id: "sunset" as const, label: "sunset", swatch: "#2d1f0f" },
+  { id: "forest" as const, label: "forest", swatch: "#0d1f0d" },
+  { id: "nord" as const, label: "nord", swatch: "#eceff4" },
+  { id: "neon" as const, label: "japanese neon", swatch: "#0b0d17" },
+  { id: "mono" as const, label: "black & white", swatch: "#000000" },
 ];
 
 export function ThemeSwitcher() {

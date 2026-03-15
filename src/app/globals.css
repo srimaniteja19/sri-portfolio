@@ -33,11 +33,13 @@
 }
 
 /* Theme: dark */
+html[data-theme="dark"],
 body.theme-dark,
-[data-theme="dark"],
 .dark {
   --bg: #0A0A09;
   --ink: #FAFAF7;
+  --dim: #aaa;
+  --faint: rgba(250, 250, 247, 0.06);
   --mint: #5FE0B4;
   --coral: #FF6B57;
   --lemon: #EDD800;
@@ -54,11 +56,12 @@ body.theme-dark,
   --hair3: #C4752A;
 }
 /* Theme: matrix */
-body.theme-matrix,
-[data-theme="matrix"] {
+html[data-theme="matrix"],
+body.theme-matrix {
   --bg: #001a00;
   --ink: #00ff41;
   --dim: #006614;
+  --faint: rgba(0, 255, 65, 0.06);
   --mint: #00ff41;
   --lemon: #ffff00;
   --coral: #ff4400;
@@ -66,16 +69,19 @@ body.theme-matrix,
   --lilac: #ff00ff;
   --peach: #ff8800;
   --border: 2.5px solid #00ff41;
+  --muted: #006614;
+  --muted-light: #00cc33;
   --skin: #00ff41;
   --skin2: #00cc33;
   --hair1: #003311;
 }
 /* Theme: pastel */
-body.theme-pastel,
-[data-theme="pastel"] {
+html[data-theme="pastel"],
+body.theme-pastel {
   --bg: #FFF5F5;
   --ink: #2D1B69;
   --dim: #9B89C4;
+  --faint: rgba(45, 27, 105, 0.05);
   --mint: #B8F0E0;
   --lemon: #FFF3B0;
   --coral: #FFB3BA;
@@ -83,9 +89,144 @@ body.theme-pastel,
   --lilac: #E8BAFF;
   --peach: #FFDAB3;
   --border: 2.5px solid #2D1B69;
+  --muted: #9B89C4;
+  --muted-light: #B8F0E0;
   --skin: #FFDAB3;
   --skin2: #E8BAFF;
   --hair1: #2D1B69;
+}
+
+/* Theme: ocean — deep sea, calm blues (ref: ocean UI palettes) */
+html[data-theme="ocean"],
+body.theme-ocean {
+  --bg: #0f172a;
+  --ink: #f0f9ff;
+  --dim: #7dd3fc;
+  --faint: rgba(224, 242, 254, 0.06);
+  --mint: #2dd4bf;
+  --lemon: #fde047;
+  --coral: #fb923c;
+  --sky: #38bdf8;
+  --lilac: #a78bfa;
+  --peach: #fdba74;
+  --border: 2.5px solid #38bdf8;
+  --muted: #7dd3fc;
+  --muted-light: #bae6fd;
+  --skin: #fed7aa;
+  --skin2: #7dd3fc;
+  --hair1: #0c4a6e;
+}
+
+/* Theme: sunset — warm golden hour (ref: sunset palettes) */
+html[data-theme="sunset"],
+body.theme-sunset {
+  --bg: #1c1917;
+  --ink: #fef3c7;
+  --dim: #fcd34d;
+  --faint: rgba(254, 243, 199, 0.06);
+  --mint: #6ee7b7;
+  --lemon: #fbbf24;
+  --coral: #f97316;
+  --sky: #38bdf8;
+  --lilac: #c084fc;
+  --peach: #fb923c;
+  --border: 2.5px solid #f59e0b;
+  --muted: #fcd34d;
+  --muted-light: #fde68a;
+  --skin: #fdba74;
+  --skin2: #fb923c;
+  --hair1: #78350f;
+}
+
+/* Theme: forest — nature greens (ref: forest green palettes) */
+html[data-theme="forest"],
+body.theme-forest {
+  --bg: #052e16;
+  --ink: #dcfce7;
+  --dim: #4ade80;
+  --faint: rgba(220, 252, 231, 0.06);
+  --mint: #34d399;
+  --lemon: #bef264;
+  --coral: #f87171;
+  --sky: #22d3ee;
+  --lilac: #c084fc;
+  --peach: #fdba74;
+  --border: 2.5px solid #22c55e;
+  --muted: #4ade80;
+  --muted-light: #86efac;
+  --skin: #a8a29e;
+  --skin2: #34d399;
+  --hair1: #14532d;
+}
+
+/* Theme: nord — official Nord palette (nordtheme.com) */
+html[data-theme="nord"],
+body.theme-nord {
+  --bg: #eceff4;
+  --ink: #2e3440;
+  --dim: #4c566a;
+  --faint: rgba(46, 52, 64, 0.05);
+  --mint: #8fbcbb;
+  --lemon: #ebcb8b;
+  --coral: #bf616a;
+  --sky: #88c0d0;
+  --lilac: #b48ead;
+  --peach: #d08770;
+  --border: 2.5px solid #3b4252;
+  --muted: #4c566a;
+  --muted-light: #88c0d0;
+  --skin: #d08770;
+  --skin2: #b48ead;
+  --hair1: #2e3440;
+}
+
+/* Theme: Japanese neon — cyberpunk / Tokyo neon (ref: neon palettes) */
+html[data-theme="neon"],
+body.theme-neon {
+  --bg: #0b0d17;
+  --ink: #e0e7ff;
+  --dim: #00e5ff;
+  --faint: rgba(255, 45, 170, 0.06);
+  --mint: #00e5ff;
+  --lemon: #fef08a;
+  --coral: #ff2daa;
+  --sky: #00e5ff;
+  --lilac: #7c4dff;
+  --peach: #ff9f1c;
+  --border: 2.5px solid #ff2daa;
+  --muted: #00e5ff;
+  --muted-light: #67e8f9;
+  --skin: #fda4af;
+  --skin2: #7c4dff;
+  --hair1: #1e1b4b;
+}
+
+/* Theme: mono — pure black & white (high specificity so it always wins) */
+html[data-theme="mono"],
+html[data-theme="mono"] body,
+body.theme-mono {
+  --bg: #000000 !important;
+  --ink: #ffffff !important;
+  --dim: #a3a3a3 !important;
+  --faint: rgba(255, 255, 255, 0.06) !important;
+  --mint: #e5e5e5 !important;
+  --lemon: #f5f5f5 !important;
+  --coral: #d4d4d4 !important;
+  --sky: #e5e5e5 !important;
+  --lilac: #d4d4d4 !important;
+  --peach: #e5e5e5 !important;
+  --border: 2.5px solid #ffffff !important;
+  --muted: #a3a3a3 !important;
+  --muted-light: #d4d4d4 !important;
+  --skin: #d4d4d4 !important;
+  --skin2: #e5e5e5 !important;
+  --hair1: #171717 !important;
+}
+
+html[data-theme="mono"] body,
+body.theme-mono {
+  background: #000000 !important;
+  color: #ffffff !important;
 }
 
 /* v3 tag/pill color utilities */

@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-export type Theme = "default" | "dark" | "matrix" | "pastel";
+const THEME_IDS = ["default", "dark", "matrix", "pastel", "ocean", "sunset", "forest", "nord", "neon", "mono"] as const;
+export type Theme = (typeof THEME_IDS)[number];
 
 type ThemeContextType = {
   theme: Theme;
@@ -15,18 +16,21 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("default");
 
   const applyTheme = (t: Theme) => {
-    document.body.classList.remove("theme-dark", "theme-matrix", "theme-pastel");
+    document.documentElement.setAttribute("data-theme", t);
+    document.body.classList.remove(
+      "theme-dark", "theme-matrix", "theme-pastel",
+      "theme-ocean", "theme-sunset", "theme-forest", "theme-nord", "theme-neon", "theme-mono"
+    );
     document.documentElement.classList.remove("dark");
     if (t !== "default") {
       document.body.classList.add(`theme-${t}`);
-      if (t === "dark") document.documentElement.classList.add("dark");
+      if (t === "dark" || t === "mono") document.documentElement.classList.add("dark");
     }
-    document.documentElement.setAttribute("data-theme", t);
   };
 
   useEffect(() => {
     const stored = localStorage.getItem("theme") as Theme | null;
-    if (stored && ["default", "dark", "matrix", "pastel"].includes(stored)) {
+    if (stored && THEME_IDS.includes(stored)) {
       setThemeState(stored);
       applyTheme(stored);
     } else {

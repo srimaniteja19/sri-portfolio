@@ -1,6 +1,5 @@
 import { Hero } from "@/components/hero";
 import { ScrollTicker } from "@/components/scroll-ticker";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { SectionDivider } from "@/components/section-divider";
 import { InteractiveCharacters } from "@/components/interactive-characters";
 import { TypingTest } from "@/components/typing-test";
@@ -23,10 +22,6 @@ export default function Home() {
     <main className="min-h-screen overflow-x-hidden">
       <Hero />
       <ScrollTicker />
-      <section id="theme" className="scroll-mt-24">
-        <SectionDivider label="theme" right="// pick your vibe" />
-        <ThemeSwitcher />
-      </section>
       <section id="skills" className="scroll-mt-24">
         <SectionDivider label="skills" right="// grouped by domain" />
         <SkillsMarquee />

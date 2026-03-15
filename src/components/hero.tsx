@@ -22,11 +22,11 @@ const tagColors: Record<string, string> = {
   "t-peach": "var(--peach)",
 };
 
-const commits = [
-  { hash: "a3f9e2c", scope: "feat(rag):", msg: "improve retrieval pipeline", time: "2d ago" },
-  { hash: "7b12d4a", scope: "fix(finance):", msg: "variance edge cases", time: "4d ago" },
-  { hash: "c891ab0", scope: "feat(devpath):", msg: "gemini course gen v2", time: "6d ago" },
-  { hash: "f23e110", scope: "chore:", msg: "upgrade langchain to 0.3", time: "1w ago" },
+const focusItems = [
+  { label: "Building", value: "DevPath AI · RAG pipelines", color: "var(--mint)" },
+  { label: "Learning", value: "LangGraph, streaming UX", color: "var(--lemon)" },
+  { label: "Status", value: "Open to full-time · contracts", color: "var(--coral)" },
+  { label: "Reach", value: "hire page · email below", color: "var(--sky)" },
 ];
 
 const stats = [
@@ -161,15 +161,14 @@ export function Hero() {
         </div>
         <div className="flex-shrink-0 border-b p-4" style={{ borderColor: "var(--ink)" }}>
           <div className="mb-2 flex items-center justify-between" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.52rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--dim)" }}>
-            <span>//</span> recent commits
-            <span className="rounded border px-1.5 py-0.5 text-[0.55rem]" style={{ borderColor: "rgba(10,10,9,0.15)" }}>⎇ main</span>
+            <span>//</span> focus
+            <span className="rounded border px-1.5 py-0.5 text-[0.55rem]" style={{ borderColor: "rgba(10,10,9,0.15)" }}>now</span>
           </div>
           <div style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.65rem" }}>
-            {commits.map((c) => (
-              <div key={c.hash} className="grid grid-cols-[auto_1fr_auto] gap-2 border-b py-2" style={{ borderColor: "rgba(10,10,9,0.07)", alignItems: "center" }}>
-                <span className="font-bold" style={{ color: "var(--mint)", fontSize: "0.6rem" }}>{c.hash.slice(0, 7)}</span>
-                <span><span style={{ color: "var(--dim)" }}>{c.scope}</span> <span className="font-bold" style={{ color: "var(--ink)" }}>{c.msg}</span></span>
-                <span className="text-[0.57rem]" style={{ color: "var(--dim)" }}>{c.time.replace(" ago", "")}</span>
+            {focusItems.map((item) => (
+              <div key={item.label} className="grid grid-cols-[auto_1fr] gap-2 border-b py-2" style={{ borderColor: "rgba(10,10,9,0.07)", alignItems: "center" }}>
+                <span className="font-bold" style={{ color: item.color, fontSize: "0.58rem" }}>{item.label}</span>
+                <span className="font-medium" style={{ color: "var(--ink)" }}>{item.value}</span>
               </div>
             ))}
           </div>
