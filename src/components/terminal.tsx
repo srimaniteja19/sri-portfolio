@@ -42,7 +42,8 @@ export function Terminal() {
       setHistory([]);
       return;
     }
-    const output = resp || `<span style="color:var(--coral)">command not found: ${c}</span> <span class="term-comment">— try 'help'</span>`;
+    const safeCmd = c.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    const output = resp || `<span style="color:var(--coral)">command not found: ${safeCmd}</span> <span class="term-comment">— try 'help'</span>`;
     setHistory((h) => [...h, { cmd: c, output }]);
   };
 

@@ -23,11 +23,33 @@ KEY PROJECTS & IMPACT:
 
 Keep answers concise (2-4 sentences max unless asked for detail). Be direct and helpful.`;
 
+const MAX_BODY_BYTES = 50_000; // ~50KB to avoid huge payloads
+
 export async function POST(req: NextRequest) {
   try {
-    const { type, message, jd } = await req.json();
-    const apiKey = process.env.GEMINI_API_KEY;
+    const raw = await req.text();
+    if (raw.length > MAX_BODY_BYTES) {
+      return NextResponse.json(
+        { error: "Request body too large." },
+        { status: 413 }
+      );
+    }
+    let body: { type?: string; message?: string; jd?: string };
+    try {
+      body = JSON.parse(raw);
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+    }
+    const { type, message, jd } = body;
+    const allowedTypes = ["chat", "jd-analyze", "jd-pitch"];
+    if (!type || !allowedTypes.includes(String(type))) {
+      return NextResponse.json(
+        { error: "Invalid or missing type. Use: chat, jd-analyze, jd-pitch." },
+        { status: 400 }
+      );
+    }
 
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
         { error: "GEMINI_API_KEY not configured. Add it to .env.local for AI features." },
@@ -35,17 +57,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const safeStr = (v: unknown, max: number) =>
+      typeof v === "string" ? v.slice(0, max) : "";
     let systemPrompt = CONTEXT;
-    let userMessage = message;
+    let userMessage: string;
 
     if (type === "chat") {
-      userMessage = message;
+      userMessage = safeStr(message, 4000) || "Hello, what would you like to know?";
     } else if (type === "jd-analyze") {
       systemPrompt = `${CONTEXT}\n\nAnalyze job descriptions and tell recruiters how well Maniteja matches. Use 3 bullet points. Be specific about matches and gaps.`;
-      userMessage = `Analyze this job description and tell me in 3 bullet points how well Maniteja's profile matches it. Be specific about what matches and what gaps exist. JD:\n\n${(jd || message || "").slice(0, 1200)}`;
-    } else if (type === "jd-pitch") {
+      userMessage = `Analyze this job description and tell me in 3 bullet points how well Maniteja's profile matches it. Be specific about what matches and what gaps exist. JD:\n\n${safeStr(jd ?? message, 1200)}`;
+    } else {
       systemPrompt = `${CONTEXT}\n\nWrite short, natural cover letter openings. Sound like a real developer, not a robot. Reference actual experience.`;
-      userMessage = `Write a 3-sentence personalized cover letter opening for Maniteja applying to this role. Make it specific to the JD, reference his actual experience, and sound like a real developer. JD:\n\n${(jd || message || "").slice(0, 800)}`;
+      userMessage = `Write a 3-sentence personalized cover letter opening for Maniteja applying to this role. Make it specific to the JD, reference his actual experience, and sound like a real developer. JD:\n\n${safeStr(jd ?? message, 800)}`;
     }
 
     const res = await fetch(
@@ -65,10 +89,11 @@ export async function POST(req: NextRequest) {
     );
 
     const data = await res.json();
-    const text =
+    const rawText =
       data.candidates?.[0]?.content?.parts?.[0]?.text ||
       data.error?.message ||
       "Sorry, something went wrong.";
+    const text = typeof rawText === "string" ? rawText.slice(0, 4000) : String(rawText);
 
     return NextResponse.json({ text });
   } catch (e) {

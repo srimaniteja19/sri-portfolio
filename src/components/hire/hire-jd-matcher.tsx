@@ -4,9 +4,11 @@ import { useState } from "react";
 
 const MY_SKILLS = ["next.js", "nextjs", "typescript", "node.js", "nodejs", "react", "python", "postgresql", "postgres", "redis", "langchain", "langgraph", "llamaindex", "aws", "bedrock", "rag", "retrieval augmented", "vector", "embedding", "semantic search", "ai agent", "gpt", "openai", "claude", "llm", "docker", "kubernetes", "k8s", "ci/cd", "rest api", "graphql", "tailwind", "vercel", "full stack", "fullstack"];
 
+type MatchResult = { pct: number; text: string; matched: string[] };
+
 export function HireJDMatcher() {
   const [jd, setJd] = useState("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<MatchResult | null>(null);
   const [pitch, setPitch] = useState<string | null>(null);
   const [loading, setLoading] = useState<string | null>(null);
 
@@ -14,6 +16,9 @@ export function HireJDMatcher() {
     if (!jd.trim()) return;
     setLoading("analyze");
     setResult(null);
+    const jdLower = jd.toLowerCase();
+    const matched = MY_SKILLS.filter((s) => jdLower.includes(s));
+    const pct = Math.min(98, 50 + matched.length * 4);
     try {
       const res = await fetch("/api/llm", {
         method: "POST",
@@ -21,16 +26,14 @@ export function HireJDMatcher() {
         body: JSON.stringify({ type: "jd-analyze", jd }),
       });
       const data = await res.json();
-      const jdLower = jd.toLowerCase();
-      const matched = MY_SKILLS.filter((s) => jdLower.includes(s));
-      const pct = Math.min(98, 50 + matched.length * 4);
       const text = data.text || `Matched skills: ${matched.slice(0, 8).join(", ") || "no direct matches"}`;
-      setResult(`<div class="mb-3 flex items-center gap-3"><span class="font-serif text-2xl font-black italic" style="color:var(--mint)">${pct}%</span><div class="h-2 flex-1 rounded border" style="background:rgba(10,10,9,.07);border-color:rgba(10,10,9,.12)"><div class="h-full rounded transition-all" style="background:var(--mint);width:${pct}%"></div></div></div><div class="text-[0.72rem] leading-relaxed">${text.replace(/\n/g, "<br>")}</div><div class="mt-2 text-[0.58rem]" style="color:var(--mint);font-family:var(--font-jetbrains-mono)">matched: ${matched.slice(0, 6).join(" · ") || "none"}</div>`);
+      setResult({ pct, text, matched });
     } catch {
-      const jdLower = jd.toLowerCase();
-      const matched = MY_SKILLS.filter((s) => jdLower.includes(s));
-      const pct = Math.min(98, 50 + matched.length * 4);
-      setResult(`<div class="font-serif text-2xl font-black italic" style="color:var(--mint)">${pct}% match</div><div class="mt-2 text-[0.62rem]" style="color:var(--dim)">matched: ${matched.join(", ") || "no direct matches"}</div>`);
+      setResult({
+        pct,
+        text: "",
+        matched,
+      });
     } finally {
       setLoading(null);
     }
@@ -77,7 +80,26 @@ export function HireJDMatcher() {
         <div>
           <div className="border-b-2 px-4 py-2 text-[0.56rem] font-bold uppercase tracking-wider" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)", borderColor: "var(--ink)" }}>// match analysis</div>
           <div className="min-h-[140px] p-4 text-[0.74rem] leading-relaxed" style={{ color: "var(--dim)" }}>
-            {result ? <div dangerouslySetInnerHTML={{ __html: result }} /> : "waiting for job description..."}
+            {result ? (
+              <>
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="font-serif text-2xl font-black italic" style={{ color: "var(--mint)" }}>{result.pct}%</span>
+                  <div className="h-2 flex-1 rounded border" style={{ background: "rgba(10,10,9,.07)", borderColor: "rgba(10,10,9,.12)" }}>
+                    <div className="h-full rounded transition-all" style={{ background: "var(--mint)", width: `${result.pct}%` }} />
+                  </div>
+                </div>
+                <div className="text-[0.72rem] leading-relaxed">
+                  {result.text.split("\n").map((line, i) => (
+                    <span key={i}>{i > 0 && <br />}{line}</span>
+                  ))}
+                </div>
+                <div className="mt-2 text-[0.58rem]" style={{ color: "var(--mint)", fontFamily: "var(--font-jetbrains-mono)" }}>
+                  matched: {result.matched.slice(0, 6).join(" · ") || "none"}
+                </div>
+              </>
+            ) : (
+              "waiting for job description..."
+            )}
           </div>
         </div>
       </div>

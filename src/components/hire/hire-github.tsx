@@ -111,8 +111,10 @@ export function HireGitHub() {
         {loading ? (
           <div className="bg-[var(--bg)] p-4 text-[0.6rem]" style={{ color: "var(--dim)" }}>loading repos...</div>
         ) : (
-          repos.map((r, i) => (
-            <a key={r.name} href={r.html_url} target="_blank" rel="noopener noreferrer" className="group relative block bg-[var(--bg)] p-4 transition-colors hover:bg-[#E8E4D9]">
+          repos.map((r, i) => {
+            const repoUrl = typeof r.html_url === "string" && r.html_url.startsWith("https://github.com/") ? r.html_url : `https://github.com/srimaniteja19/${encodeURIComponent(r.name)}`;
+            return (
+            <a key={r.name} href={repoUrl} target="_blank" rel="noopener noreferrer" className="group relative block bg-[var(--bg)] p-4 transition-colors hover:bg-[#E8E4D9]">
               <div className="mb-1 flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full border-[1.5px] border-[var(--ink)]" style={{ background: COLS[i % 6] }} />
                 <span className="text-[0.65rem] font-bold" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>{r.name}</span>
@@ -130,7 +132,7 @@ export function HireGitHub() {
               </div>
               <span className="absolute right-3 top-4 text-[0.68rem] opacity-0 transition group-hover:opacity-100" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>↗</span>
             </a>
-          ))
+          ); })
         )}
       </div>
     </div>
