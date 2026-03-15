@@ -44,7 +44,7 @@ export default function RootLayout({
               (function(){
                 var stored=localStorage.getItem('theme');
                 var valid=['default','dark','matrix','pastel'];
-                var theme=stored&&valid.indexOf(stored)!==-1?stored:(!stored&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'default';
+                var theme=stored&&valid.indexOf(stored)!==-1?stored:'default';
                 document.documentElement.setAttribute('data-theme',theme);
                 document.documentElement.classList.toggle('dark',theme==='dark');
               })();

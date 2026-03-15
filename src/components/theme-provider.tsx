@@ -30,10 +30,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setThemeState(stored);
       applyTheme(stored);
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initial: Theme = prefersDark ? "dark" : "default";
-      setThemeState(initial);
-      applyTheme(initial);
+      setThemeState("default");
+      applyTheme("default");
     }
   }, []);
 
