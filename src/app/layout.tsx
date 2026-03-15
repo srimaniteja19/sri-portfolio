@@ -38,14 +38,6 @@ export const metadata: Metadata = {
       "Full-stack engineer focused on Next.js, TypeScript, and AI-powered products.",
     url: "https://srichinnam.space",
     siteName: "Sri Maniteja Chinnam",
-    images: [
-      {
-        url: "/og-image.svg",
-        width: 1200,
-        height: 630,
-        alt: "Sri Maniteja Chinnam — Full-Stack Engineer",
-      },
-    ],
     type: "website",
   },
   twitter: {
@@ -53,7 +45,6 @@ export const metadata: Metadata = {
     title: "Sri Maniteja Chinnam | Full-Stack Engineer",
     description:
       "Full-stack engineer focused on Next.js, TypeScript, and AI-powered products.",
-    images: ["/og-image.svg"],
   },
 };
 
