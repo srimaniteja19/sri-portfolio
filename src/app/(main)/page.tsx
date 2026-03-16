@@ -16,6 +16,7 @@ import { CTASection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 import { MouseTrail } from "@/components/mouse-trail";
 import { Hobbies } from "@/components/hobbies";
+import { ActionFigureSection } from "@/components/action-figure-section";
 
 export default function Home() {
   return (
@@ -56,6 +57,8 @@ export default function Home() {
       <About />
       <SectionDivider label="contact" right="// let's build something" />
       <CTASection />
+      <SectionDivider label="collectible" right="// full-stack AI engineer" />
+      <ActionFigureSection />
       <Footer />
     </main>
     </MouseTrail>

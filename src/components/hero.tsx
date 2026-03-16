@@ -132,7 +132,7 @@ export function Hero() {
             <div><span className="font-bold" style={{ color: "var(--mint)" }}>$ </span>npm run build<span className="ml-0.5 inline-block h-4 w-2 animate-blink" style={{ background: "var(--lemon)", verticalAlign: "text-bottom" }} /></div>
           </div>
         </div>
-        <div className="flex-shrink-0 border-b p-4" style={{ borderColor: "var(--ink)" }}>
+        <div className="shrink-0 border-b p-4" style={{ borderColor: "var(--ink)" }}>
           <div className="mb-2 flex items-center justify-between" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.52rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--dim)" }}>
             <span>//</span> focus
             <span className="rounded border px-1.5 py-0.5 text-[0.55rem]" style={{ borderColor: "rgba(10,10,9,0.15)" }}>now</span>
