@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Fraunces, DM_Sans, JetBrains_Mono, Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -24,6 +24,18 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
+});
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  variable: "--font-bricolage",
+  subsets: ["latin"],
+  weight: ["800"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -74,7 +86,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${fraunces.variable} ${dmSans.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${fraunces.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${bricolageGrotesque.variable} ${spaceGrotesk.variable} font-sans antialiased`}
         style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
       >
         <ThemeProvider>

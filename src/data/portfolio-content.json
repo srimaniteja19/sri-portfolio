@@ -28,16 +28,16 @@
         "label": "hire"
       }
     ],
-    "openToRolesText": "open to new roles"
+    "openToRolesText": "Software Engineer @ Rivian"
   },
   "hero": {
-    "subtitle": "full-stack engineer — AI · US-based",
+    "subtitle": "Software Engineer @ Rivian · full-stack & AI",
     "name": "Maniteja",
     "role": "full-stack engineer",
-    "statusComment": "open_to_new_roles // US · reloc ok",
+    "statusComment": "Software Engineer @ Rivian",
     "codeRole": "full-stack engineer",
     "codeFocus": "LLM apps that ship",
-    "codeStatus": "open_to_new_roles",
+    "codeStatus": "Software Engineer @ Rivian",
     "codeComment": "// semantic search · RAG · AI agents · ecommerce",
     "tags": [
       {
@@ -86,7 +86,7 @@
       },
       {
         "label": "Status",
-        "value": "Open to full-time · contracts",
+        "value": "Software Engineer @ Rivian",
         "color": "var(--coral)"
       },
       {
@@ -159,7 +159,13 @@
   "experience": {
     "items": [
       {
-        "date": "2023 – now",
+        "date": "Aug 2026 – present",
+        "role": "Software Engineer",
+        "meta": "Rivian · full-time",
+        "desc": "Software Engineer at Rivian."
+      },
+      {
+        "date": "2023 – 2026",
         "role": "Full-Stack Engineer",
         "meta": "backend + AI/ML",
         "desc": "Building AI-powered products. Next.js, TypeScript, LangChain, RAG pipelines, production systems."
@@ -178,8 +184,8 @@
       }
     ],
     "sidebarStats": [
+      "Software Engineer @ Rivian",
       "4+ yrs engineering",
-      "2+ yrs AI/ML",
       "M.S. Data Science"
     ]
   },
@@ -201,8 +207,8 @@
     "cells": [
       {
         "label": "who i am",
-        "title": "full-stack engineer",
-        "body": "Based in the US. Building AI-powered products at the intersection of clean code and real-world impact.",
+        "title": "Software Engineer @ Rivian",
+        "body": "Based in the US. Software Engineer at Rivian building high-performance systems and AI-powered tools.",
         "color": "mint"
       },
       {
@@ -218,9 +224,9 @@
         "color": "coral"
       },
       {
-        "label": "looking for",
-        "title": "interesting roles",
-        "body": "Teams where full-stack and AI go to production. Open to interesting opportunities.",
+        "label": "current role",
+        "title": "Software Engineer @ Rivian",
+        "body": "Software Engineer at Rivian building scalable EV and energy software platforms.",
         "color": "sky"
       }
     ]
@@ -271,10 +277,10 @@
   },
   "cta": {
     "availItems": [
-      "full-time roles",
-      "freelance / contract",
+      "Software Engineer @ Rivian",
+      "open source collab",
       "ai consulting",
-      "open source collab"
+      "systems engineering"
     ],
     "headline": "got a hard problem?",
     "subline": "Let's build something."

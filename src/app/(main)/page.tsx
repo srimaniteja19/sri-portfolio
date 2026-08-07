@@ -5,12 +5,11 @@ import { InteractiveCharacters } from "@/components/interactive-characters";
 import { TypingTest } from "@/components/typing-test";
 import { LearningBoard } from "@/components/learning-board";
 import { SkillsMarquee } from "@/components/skills-marquee";
-import { Projects } from "@/components/projects";
+import { Showcase2026 } from "@/components/showcase-2026";
 import { ProcessSection } from "@/components/process-section";
 import { ExperienceSection } from "@/components/experience-section";
 import { DevlogSection } from "@/components/devlog-section";
 import { GitHubActivity } from "@/components/github-activity";
-import { FunFacts } from "@/components/fun-facts";
 import { About } from "@/components/about";
 import { CTASection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
@@ -30,8 +29,8 @@ export default function Home() {
       </section>
       <SectionDivider label="the crew" right="// your dev team in one person" />
       <InteractiveCharacters />
-      <SectionDivider label="selected work" right="// 3 projects · 2023–2025" />
-      <Projects />
+      <SectionDivider label="shipped so far" right="// 7 projects · release timeline" />
+      <Showcase2026 />
       <SectionDivider label="how i work" right="// 4-step process" />
       <ProcessSection />
       <SectionDivider label="experience" right="// work history" />
@@ -51,8 +50,6 @@ export default function Home() {
         right="// what i do when the terminal is closed"
       />
       <Hobbies />
-      <SectionDivider label="fun facts" />
-      <FunFacts />
       <SectionDivider label="about" />
       <About />
       <SectionDivider label="contact" right="// let's build something" />

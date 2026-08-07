@@ -38,7 +38,7 @@ export function ExperienceSection() {
       <div className="flex flex-col">
         {items.map((item) => (
           <div
-            key={item.role}
+            key={`${item.role}-${item.date}`}
             className="grid border-b py-5 pl-5 pr-5 md:grid-cols-[88px_1fr] md:gap-5 md:pr-6"
             style={{ borderColor: "rgba(10,10,9,0.06)" }}
           >
