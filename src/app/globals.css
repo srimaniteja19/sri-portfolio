@@ -16,9 +16,14 @@
   --r: 100px;
   --muted: #7A7870;
   --muted-light: #888;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
-  --sans: "DM Sans", system-ui, sans-serif;
-  --serif: "Fraunces", Georgia, serif;
+  --mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --sans: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --serif: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+  --font-fraunces: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-dm-sans: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-bricolage: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-space-grotesk: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+  --font-inter: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
   /* hover states for bento / about */
   --mint-hover: #5FE0B4;
   --lemon-hover: #EDD800;

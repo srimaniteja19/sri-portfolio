@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, DM_Sans, JetBrains_Mono, Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,35 +7,11 @@ import { ContentProvider } from "@/components/content-provider";
 import { KonamiOverlay } from "@/components/konami-overlay";
 import { getContent } from "@/lib/content";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["700", "900"],
-  style: ["normal", "italic"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
-});
-
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
-
-const bricolageGrotesque = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  weight: ["800"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -86,8 +62,8 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${fraunces.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${bricolageGrotesque.variable} ${spaceGrotesk.variable} font-sans antialiased`}
-        style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif" }}
+        className={`${jetbrainsMono.variable} font-mono antialiased`}
+        style={{ fontFamily: "var(--font-jetbrains-mono), ui-monospace, monospace" }}
       >
         <ThemeProvider>
           <ContentProvider content={content}>
