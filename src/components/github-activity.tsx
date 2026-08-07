@@ -39,7 +39,7 @@ async function fetchGitHubEvents(username: string) {
     }
     const res = await fetch(`https://api.github.com/users/${username}/events?per_page=12`, {
       headers,
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     });
     if (!res.ok) return [];
     return res.json();
@@ -55,7 +55,7 @@ async function fetchContributions(username: string) {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36",
         "X-Requested-With": "XMLHttpRequest",
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) return null;
