@@ -35,7 +35,7 @@ export default function Home() {
       <ProcessSection />
       <SectionDivider label="experience" right="// work history" />
       <ExperienceSection />
-      <SectionDivider label="currently building" right="// devpath-ai · live" />
+      <SectionDivider label="currently building" right="// refrainly · live" />
       <DevlogSection />
       <section id="github" className="scroll-mt-24">
         <SectionDivider label="github" right="// @srimaniteja19" />

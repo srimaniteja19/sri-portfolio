@@ -31,7 +31,7 @@ export function ProjectFilters({
     <div
       role="region"
       aria-label="Project Filters"
-      className="flex flex-wrap items-center gap-3"
+      className="flex flex-wrap items-center gap-2"
     >
       {filters.map(({ id, label }) => {
         const isActive = activeFilter === id;
@@ -41,15 +41,13 @@ export function ProjectFilters({
             type="button"
             aria-pressed={isActive}
             onClick={() => onFilterChange(id)}
-            className={`cursor-pointer border-[3px] border-[#0E0E10] px-4 py-2 text-xs font-bold uppercase transition-all duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2B4CFF] focus-visible:ring-offset-2 ${
-              isActive
-                ? "bg-[#2B4CFF] text-[#FFFFFF] shadow-[4px_4px_0_#0E0E10]"
-                : "bg-[#FFFFFF] text-[#0E0E10] shadow-[3px_3px_0_#0E0E10] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#0E0E10]"
-            }`}
+            className="cursor-pointer rounded border-2 px-3 py-1.5 text-[0.65rem] font-bold uppercase transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
             style={{
               fontFamily: "var(--font-jetbrains-mono), monospace",
-              letterSpacing: "0.12em",
-              borderRadius: "0",
+              borderColor: "var(--ink)",
+              backgroundColor: isActive ? "var(--ink)" : "var(--bg)",
+              color: isActive ? "var(--bg)" : "var(--ink)",
+              boxShadow: isActive ? "2px 2px 0 var(--ink)" : "none",
             }}
           >
             {label}

@@ -10,17 +10,10 @@ interface ProjectTimelineProps {
 }
 
 const ACCENT_COLORS: Record<Project2026["accent"], string> = {
-  blue: "#2B4CFF",
-  coral: "#FF5C4D",
-  lime: "#C6F04A",
-  sun: "#FFD23F",
-};
-
-const ACCENT_TEXT_COLORS: Record<Project2026["accent"], string> = {
-  blue: "#FFFFFF",
-  coral: "#FFFFFF",
-  lime: "#0E0E10",
-  sun: "#0E0E10",
+  blue: "var(--sky)",
+  coral: "var(--coral)",
+  lime: "var(--mint)",
+  sun: "var(--lemon)",
 };
 
 const MONTHS = [
@@ -52,7 +45,6 @@ export function ProjectTimeline({
     return projects.map((p) => {
       const createdMs = new Date(`${p.created}T00:00:00Z`).getTime();
       const rawPercent = ((createdMs - timelineStartMs) / totalDuration) * 100;
-      // Clamp position safely between 4% and 96%
       const leftPercent = Math.min(Math.max(rawPercent, 4), 96);
       return {
         ...p,
@@ -75,22 +67,35 @@ export function ProjectTimeline({
   return (
     <div className="w-full overflow-x-auto pb-4 pt-2 scrollbar-thin">
       <div
-        className="relative min-w-[660px] border-[3px] border-[#0E0E10] bg-[#FFFFFF] p-6 shadow-[7px_7px_0_#0E0E10]"
-        style={{ borderRadius: "0" }}
+        className="relative min-w-[660px] rounded border-2 p-6 transition-colors"
+        style={{
+          borderColor: "var(--ink)",
+          background: "var(--bg)",
+          boxShadow: "4px 4px 0 var(--ink)",
+        }}
       >
         {/* Header label */}
-        <div className="mb-8 flex items-center justify-between border-b-[3px] border-[#0E0E10] pb-3">
+        <div
+          className="mb-8 flex items-center justify-between border-b pb-3"
+          style={{ borderColor: "var(--ink)" }}
+        >
           <span
-            className="text-xs font-bold uppercase tracking-[0.12em] text-[#0E0E10]"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            className="text-[0.62rem] font-bold uppercase tracking-wider"
+            style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              color: "var(--dim)",
+            }}
           >
             {"// Release Timeline (Feb — Aug)"}
           </span>
           <span
-            className="text-[0.65rem] font-bold uppercase tracking-[0.12em] text-[#0E0E10]/70"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            className="text-[0.58rem] font-bold uppercase tracking-wider"
+            style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              color: "var(--dim)",
+            }}
           >
-            Click pin to focus card
+            Click pin to focus project
           </span>
         </div>
 
@@ -100,7 +105,6 @@ export function ProjectTimeline({
             const isTop = idx % 2 === 0;
             const isSelected = activeProjectId === pin.id;
             const accentBg = ACCENT_COLORS[pin.accent];
-            const accentText = ACCENT_TEXT_COLORS[pin.accent];
 
             return (
               <div
@@ -117,23 +121,27 @@ export function ProjectTimeline({
                   type="button"
                   onClick={() => onPinClick(pin.id)}
                   aria-label={`Jump to project ${pin.title}`}
-                  className={`group relative flex items-center gap-1.5 border-[3px] border-[#0E0E10] px-2.5 py-1 text-xs font-bold uppercase transition-all duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2B4CFF] focus-visible:ring-offset-2 ${
+                  className={`group relative flex items-center gap-1.5 rounded border-2 px-2.5 py-1 text-[0.65rem] font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)] ${
                     isSelected
-                      ? "scale-105 shadow-[4px_4px_0_#2B4CFF]"
-                      : "shadow-[3px_3px_0_#0E0E10] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#0E0E10]"
+                      ? "scale-105 shadow-[3px_3px_0_var(--ink)]"
+                      : "hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--ink)]"
                   }`}
                   style={{
                     backgroundColor: accentBg,
-                    color: accentText,
+                    color: "var(--ink)",
+                    borderColor: "var(--ink)",
                     fontFamily: "var(--font-jetbrains-mono), monospace",
-                    letterSpacing: "0.08em",
-                    borderRadius: "0",
                   }}
                 >
                   <span>{pin.title}</span>
                   {pin.liveUrl && (
                     <span
-                      className="border border-[#0E0E10] bg-[#C6F04A] px-1 py-0.2 text-[0.6rem] font-extrabold text-[#0E0E10]"
+                      className="rounded border px-1 text-[0.52rem] font-black"
+                      style={{
+                        borderColor: "var(--ink)",
+                        background: "var(--lemon)",
+                        color: "var(--ink)",
+                      }}
                       title="Live project"
                     >
                       LIVE
@@ -143,9 +151,10 @@ export function ProjectTimeline({
 
                 {/* Vertical stem line pointing to axis */}
                 <div
-                  className="w-[3px] bg-[#0E0E10]"
+                  className="w-[2px]"
                   style={{
                     height: isTop ? "26px" : "18px",
+                    background: "var(--ink)",
                   }}
                 />
               </div>
@@ -154,15 +163,19 @@ export function ProjectTimeline({
         </div>
 
         {/* Timeline main axis track */}
-        <div className="relative my-4 h-[6px] w-full border-[2px] border-[#0E0E10] bg-[#0E0E10]">
+        <div
+          className="relative my-4 h-[4px] w-full rounded"
+          style={{ background: "var(--ink)" }}
+        >
           {/* Axis pins ticks */}
           {pins.map((pin) => (
             <div
               key={`tick-${pin.id}`}
-              className="absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 border-[3px] border-[#0E0E10] shadow-[2px_2px_0_#0E0E10]"
+              className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
               style={{
                 left: `${pin.leftPercent}%`,
                 backgroundColor: ACCENT_COLORS[pin.accent],
+                borderColor: "var(--ink)",
               }}
             />
           ))}
@@ -179,12 +192,12 @@ export function ProjectTimeline({
                 transform: "translateX(-50%)",
               }}
             >
-              <div className="h-2 w-[2px] bg-[#0E0E10]" />
+              <div className="h-2 w-[2px]" style={{ background: "var(--ink)" }} />
               <span
-                className="mt-1 text-[0.65rem] font-bold text-[#0E0E10]"
+                className="mt-1 text-[0.58rem] font-bold"
                 style={{
                   fontFamily: "var(--font-jetbrains-mono), monospace",
-                  letterSpacing: "0.12em",
+                  color: "var(--dim)",
                 }}
               >
                 {m.name}

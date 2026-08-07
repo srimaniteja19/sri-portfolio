@@ -76,7 +76,7 @@
     "focusItems": [
       {
         "label": "Building",
-        "value": "DevPath AI · RAG pipelines",
+        "value": "Refrainly · refrainly.dev",
         "color": "var(--mint)"
       },
       {
@@ -219,8 +219,8 @@
       },
       {
         "label": "side project",
-        "title": "DevPath AI",
-        "body": "Self-learning platform using Gemini API — structured course plans and interview prep kits. Next.js + TypeScript.",
+        "title": "Refrainly",
+        "body": "Daily learning campaigns: AI-generated study plans up to 730 days, spaced repetition on 7/30/90/180 ladder, XP & badges. Next.js 16 + React 19.",
         "color": "coral"
       },
       {
@@ -248,16 +248,17 @@
     },
     {
       "num": "02",
-      "label": "devpath ai",
-      "name": "DevPath AI",
-      "desc": "Self-learning platform. Course plans + interview prep from resume & JD via Gemini API + RAG pipelines.",
+      "label": "refrainly",
+      "name": "Refrainly",
+      "desc": "Daily learning campaigns: AI-generated study plans up to 730 days, spaced repetition, XP & badges, Field Kit for notes & bookmarks.",
       "tags": [
-        "next.js",
-        "gemini",
-        "rag",
-        "vercel"
+        "next.js 16",
+        "react 19",
+        "neon",
+        "drizzle",
+        "stripe"
       ],
-      "url": "https://github.com/srimaniteja19/DevPathAI",
+      "url": "https://refrainly.dev",
       "color": "lemon",
       "active": true
     }

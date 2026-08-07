@@ -9,17 +9,10 @@ interface ProjectCardProps {
 }
 
 const ACCENT_BAR_BG: Record<Project2026["accent"], string> = {
-  blue: "#2B4CFF",
-  coral: "#FF5C4D",
-  lime: "#C6F04A",
-  sun: "#FFD23F",
-};
-
-const ACCENT_BAR_TEXT: Record<Project2026["accent"], string> = {
-  blue: "#FFFFFF",
-  coral: "#FFFFFF",
-  lime: "#0E0E10",
-  sun: "#0E0E10",
+  blue: "var(--sky)",
+  coral: "var(--coral)",
+  lime: "var(--mint)",
+  sun: "var(--lemon)",
 };
 
 function formatDate(isoDate: string): string {
@@ -35,32 +28,43 @@ function formatDate(isoDate: string): string {
 export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
   function ProjectCard({ project, isHighlighted }, ref) {
     const accentBg = ACCENT_BAR_BG[project.accent];
-    const accentText = ACCENT_BAR_TEXT[project.accent];
 
     return (
       <article
         ref={ref}
         id={`project-card-${project.id}`}
-        className={`group flex flex-col justify-between border-[3px] border-[#0E0E10] bg-[#FFFFFF] transition-all duration-200 motion-reduce:transition-none ${
+        className={`group flex flex-col justify-between rounded border-2 transition-all duration-200 ${
           isHighlighted
-            ? "-translate-x-1 -translate-y-1 shadow-[11px_11px_0_#2B4CFF] ring-4 ring-[#2B4CFF]"
-            : "shadow-[7px_7px_0_#0E0E10] hover:-translate-x-1 hover:-translate-y-1 hover:shadow-[11px_11px_0_#0E0E10]"
+            ? "-translate-x-1 -translate-y-1 shadow-[5px_5px_0_var(--ink)] ring-2 ring-[var(--ink)]"
+            : "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ink)]"
         }`}
-        style={{ borderRadius: "0" }}
+        style={{
+          borderColor: "var(--ink)",
+          background: "var(--bg)",
+        }}
       >
         {/* Header Bar */}
         <div
-          className="flex items-center justify-between border-b-[3px] border-[#0E0E10] px-4 py-2.5 text-xs font-bold uppercase tracking-[0.12em]"
+          className="flex items-center justify-between border-b px-4 py-2.5 text-[0.62rem] font-bold uppercase"
           style={{
             backgroundColor: accentBg,
-            color: accentText,
+            color: "var(--ink)",
+            borderColor: "var(--ink)",
             fontFamily: "var(--font-jetbrains-mono), monospace",
+            letterSpacing: "0.08em",
           }}
         >
           <span className="truncate">
             {formatDate(project.created)} — {formatDate(project.lastPush)}
           </span>
-          <span className="ml-2 shrink-0 border border-[#0E0E10] bg-[#FFFFFF] px-1.5 py-0.5 text-[0.68rem] text-[#0E0E10]">
+          <span
+            className="ml-2 shrink-0 rounded border px-1.5 py-0.5 text-[0.55rem]"
+            style={{
+              borderColor: "var(--ink)",
+              background: "var(--bg)",
+              color: "var(--ink)",
+            }}
+          >
             {project.size}
           </span>
         </div>
@@ -68,17 +72,21 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
         {/* Content Body */}
         <div className="flex flex-1 flex-col p-5">
           {/* Title & Live Badge */}
-          <div className="mb-2 flex flex-wrap items-center gap-2.5">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
             <h3
-              className="text-2xl font-extrabold uppercase leading-none tracking-tighter text-[#0E0E10]"
-              style={{ fontFamily: "var(--font-bricolage), sans-serif" }}
+              className="text-[1.3rem] font-black leading-tight text-[var(--ink)]"
+              style={{ fontFamily: "var(--font-fraunces), serif" }}
             >
               {project.title}
             </h3>
             {project.liveUrl && (
               <span
-                className="border-[2px] border-[#0E0E10] bg-[#C6F04A] px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-[#0E0E10] shadow-[2px_2px_0_#0E0E10]"
-                style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+                className="rounded border border-[var(--ink)] px-1.5 py-0.5 text-[0.52rem] font-bold uppercase"
+                style={{
+                  fontFamily: "var(--font-jetbrains-mono), monospace",
+                  background: "var(--lemon)",
+                  color: "var(--ink)",
+                }}
               >
                 Live
               </span>
@@ -87,51 +95,80 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
 
           {/* Repo Slug */}
           <div
-            className="mb-4 text-xs font-semibold text-[#0E0E10]/70"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            className="mb-3 text-[0.62rem] font-bold"
+            style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              color: "var(--dim)",
+            }}
           >
-            {project.repo}
+            // {project.repo}
           </div>
 
           {/* Blurb */}
           <p
-            className="mb-6 flex-1 text-sm leading-relaxed text-[#0E0E10]"
-            style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+            className="mb-4 flex-1 text-[0.74rem] font-light leading-[1.65]"
+            style={{
+              fontFamily: "var(--font-dm-sans), sans-serif",
+              color: "var(--dim)",
+            }}
           >
             {project.blurb}
           </p>
 
           {/* Spec Pills Row */}
-          <div className="mb-6 flex flex-wrap gap-2">
+          <div className="mb-4 flex flex-wrap gap-1.5">
             <span
-              className="border-[2px] border-[#0E0E10] bg-[#E7E2F2] px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[#0E0E10]"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                background: "rgba(10,10,9,0.04)",
+                color: "var(--ink)",
+              }}
             >
-              Lang: {project.language}
+              {project.language}
             </span>
             <span
-              className="border-[2px] border-[#0E0E10] bg-[#E7E2F2] px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[#0E0E10]"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                background: "rgba(10,10,9,0.04)",
+                color: "var(--dim)",
+              }}
             >
-              Created: {project.created}
+              Start: {project.created}
             </span>
             <span
-              className="border-[2px] border-[#0E0E10] bg-[#E7E2F2] px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[#0E0E10]"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                background: "rgba(10,10,9,0.04)",
+                color: "var(--dim)",
+              }}
             >
-              Pushed: {project.lastPush}
+              Push: {project.lastPush}
             </span>
           </div>
         </div>
 
         {/* Card Footer Actions */}
-        <div className="flex items-center gap-3 border-t-[3px] border-[#0E0E10] bg-[#E7E2F2]/50 p-4">
+        <div
+          className="flex items-center gap-3 border-t p-4"
+          style={{
+            borderColor: "rgba(10,10,9,0.12)",
+            background: "rgba(10,10,9,0.02)",
+          }}
+        >
           <a
             href={project.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 border-[3px] border-[#0E0E10] bg-[#FFFFFF] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-[#0E0E10] shadow-[3px_3px_0_#0E0E10] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#0E0E10] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2B4CFF] focus-visible:ring-offset-2"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+            className="inline-flex items-center gap-1 rounded border-2 px-3 py-1 text-[0.62rem] font-bold uppercase transition hover:bg-[var(--ink)] hover:text-[var(--bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
+            style={{
+              fontFamily: "var(--font-jetbrains-mono), monospace",
+              borderColor: "var(--ink)",
+              background: "var(--bg)",
+              color: "var(--ink)",
+            }}
           >
             View Code ↗
           </a>
@@ -141,8 +178,13 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 border-[3px] border-[#0E0E10] bg-[#C6F04A] px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.12em] text-[#0E0E10] shadow-[3px_3px_0_#0E0E10] transition-all hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#0E0E10] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#2B4CFF] focus-visible:ring-offset-2"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
+              className="inline-flex items-center gap-1 rounded border-2 px-3 py-1 text-[0.62rem] font-bold uppercase transition hover:bg-[var(--ink)] hover:text-[var(--bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
+              style={{
+                fontFamily: "var(--font-jetbrains-mono), monospace",
+                borderColor: "var(--ink)",
+                background: "var(--mint)",
+                color: "var(--ink)",
+              }}
             >
               Visit Site ↗
             </a>
