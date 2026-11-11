@@ -4,7 +4,7 @@ const CASE_STUDIES = [
   {
     tag: "Enterprise RAG / LLM",
     accent: "var(--volt)",
-    fg: "#111210",
+    fg: "#0B0F17",
     title: "10M+ Product Catalog Semantic Search",
     desc: "Architected an end-to-end RAG recommendation pipeline indexing Goodyear's full tire catalog with chunking, vector embeddings, and hybrid reranking on AWS Bedrock and LlamaIndex.",
     metrics: [
@@ -15,7 +15,7 @@ const CASE_STUDIES = [
   {
     tag: "Multi-Agent Automation",
     accent: "var(--emerald)",
-    fg: "#111210",
+    fg: "#0B0F17",
     title: "LangGraph FP&A Variance Triage",
     desc: "Built a stateful LangGraph agent pipeline that classifies, explains, and routes budget variance reports with human-in-the-loop verification — reducing daily analyst work from 3 hours to 12 minutes.",
     metrics: [

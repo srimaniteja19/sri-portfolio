@@ -124,7 +124,7 @@ export function LogbookRail() {
                   style={{
                     borderColor: isActive ? "var(--ink)" : "transparent",
                     background: isActive ? "var(--volt)" : "transparent",
-                    color: isActive ? "#111210" : "var(--dim)",
+                    color: isActive ? "#0B0F17" : "var(--dim)",
                     boxShadow: isActive ? "2.5px 2.5px 0px var(--ink)" : "none",
                   }}
                 >
@@ -132,7 +132,7 @@ export function LogbookRail() {
                   {isActive && (
                     <span
                       className="inline-block h-2 w-2 shrink-0"
-                      style={{ background: "#111210" }}
+                      style={{ background: "#0B0F17" }}
                     />
                   )}
                 </a>

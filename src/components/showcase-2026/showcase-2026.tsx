@@ -105,7 +105,7 @@ export function Showcase2026() {
             </div>
             <div
               className="px-4 py-2.5"
-              style={{ background: "var(--volt)", color: "#111210" }}
+              style={{ background: "var(--volt)", color: "#0B0F17" }}
             >
               <span className="block font-data text-[0.6rem] font-bold uppercase">
                 In Production

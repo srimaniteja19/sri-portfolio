@@ -60,7 +60,7 @@ export function ProcessSection() {
                     style={{
                       borderColor: "var(--ink)",
                       background: idx === 2 ? "var(--signal)" : "var(--volt)",
-                      color: idx === 2 ? "#FFFFFF" : "#111210",
+                      color: idx === 2 ? "#FFFFFF" : "#0B0F17",
                     }}
                   >
                     0{idx + 1}

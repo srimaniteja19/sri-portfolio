@@ -1,34 +1,34 @@
 @import "tailwindcss";
 
 /*
- * INDUSTRIAL NEOBRUTALIST AVIONICS & TELEMETRY FLIGHT LOGBOOK
- * Primary Surface Tokens: Titanium Ledger (#F4F1EA), Carbon Chassis (#111210),
- * Signal Orange (#FF521B), Telemetry Volt (#D9F938), Field Emerald (#10C982), Blueprint Cobalt (#2B5CE6)
+ * NORDIC COBALT, GLACIAL MINT & STUDIO CHALK NEOBRUTALIST SYSTEM
+ * Primary Surface Tokens: Studio Chalk (#F2F4F7), Silver Slate (#E4E8F0), Pure White (#FFFFFF),
+ * Obsidian Ink (#0B0F17), Electric Cobalt (#2546F0), Glacial Mint (#38F2C2), Iris Ice (#A5B4FC)
  */
 :root {
-  --bg: #F4F1EA;
-  --surface: #ECE7DC;
-  --surface-elevated: #FAF8F3;
-  --ink: #111210;
-  --dim: #3D3E3A;
-  --muted: #4A4B46;
-  --faint: rgba(17, 18, 16, 0.06);
-  --rule: rgba(17, 18, 16, 0.18);
+  --bg: #F2F4F7;
+  --surface: #E4E8F0;
+  --surface-elevated: #FFFFFF;
+  --ink: #0B0F17;
+  --dim: #334155;
+  --muted: #475569;
+  --faint: rgba(11, 15, 23, 0.06);
+  --rule: rgba(11, 15, 23, 0.16);
 
-  /* High-conviction industrial neobrutalist accents */
-  --signal: #FF521B;
-  --volt: #D9F938;
-  --emerald: #10C982;
-  --cobalt: #2B5CE6;
-  --amber: #F59E0B;
+  /* High-craft Cobalt & Glacial Mint accents */
+  --signal: #2546F0;
+  --volt: #38F2C2;
+  --emerald: #A5B4FC;
+  --cobalt: #2546F0;
+  --amber: #60A5FA;
 
-  /* Legacy alias mappings so secondary routes (/hire, /admin) remain cohesive */
-  --mint: #10C982;
-  --lemon: #D9F938;
-  --coral: #FF521B;
+  /* Alias mappings */
+  --mint: #38F2C2;
+  --lemon: #A5B4FC;
+  --coral: #2546F0;
   --sky: #60A5FA;
-  --lilac: #C4B5FD;
-  --peach: #FDBA74;
+  --lilac: #A5B4FC;
+  --peach: #A5F3FC;
 
   --border-width: 2.5px;
   --border: 2.5px solid var(--ink);
@@ -36,36 +36,36 @@
   --shadow-hard-sm: 2.5px 2.5px 0px var(--ink);
   --shadow-hard-lg: 6px 6px 0px var(--ink);
 
-  /* Authentic three-voice typography system */
+  /* Three-voice typography system */
   --display: var(--font-display), "Big Shoulders Display", sans-serif;
   --sans: var(--font-sans), "Chivo", -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
 }
 
-/* Dark / Night-Flight Telemetry Mode */
+/* Dark / Midnight Obsidian Mode */
 html[data-theme="dark"],
 body.theme-dark,
 .dark {
-  --bg: #0D0F0E;
-  --surface: #151917;
-  --surface-elevated: #1B201E;
-  --ink: #F4F1EA;
-  --dim: #C4C1B8;
-  --muted: #A8A59C;
-  --faint: rgba(244, 241, 234, 0.07);
-  --rule: rgba(244, 241, 234, 0.2);
-  --signal: #FF6230;
-  --volt: #D9F938;
-  --emerald: #18E094;
-  --cobalt: #5B8DEF;
-  --mint: #18E094;
-  --lemon: #D9F938;
-  --coral: #FF6230;
-  --sky: #5B8DEF;
-  --border: 2.5px solid #F4F1EA;
-  --shadow-hard: 4px 4px 0px #F4F1EA;
-  --shadow-hard-sm: 2.5px 2.5px 0px #F4F1EA;
-  --shadow-hard-lg: 6px 6px 0px #F4F1EA;
+  --bg: #0B0F17;
+  --surface: #131B2E;
+  --surface-elevated: #19233A;
+  --ink: #F2F4F7;
+  --dim: #CBD5E1;
+  --muted: #94A3B8;
+  --faint: rgba(242, 244, 247, 0.07);
+  --rule: rgba(242, 244, 247, 0.2);
+  --signal: #3B63FB;
+  --volt: #38F2C2;
+  --emerald: #A5B4FC;
+  --cobalt: #60A5FA;
+  --mint: #38F2C2;
+  --lemon: #A5B4FC;
+  --coral: #3B63FB;
+  --sky: #60A5FA;
+  --border: 2.5px solid #F2F4F7;
+  --shadow-hard: 4px 4px 0px #F2F4F7;
+  --shadow-hard-sm: 2.5px 2.5px 0px #F2F4F7;
+  --shadow-hard-lg: 6px 6px 0px #F2F4F7;
 }
 
 html[data-theme="matrix"],
@@ -78,12 +78,12 @@ body.theme-matrix {
   --muted: #66DD88;
   --faint: rgba(34, 255, 102, 0.08);
   --rule: rgba(34, 255, 102, 0.25);
-  --signal: #FF5500;
-  --volt: #E5FF00;
-  --emerald: #22FF66;
+  --signal: #00B84D;
+  --volt: #22FF66;
+  --emerald: #88FFAA;
   --mint: #22FF66;
-  --lemon: #E5FF00;
-  --coral: #FF5500;
+  --lemon: #88FFAA;
+  --coral: #00B84D;
   --sky: #00E5FF;
   --border: 2.5px solid #22FF66;
 }
@@ -129,7 +129,7 @@ body.theme-mono {
   /* Custom browser surfaces per craft-floor */
   ::selection {
     background: var(--volt);
-    color: #111210;
+    color: #0B0F17;
   }
 
   ::-webkit-scrollbar {
@@ -220,7 +220,7 @@ body.theme-mono {
   }
 }
 
-/* diagonal hazard / calibration stripe */
+/* diagonal stripe */
 .hazard-stripe {
   background-image: repeating-linear-gradient(
     -45deg,

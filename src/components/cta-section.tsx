@@ -25,19 +25,19 @@ export function CTASection() {
           <div
             className="flex flex-col justify-between p-8 md:p-10 lg:p-12"
             style={{
-              background: "#111210",
-              color: "#F4F1EA",
+              background: "#0B0F17",
+              color: "#F2F4F7",
             }}
           >
             <div>
               <h2
                 className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black uppercase leading-[0.88]"
-                style={{ color: "#F4F1EA" }}
+                style={{ color: "#F2F4F7" }}
               >
                 {cta.headline}{" "}
                 <span
                   className="mt-1 block"
-                  style={{ color: "#D9F938" }}
+                  style={{ color: "#38F2C2" }}
                 >
                   {cta.subline}
                 </span>
@@ -45,7 +45,7 @@ export function CTASection() {
 
               <p
                 className="mt-4 max-w-[60ch] text-[0.95rem] leading-[1.6]"
-                style={{ color: "#D4D1C8" }}
+                style={{ color: "#CBD5E1" }}
               >
                 {contact.tagline} Feel free to reach out for roles, open-source
                 collaboration, or engineering conversations.
@@ -56,10 +56,10 @@ export function CTASection() {
                   href={`mailto:${contact.email}`}
                   className="nb-btn px-5 py-3 text-[0.74rem]"
                   style={{
-                    borderColor: "#F4F1EA",
+                    borderColor: "#F2F4F7",
                     background: "var(--signal)",
                     color: "#FFFFFF",
-                    boxShadow: "3px 3px 0px #F4F1EA",
+                    boxShadow: "3px 3px 0px #F2F4F7",
                   }}
                 >
                   <span>Email: {contact.email}</span>
@@ -81,10 +81,10 @@ export function CTASection() {
                   href="/hire"
                   className="nb-btn px-5 py-3 text-[0.74rem]"
                   style={{
-                    borderColor: "#F4F1EA",
-                    background: "#D9F938",
-                    color: "#111210",
-                    boxShadow: "3px 3px 0px #F4F1EA",
+                    borderColor: "#F2F4F7",
+                    background: "#38F2C2",
+                    color: "#0B0F17",
+                    boxShadow: "3px 3px 0px #F2F4F7",
                   }}
                 >
                   <span>Resume &amp; Fit Check</span>
@@ -108,10 +108,10 @@ export function CTASection() {
                   rel="noopener noreferrer"
                   className="nb-btn px-4 py-3 text-[0.74rem]"
                   style={{
-                    borderColor: "#F4F1EA",
+                    borderColor: "#F2F4F7",
                     background: "transparent",
-                    color: "#F4F1EA",
-                    boxShadow: "3px 3px 0px #F4F1EA",
+                    color: "#F2F4F7",
+                    boxShadow: "3px 3px 0px #F2F4F7",
                   }}
                 >
                   <span>LinkedIn</span>
@@ -121,7 +121,7 @@ export function CTASection() {
 
             <div
               className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-4 font-data text-[0.68rem] font-bold uppercase"
-              style={{ borderColor: "rgba(244, 241, 234, 0.22)", color: "#D4D1C8" }}
+              style={{ borderColor: "rgba(242, 244, 247, 0.22)", color: "#CBD5E1" }}
             >
               <span>{contact.phone}</span>
               <span>{contact.location}</span>
@@ -140,7 +140,7 @@ export function CTASection() {
             style={{
               borderColor: "var(--ink)",
               background: "var(--volt)",
-              color: "#111210",
+              color: "#0B0F17",
             }}
           >
             <div>
@@ -155,15 +155,15 @@ export function CTASection() {
                 {availItems.map((item) => (
                   <div
                     key={item}
-                    className="flex items-center justify-between border-2 border-[#111210] bg-[#F4F1EA] px-4 py-3 text-[#111210]"
-                    style={{ boxShadow: "3px 3px 0px #111210" }}
+                    className="flex items-center justify-between border-2 border-[#0B0F17] bg-[#FFFFFF] px-4 py-3 text-[#0B0F17]"
+                    style={{ boxShadow: "3px 3px 0px #0B0F17" }}
                   >
                     <span className="font-data text-[0.74rem] font-bold uppercase">
                       {item}
                     </span>
                     <span
-                      className="inline-block h-2.5 w-2.5 border border-[#111210]"
-                      style={{ background: "var(--emerald)" }}
+                      className="inline-block h-2.5 w-2.5 border border-[#0B0F17]"
+                      style={{ background: "var(--signal)" }}
                     />
                   </div>
                 ))}

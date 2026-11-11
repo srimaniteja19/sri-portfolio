@@ -6,8 +6,8 @@ import { useTheme } from "@/components/theme-provider";
 import { useContent } from "@/components/content-provider";
 
 const THEMES = [
-  { id: "default" as const, label: "Light", swatch: "#F4F1EA" },
-  { id: "dark" as const, label: "Dark", swatch: "#0D0F0E" },
+  { id: "default" as const, label: "Light", swatch: "#F2F4F7" },
+  { id: "dark" as const, label: "Dark", swatch: "#0B0F17" },
   { id: "matrix" as const, label: "Matrix", swatch: "#041106" },
   { id: "mono" as const, label: "Mono", swatch: "#000000" },
 ];
@@ -104,7 +104,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="border-2 px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#111210]"
+                className="border-2 px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#0B0F17]"
                 style={{
                   borderColor: isHire ? "var(--ink)" : "transparent",
                   background: isHire ? "var(--surface-elevated)" : "transparent",
@@ -186,14 +186,14 @@ export function Header() {
                       style={{
                         borderColor: active ? "var(--ink)" : "transparent",
                         background: active ? "var(--volt)" : "transparent",
-                        color: active ? "#111210" : "var(--ink)",
+                        color: active ? "#0B0F17" : "var(--ink)",
                       }}
                     >
                       <span className="flex items-center gap-2">
                         <span
                           className="h-3 w-3 shrink-0 border-2"
                           style={{
-                            borderColor: active ? "#111210" : "var(--ink)",
+                            borderColor: active ? "#0B0F17" : "var(--ink)",
                             background: t.swatch,
                           }}
                         />

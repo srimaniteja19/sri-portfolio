@@ -2,19 +2,18 @@
 name: Sri Maniteja Chinnam — Flight Logbook & Release Archive
 description: Industrial Neobrutalist Avionics & Telemetry Flight Logbook for full-stack and AI systems engineering.
 colors:
-  signal-orange: "#FF521B"
-  telemetry-volt: "#D9F938"
-  field-emerald: "#10C982"
-  contribution-mint: "#8CE99A"
-  blueprint-cobalt: "#2B5CE6"
-  titanium-paper: "#F4F1EA"
-  anodized-stone: "#ECE7DC"
-  elevated-sheet: "#FAF8F3"
-  signal-white: "#FFFFFF"
-  carbon-chassis: "#111210"
-  oscilloscope-screen: "#0D110F"
-  graphite-secondary: "#3D3E3A"
-  slate-muted: "#4A4B46"
+  electric-cobalt: "#2546F0"
+  glacial-mint: "#38F2C2"
+  iris-ice: "#A5B4FC"
+  ice-cyan: "#A5F3FC"
+  sky-cobalt: "#60A5FA"
+  studio-chalk: "#F2F4F7"
+  silver-slate: "#E4E8F0"
+  pure-white: "#FFFFFF"
+  obsidian-ink: "#0B0F17"
+  slate-secondary: "#334155"
+  steel-muted: "#475569"
+  cool-silver: "#CBD5E1"
 typography:
   display:
     fontFamily: "Big Shoulders, sans-serif"
@@ -102,26 +101,26 @@ spacing:
   xl: "64px"
 components:
   button-primary:
-    backgroundColor: "{colors.signal-orange}"
+    backgroundColor: "{colors.electric-cobalt}"
     textColor: "#FFFFFF"
     typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: "12px 20px"
   button-secondary:
-    backgroundColor: "{colors.telemetry-volt}"
-    textColor: "{colors.carbon-chassis}"
+    backgroundColor: "{colors.glacial-mint}"
+    textColor: "{colors.obsidian-ink}"
     typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: "12px 20px"
   button-surface:
-    backgroundColor: "{colors.elevated-sheet}"
-    textColor: "{colors.carbon-chassis}"
+    backgroundColor: "{colors.pure-white}"
+    textColor: "{colors.obsidian-ink}"
     typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: "8px 14px"
   card-chassis:
-    backgroundColor: "{colors.elevated-sheet}"
-    textColor: "{colors.carbon-chassis}"
+    backgroundColor: "{colors.pure-white}"
+    textColor: "{colors.obsidian-ink}"
     rounded: "{rounded.none}"
     padding: "24px"
 ---

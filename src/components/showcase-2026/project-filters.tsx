@@ -57,7 +57,7 @@ export function ProjectFilters({
               style={{
                 borderColor: isActive ? "var(--bg)" : "var(--ink)",
                 background: isActive ? "var(--volt)" : "var(--surface)",
-                color: "#111210",
+                color: "#0B0F17",
               }}
             >
               {count}

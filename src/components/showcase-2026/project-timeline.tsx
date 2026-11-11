@@ -15,8 +15,8 @@ const ACCENT_STYLE: Record<
 > = {
   blue: { bg: "var(--surface-elevated)", fg: "var(--ink)" },
   coral: { bg: "var(--signal)", fg: "#FFFFFF" },
-  lime: { bg: "var(--emerald)", fg: "#111210" },
-  sun: { bg: "var(--volt)", fg: "#111210" },
+  lime: { bg: "var(--emerald)", fg: "#0B0F17" },
+  sun: { bg: "var(--volt)", fg: "#0B0F17" },
 };
 
 const MONTHS = [
@@ -140,9 +140,9 @@ export function ProjectTimeline({
                       <span
                         className="border px-1 text-[0.6rem] font-black"
                         style={{
-                          borderColor: "#111210",
+                          borderColor: "#0B0F17",
                           background: "var(--volt)",
-                          color: "#111210",
+                          color: "#0B0F17",
                         }}
                       >
                         Live

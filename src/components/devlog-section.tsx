@@ -387,7 +387,7 @@ export function DevlogSection() {
                           style={{
                             borderColor: "var(--ink)",
                             background: "var(--volt)",
-                            color: "#111210",
+                            color: "#0B0F17",
                           }}
                         >
                           {c.hash}
@@ -461,7 +461,7 @@ export function DevlogSection() {
                       style={{
                         borderColor: "var(--ink)",
                         background: "var(--emerald)",
-                        color: "#111210",
+                        color: "#0B0F17",
                       }}
                     >
                       {m.tag}

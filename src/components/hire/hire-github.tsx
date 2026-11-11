@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 
 const BGS = [
   "rgba(17, 18, 16, 0.08)",
-  "#8CE99A",
-  "#10C982",
-  "#D9F938",
-  "#FF521B",
+  "#A5F3FC",
+  "#38F2C2",
+  "#38F2C2",
+  "#2546F0",
 ];
 
 function ago(d: string) {
@@ -143,7 +143,7 @@ export function HireGitHub() {
           </div>
           <div
             className="p-5"
-            style={{ background: "var(--volt)", color: "#111210" }}
+            style={{ background: "var(--volt)", color: "#0B0F17" }}
           >
             <div className="font-data text-[0.64rem] font-bold uppercase">
               2026 Shipped
@@ -253,7 +253,7 @@ export function HireGitHub() {
                   <div>
                     <div className="flex items-center justify-between gap-2">
                       <span
-                        className="font-display text-[1.45rem] font-black uppercase leading-none group-hover:text-[#111210]"
+                        className="font-display text-[1.45rem] font-black uppercase leading-none group-hover:text-[#0B0F17]"
                         style={{ color: "var(--ink)" }}
                       >
                         {r.name}
@@ -266,14 +266,14 @@ export function HireGitHub() {
                         stroke="currentColor"
                         strokeWidth="2.2"
                         strokeLinecap="square"
-                        className="shrink-0 group-hover:text-[#111210]"
+                        className="shrink-0 group-hover:text-[#0B0F17]"
                         aria-hidden="true"
                       >
                         <path d="M3 9L9 3M9 3H4M9 3V8" />
                       </svg>
                     </div>
                     <p
-                      className="mt-2 text-[0.84rem] leading-relaxed group-hover:text-[#111210]"
+                      className="mt-2 text-[0.84rem] leading-relaxed group-hover:text-[#0B0F17]"
                       style={{ color: "var(--dim)" }}
                     >
                       {r.description ||
@@ -297,7 +297,7 @@ export function HireGitHub() {
                       </span>
                     )}
                     <span
-                      className="tabular-nums group-hover:text-[#111210]"
+                      className="tabular-nums group-hover:text-[#0B0F17]"
                       style={{ color: "var(--dim)" }}
                     >
                       Updated {ago(r.pushed_at || r.updated_at)}

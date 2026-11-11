@@ -23,11 +23,11 @@ const ACCENT_HEADER: Record<
   },
   lime: {
     bg: "var(--emerald)",
-    fg: "#111210",
+    fg: "#0B0F17",
   },
   sun: {
     bg: "var(--volt)",
-    fg: "#111210",
+    fg: "#0B0F17",
   },
 };
 
@@ -76,9 +76,9 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
               <span
                 className="border px-1.5 py-0.5 text-[0.6rem] font-black"
                 style={{
-                  borderColor: "#111210",
-                  background: "#111210",
-                  color: "#D9F938",
+                  borderColor: "#0B0F17",
+                  background: "#0B0F17",
+                  color: "#38F2C2",
                 }}
               >
                 Featured
@@ -115,7 +115,7 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
                 style={{
                   borderColor: "var(--ink)",
                   background: "var(--volt)",
-                  color: "#111210",
+                  color: "#0B0F17",
                 }}
               >
                 Live
@@ -259,7 +259,7 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
               className="nb-btn px-4 py-1.5 text-[0.68rem]"
               style={{
                 background: isFeatured ? "var(--signal)" : "var(--volt)",
-                color: isFeatured ? "#FFFFFF" : "#111210",
+                color: isFeatured ? "#FFFFFF" : "#0B0F17",
               }}
             >
               <span>Visit Site</span>

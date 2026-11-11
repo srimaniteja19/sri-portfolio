@@ -14,10 +14,10 @@ export default async function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#F4F1EA",
+          backgroundColor: "#F2F4F7",
           padding: "44px",
           fontFamily: "system-ui, -apple-system, sans-serif",
-          color: "#111210",
+          color: "#0B0F17",
         }}
       >
         {/* Main Neobrutalist Chassis Box */}
@@ -28,9 +28,9 @@ export default async function Image() {
             justifyContent: "space-between",
             width: "100%",
             height: "100%",
-            backgroundColor: "#FAF8F3",
-            border: "4px solid #111210",
-            boxShadow: "10px 10px 0px #111210",
+            backgroundColor: "#FFFFFF",
+            border: "4px solid #0B0F17",
+            boxShadow: "10px 10px 0px #0B0F17",
           }}
         >
           {/* Top Bar */}
@@ -39,10 +39,10 @@ export default async function Image() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              backgroundColor: "#111210",
-              color: "#F4F1EA",
+              backgroundColor: "#0B0F17",
+              color: "#F2F4F7",
               padding: "18px 32px",
-              borderBottom: "4px solid #111210",
+              borderBottom: "4px solid #0B0F17",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
@@ -50,7 +50,7 @@ export default async function Image() {
                 style={{
                   width: "16px",
                   height: "16px",
-                  backgroundColor: "#FF521B",
+                  backgroundColor: "#2546F0",
                 }}
               />
               <span
@@ -69,8 +69,8 @@ export default async function Image() {
                 display: "flex",
                 alignItems: "center",
                 gap: "12px",
-                backgroundColor: "#D9F938",
-                color: "#111210",
+                backgroundColor: "#38F2C2",
+                color: "#0B0F17",
                 padding: "6px 16px",
                 fontSize: "16px",
                 fontWeight: 800,
@@ -104,7 +104,7 @@ export default async function Image() {
                   fontWeight: 900,
                   letterSpacing: "-0.03em",
                   lineHeight: 0.95,
-                  color: "#111210",
+                  color: "#0B0F17",
                 }}
               >
                 SRI MANITEJA CHINNAM
@@ -120,9 +120,9 @@ export default async function Image() {
             >
               <span
                 style={{
-                  backgroundColor: "#FF521B",
+                  backgroundColor: "#2546F0",
                   color: "#FFFFFF",
-                  border: "3px solid #111210",
+                  border: "3px solid #0B0F17",
                   padding: "8px 18px",
                   fontSize: "22px",
                   fontWeight: 800,
@@ -133,9 +133,9 @@ export default async function Image() {
               </span>
               <span
                 style={{
-                  backgroundColor: "#ECE7DC",
-                  color: "#111210",
-                  border: "3px solid #111210",
+                  backgroundColor: "#38F2C2",
+                  color: "#0B0F17",
+                  border: "3px solid #0B0F17",
                   padding: "8px 18px",
                   fontSize: "22px",
                   fontWeight: 800,
@@ -149,7 +149,7 @@ export default async function Image() {
               style={{
                 fontSize: "24px",
                 fontWeight: 500,
-                color: "#3D3E3A",
+                color: "#334155",
                 maxWidth: "960px",
                 lineHeight: 1.4,
                 marginTop: "6px",
@@ -166,8 +166,8 @@ export default async function Image() {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              backgroundColor: "#ECE7DC",
-              borderTop: "4px solid #111210",
+              backgroundColor: "#E4E8F0",
+              borderTop: "4px solid #0B0F17",
               padding: "18px 32px",
             }}
           >
@@ -184,12 +184,12 @@ export default async function Image() {
                 <span
                   key={tech}
                   style={{
-                    backgroundColor: "#FAF8F3",
-                    border: "2px solid #111210",
+                    backgroundColor: "#FFFFFF",
+                    border: "2px solid #0B0F17",
                     padding: "6px 14px",
                     fontSize: "16px",
                     fontWeight: 700,
-                    color: "#111210",
+                    color: "#0B0F17",
                   }}
                 >
                   {tech}
@@ -201,7 +201,7 @@ export default async function Image() {
               style={{
                 fontSize: "16px",
                 fontWeight: 800,
-                color: "#111210",
+                color: "#0B0F17",
               }}
             >
               M.S. DATA SCIENCE · SUNY BUFFALO

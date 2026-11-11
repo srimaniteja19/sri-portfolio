@@ -103,7 +103,7 @@ export function ExperienceSection() {
                     style={{
                       borderColor: "var(--ink)",
                       background: isCurrent ? "var(--volt)" : "var(--surface)",
-                      color: isCurrent ? "#111210" : "var(--ink)",
+                      color: isCurrent ? "#0B0F17" : "var(--ink)",
                     }}
                   >
                     {item.date}

@@ -39,7 +39,7 @@ export function Hero() {
                 style={{
                   borderColor: "var(--ink)",
                   background: "var(--volt)",
-                  color: "#111210",
+                  color: "#0B0F17",
                   boxShadow: "4px 4px 0px var(--ink)",
                 }}
               >
@@ -88,7 +88,7 @@ export function Hero() {
                 className="nb-btn px-5 py-3 text-[0.78rem]"
                 style={{
                   background: "var(--volt)",
-                  color: "#111210",
+                  color: "#0B0F17",
                 }}
               >
                 <span>Recruiter &amp; Fit Tools</span>
@@ -233,7 +233,7 @@ export function Hero() {
                   background: m.accent,
                   color:
                     m.accent === "var(--volt)" || m.accent === "var(--emerald)"
-                      ? "#111210"
+                      ? "#0B0F17"
                       : "var(--ink)",
                 }}
               >

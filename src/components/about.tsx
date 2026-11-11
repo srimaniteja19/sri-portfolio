@@ -62,7 +62,7 @@ export function About() {
                     style={{
                       borderColor: "var(--ink)",
                       background: idx % 2 === 0 ? "var(--volt)" : "var(--bg)",
-                      color: idx % 2 === 0 ? "#111210" : "var(--ink)",
+                      color: idx % 2 === 0 ? "#0B0F17" : "var(--ink)",
                     }}
                   >
                     {cell.label}

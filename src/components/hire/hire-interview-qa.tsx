@@ -152,7 +152,7 @@ export function HireInterviewQA() {
                     className="cursor-pointer flex w-full items-center justify-between gap-3 p-4 text-left font-data text-[0.74rem] font-bold leading-snug transition-colors"
                     style={{
                       background: isSelected ? "var(--volt)" : "var(--bg)",
-                      color: isSelected ? "#111210" : "var(--ink)",
+                      color: isSelected ? "#0B0F17" : "var(--ink)",
                     }}
                   >
                     <span>{q.q}</span>
@@ -190,7 +190,7 @@ export function HireInterviewQA() {
                       className="nb-btn cursor-pointer px-3.5 py-1.5 text-[0.68rem]"
                       style={{
                         background: copied ? "var(--emerald)" : "var(--surface)",
-                        color: "#111210",
+                        color: "#0B0F17",
                       }}
                     >
                       {copied ? "Copied Answer" : "Copy Answer"}

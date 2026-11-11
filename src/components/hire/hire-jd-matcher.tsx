@@ -184,7 +184,7 @@ export function HireJDMatcher() {
                           style={{
                             borderColor: "var(--ink)",
                             background: "var(--volt)",
-                            color: "#111210",
+                            color: "#0B0F17",
                           }}
                         >
                           Strong Alignment
@@ -280,7 +280,7 @@ export function HireJDMatcher() {
               className="nb-btn cursor-pointer px-5 py-2.5 text-[0.74rem] disabled:opacity-50"
               style={{
                 background: "var(--volt)",
-                color: "#111210",
+                color: "#0B0F17",
               }}
             >
               <span>Generate Tailored Intro</span>
@@ -330,7 +330,7 @@ export function HireJDMatcher() {
                   className="nb-btn cursor-pointer px-3 py-1 text-[0.64rem]"
                   style={{
                     background: copied ? "var(--emerald)" : "var(--bg)",
-                    color: "#111210",
+                    color: "#0B0F17",
                   }}
                 >
                   {copied ? "Copied" : "Copy Intro"}

@@ -113,7 +113,7 @@ export function HireAIChat() {
                       style={{
                         borderColor: "var(--ink)",
                         background: isBot ? "var(--volt)" : "var(--signal)",
-                        color: isBot ? "#111210" : "#FFFFFF",
+                        color: isBot ? "#0B0F17" : "#FFFFFF",
                       }}
                     >
                       {isBot ? "AI" : "YOU"}
@@ -140,7 +140,7 @@ export function HireAIChat() {
                     style={{
                       borderColor: "var(--ink)",
                       background: "var(--volt)",
-                      color: "#111210",
+                      color: "#0B0F17",
                     }}
                   >
                     AI

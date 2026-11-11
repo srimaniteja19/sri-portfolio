@@ -133,7 +133,7 @@ export function HireStackChecker() {
                       : "var(--bg)",
                     color: isSelected
                       ? match
-                        ? "#111210"
+                        ? "#0B0F17"
                         : "#FFFFFF"
                       : "var(--ink)",
                   }}

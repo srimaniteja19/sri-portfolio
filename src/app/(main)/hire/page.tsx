@@ -64,7 +64,7 @@ export default function HirePage() {
               <a
                 key={item.href}
                 href={item.href}
-                className="border-2 border-transparent px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#111210]"
+                className="border-2 border-transparent px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#0B0F17]"
                 style={{ color: "var(--ink)" }}
               >
                 {item.label}
@@ -120,7 +120,7 @@ export default function HirePage() {
                   style={{
                     borderColor: "var(--ink)",
                     background: "var(--volt)",
-                    color: "#111210",
+                    color: "#0B0F17",
                     boxShadow: "4px 4px 0px var(--ink)",
                   }}
                 >
@@ -189,7 +189,7 @@ export default function HirePage() {
               </div>
               <div
                 className="p-4"
-                style={{ background: "var(--volt)", color: "#111210" }}
+                style={{ background: "var(--volt)", color: "#0B0F17" }}
               >
                 <div className="font-data text-[0.6rem] font-bold uppercase">
                   2026 Shipped

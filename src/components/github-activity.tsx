@@ -1,9 +1,9 @@
 const LEVEL_COLORS: Record<number, string> = {
-  0: "rgba(17, 18, 16, 0.08)",
-  1: "#8CE99A",
-  2: "#10C982",
-  3: "#D9F938",
-  4: "#FF521B",
+  0: "rgba(11, 15, 23, 0.08)",
+  1: "#A5F3FC",
+  2: "#38F2C2",
+  3: "#60A5FA",
+  4: "#2546F0",
 };
 
 interface DayContribution {
@@ -317,7 +317,7 @@ export async function GitHubActivity() {
                             {event.type.replace(/Event$/, "")}
                           </span>
                           <span
-                            className="font-data text-[0.64rem] font-semibold tabular-nums group-hover:text-[#111210]"
+                            className="font-data text-[0.64rem] font-semibold tabular-nums group-hover:text-[#0B0F17]"
                             style={{ color: "var(--dim)" }}
                           >
                             {formatRelativeTime(event.created_at)}
@@ -326,7 +326,7 @@ export async function GitHubActivity() {
 
                         <div className="mt-3 flex items-end justify-between gap-2">
                           <span
-                            className="truncate font-display text-[1.45rem] font-black uppercase leading-none group-hover:text-[#111210]"
+                            className="truncate font-display text-[1.45rem] font-black uppercase leading-none group-hover:text-[#0B0F17]"
                             style={{ color: "var(--ink)" }}
                           >
                             {repoName}
@@ -339,7 +339,7 @@ export async function GitHubActivity() {
                             stroke="currentColor"
                             strokeWidth="2.2"
                             strokeLinecap="square"
-                            className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#111210]"
+                            className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#0B0F17]"
                             aria-hidden="true"
                           >
                             <path d="M3 9L9 3M9 3H4M9 3V8" />
