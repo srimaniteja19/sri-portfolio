@@ -6,30 +6,54 @@ export function Footer() {
   const { footer, contact } = useContent();
   return (
     <footer
-      className="flex flex-col justify-between gap-4 border-t px-6 py-5 md:flex-row md:items-center md:px-8"
-      style={{ borderColor: "var(--ink)", fontFamily: "var(--font-jetbrains-mono), monospace", fontSize: "0.62rem", color: "var(--dim)" }}
+      className="flex flex-col justify-between gap-4 px-4 py-6 md:flex-row md:items-center md:px-8"
+      style={{
+        background: "var(--ink)",
+        color: "var(--bg)",
+      }}
     >
-      <div className="flex items-center gap-6">
-        <span>~/{footer.name} · {footer.location}</span>
-        <div className="flex items-center gap-1.5" style={{ borderColor: "rgba(10,10,9,0.15)" }}>
-          <span className="h-1.5 w-1.5 animate-pulse-dot rounded-full" style={{ background: "var(--mint)" }} />
-          {footer.statusText}
+      <div className="flex flex-wrap items-center gap-5 font-data text-[0.68rem] font-bold uppercase">
+        <span>
+          {footer.name} · {footer.location}
+        </span>
+        <div className="flex items-center gap-2">
+          <span
+            className="h-2 w-2 animate-pulse-dot"
+            style={{ background: "var(--emerald)" }}
+          />
+          <span style={{ color: "var(--volt)" }}>{footer.statusText}</span>
         </div>
       </div>
-      <div className="flex gap-5">
-        <a href="/hire" className="transition-colors hover:text-[var(--ink)]">
-          hire
+
+      <div className="flex flex-wrap items-center gap-5 font-data text-[0.68rem] font-bold uppercase">
+        <a href="/hire" className="transition-opacity hover:opacity-75">
+          /hire
         </a>
-        <a href={contact.github} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[var(--ink)]">
+        <a
+          href={contact.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-opacity hover:opacity-75"
+        >
           github
         </a>
-        <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[var(--ink)]">
+        <a
+          href={contact.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-opacity hover:opacity-75"
+        >
           linkedin
         </a>
-        <a href={`mailto:${contact.email}`} className="transition-colors hover:text-[var(--ink)]">
+        <a
+          href={`mailto:${contact.email}`}
+          className="transition-opacity hover:opacity-75"
+        >
           email
         </a>
-        <span style={{ color: "rgba(13,13,13,0.2)" }}>© {new Date().getFullYear()}</span>
+        <span className="tabular-nums opacity-75">
+          © {new Date().getFullYear()} SRI MANITEJA CHINNAM
+        </span>
       </div>
     </footer>
   );

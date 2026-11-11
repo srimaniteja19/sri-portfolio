@@ -1,35 +1,54 @@
-const items = [
-  { label: "Next.js", color: "var(--mint)" },
-  { label: "TypeScript", color: "var(--lemon)" },
-  { label: "Node.js", color: "var(--coral)" },
-  { label: "LangChain", color: "var(--sky)" },
-  { label: "AWS Bedrock", color: "var(--lilac)" },
-  { label: "PostgreSQL", color: "var(--peach)" },
-  { label: "GPT-4o", color: "var(--mint)" },
-  { label: "Claude 3", color: "var(--lemon)" },
-  { label: "RAG", color: "var(--coral)" },
-  { label: "Docker", color: "var(--sky)" },
-  { label: "Redis", color: "var(--lilac)" },
-  { label: "Pinecone", color: "var(--peach)" },
+const TECH_ITEMS = [
+  { cat: "Frontend", label: "Next.js 16 & React 19" },
+  { cat: "Language", label: "TypeScript" },
+  { cat: "AI / LLM", label: "LangChain & LangGraph" },
+  { cat: "Cloud AI", label: "AWS Bedrock & OpenRouter" },
+  { cat: "Database", label: "PostgreSQL & Drizzle ORM" },
+  { cat: "Search", label: "Redis & Vector Indexing" },
+  { cat: "Infra", label: "Docker & Kubernetes" },
+  { cat: "Role", label: "Software Engineer @ Rivian" },
 ];
 
 export function ScrollTicker() {
   return (
     <div
-      className="flex overflow-hidden border-y py-2"
-      style={{ borderColor: "var(--ink)", background: "var(--ink)" }}
+      className="flex overflow-hidden border-b-[2.5px] py-2.5"
+      style={{
+        borderColor: "var(--ink)",
+        background: "var(--surface)",
+        contain: "content",
+      }}
     >
       <div
-        className="flex w-max gap-0"
-        style={{ animation: "tickerScroll 20s linear infinite" }}
+        className="flex w-max items-center"
+        style={{
+          animation: "tickerScroll 28s linear infinite",
+          willChange: "transform",
+        }}
       >
-        {[...items, ...items].map((item, i) => (
-          <span key={`${item.label}-${i}`} className="flex items-center gap-2 whitespace-nowrap px-4">
-            <span className="text-[0.7rem] font-bold uppercase" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--bg)", letterSpacing: "0.05em" }}>
-              <span style={{ color: item.color }}>▸</span> {item.label}
+        {[...TECH_ITEMS, ...TECH_ITEMS].map((item, i) => (
+          <div
+            key={`${item.label}-${i}`}
+            className="flex items-center gap-2.5 border-r-2 px-5 whitespace-nowrap"
+            style={{ borderColor: "var(--ink)" }}
+          >
+            <span
+              className="border px-1.5 py-0.5 font-data text-[0.6rem] font-bold uppercase"
+              style={{
+                borderColor: "var(--ink)",
+                background: "var(--volt)",
+                color: "#111210",
+              }}
+            >
+              {item.cat}
             </span>
-            <span className="text-base" style={{ color: "rgba(255,255,255,0.18)" }}>/</span>
-          </span>
+            <span
+              className="font-data text-[0.74rem] font-bold uppercase tracking-wider"
+              style={{ color: "var(--ink)" }}
+            >
+              {item.label}
+            </span>
+          </div>
         ))}
       </div>
     </div>

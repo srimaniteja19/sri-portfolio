@@ -1,63 +1,103 @@
-const row1 = [
-  { cat: "frontend", name: "Next.js", bg: "var(--mint)" },
-  { cat: "language", name: "TypeScript", bg: "" },
-  { cat: "ai/llm", name: "LangChain", bg: "var(--lemon)" },
-  { cat: "backend", name: "Node.js", bg: "" },
-  { cat: "database", name: "PostgreSQL", bg: "var(--sky)" },
-  { cat: "ai/llm", name: "LangGraph", bg: "" },
-  { cat: "cloud", name: "AWS Bedrock", bg: "var(--coral)" },
-  { cat: "ai/llm", name: "LlamaIndex", bg: "" },
-  { cat: "cache", name: "Redis", bg: "var(--lilac)" },
-  { cat: "infra", name: "Docker", bg: "" },
-  { cat: "vector db", name: "Pinecone", bg: "var(--peach)" },
-  { cat: "language", name: "Python", bg: "" },
+const DOMAINS = [
+  {
+    title: "Frontend & Web",
+    summary:
+      "Server-first React architectures, streaming UI, and type-safe client state.",
+    items: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "HTML5 Canvas", "Server Actions"],
+  },
+  {
+    title: "AI & LLM Systems",
+    summary:
+      "Production RAG pipelines, hybrid vector/keyword search, reranking, and multi-step agents.",
+    items: ["LangChain", "LangGraph", "AWS Bedrock", "OpenRouter", "Google Gemini", "GPT-4o / Claude", "LlamaIndex"],
+  },
+  {
+    title: "Databases & Storage",
+    summary:
+      "Relational schema design, vector indexing, low-latency caching, and transactional integrity.",
+    items: ["PostgreSQL", "Neon Serverless", "Drizzle ORM", "Redis", "Pinecone", "Semantic Indexing"],
+  },
+  {
+    title: "Cloud & Infrastructure",
+    summary:
+      "Containerized microservices, CI/CD automation, payment webhooks, and observability.",
+    items: ["Node.js", "Python", "Docker", "Kubernetes", "AWS", "Vercel", "Stripe Webhooks", "CI/CD"],
+  },
 ];
-
-const row2 = [
-  { cat: "frontend", name: "React", bg: "" },
-  { cat: "styling", name: "Tailwind", bg: "var(--lemon)" },
-  { cat: "infra", name: "Kubernetes", bg: "" },
-  { cat: "ai model", name: "GPT-4o", bg: "var(--coral)" },
-  { cat: "ai model", name: "Claude 3", bg: "" },
-  { cat: "infra", name: "CI/CD", bg: "var(--mint)" },
-  { cat: "deploy", name: "Vercel", bg: "" },
-  { cat: "cloud", name: "AWS", bg: "var(--sky)" },
-  { cat: "framework", name: "Vue.js", bg: "" },
-  { cat: "technique", name: "RAG", bg: "var(--lilac)" },
-  { cat: "search", name: "Semantic", bg: "" },
-  { cat: "ai model", name: "Gemini", bg: "var(--peach)" },
-];
-
-function SkillBlock({ cat, name, bg }: { cat: string; name: string; bg: string }) {
-  return (
-    <div
-      className="flex-shrink-0 border-r px-5 py-4 transition-colors hover:bg-[rgba(10,10,9,0.05)]"
-      style={{ borderColor: "var(--ink)", background: bg || "var(--bg)", whiteSpace: "nowrap" }}
-    >
-      <div className="mb-1 text-[0.5rem] font-bold uppercase" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", letterSpacing: "0.1em", color: "var(--dim)" }}>
-        {cat}
-      </div>
-      <div className="text-[0.95rem] font-black italic" style={{ fontFamily: "var(--font-fraunces), serif" }}>
-        {name}
-      </div>
-    </div>
-  );
-}
 
 export function SkillsMarquee() {
   return (
-    <div className="overflow-hidden border-b" style={{ borderColor: "var(--ink)" }}>
-      <div className="flex border-b" style={{ borderColor: "var(--ink)" }}>
-        <div className="flex w-max" style={{ animation: "scroll 28s linear infinite" }}>
-          {[...row1, ...row1].map((s, i) => (
-            <SkillBlock key={`r1-${s.name}-${i}`} cat={s.cat} name={s.name} bg={s.bg} />
-          ))}
+    <div
+      className="border-b-[2.5px]"
+      style={{
+        borderColor: "var(--ink)",
+        background: "var(--bg)",
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+        <div
+          className="mb-8 flex flex-col items-start justify-between gap-4 border-b-[2.5px] pb-6 md:flex-row md:items-end"
+          style={{ borderColor: "var(--ink)" }}
+        >
+          <div>
+            <h2
+              className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black uppercase leading-[0.92]"
+              style={{ color: "var(--ink)" }}
+            >
+              Skills &amp; Tech Stack
+            </h2>
+            <p
+              className="mt-2.5 max-w-[65ch] text-[0.95rem] leading-[1.6]"
+              style={{ color: "var(--dim)" }}
+            >
+              Technologies used across enterprise systems at Rivian and
+              independent full-stack AI products.
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="flex">
-        <div className="flex w-max" style={{ animation: "scroll 28s linear infinite reverse" }}>
-          {[...row2, ...row2].map((s, i) => (
-            <SkillBlock key={`r2-${s.name}-${i}`} cat={s.cat} name={s.name} bg={s.bg} />
+
+        <div
+          className="nb-box grid grid-cols-1 divide-y-[2.5px] md:grid-cols-2 md:divide-x-[2.5px] md:divide-y-[2.5px]"
+          style={{ borderColor: "var(--ink)" }}
+        >
+          {DOMAINS.map((d) => (
+            <div
+              key={d.title}
+              className="flex flex-col justify-between p-6"
+              style={{ background: "var(--surface-elevated)" }}
+            >
+              <div>
+                <h3
+                  className="font-display text-[1.75rem] font-black uppercase leading-none"
+                  style={{ color: "var(--ink)" }}
+                >
+                  {d.title}
+                </h3>
+
+                <p
+                  className="mt-2.5 text-[0.84rem] leading-relaxed"
+                  style={{ color: "var(--dim)" }}
+                >
+                  {d.summary}
+                </p>
+              </div>
+
+              <div className="mt-5 flex flex-wrap gap-1.5 border-t pt-4" style={{ borderColor: "var(--rule)" }}>
+                {d.items.map((item) => (
+                  <span
+                    key={item}
+                    className="border-2 px-2.5 py-1 font-data text-[0.68rem] font-bold uppercase"
+                    style={{
+                      borderColor: "var(--ink)",
+                      background: "var(--bg)",
+                      color: "var(--ink)",
+                    }}
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>

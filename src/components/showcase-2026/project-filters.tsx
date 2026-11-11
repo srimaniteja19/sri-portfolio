@@ -2,7 +2,7 @@
 
 import React from "react";
 
-export type FilterCategory = "all" | "TypeScript" | "JavaScript" | "live";
+export type FilterCategory = "all" | "TypeScript" | "JavaScript" | "Java" | "live";
 
 interface ProjectFiltersProps {
   activeFilter: FilterCategory;
@@ -11,6 +11,7 @@ interface ProjectFiltersProps {
     all: number;
     ts: number;
     js: number;
+    java: number;
     live: number;
   };
 }
@@ -20,11 +21,12 @@ export function ProjectFilters({
   onFilterChange,
   counts,
 }: ProjectFiltersProps) {
-  const filters: { id: FilterCategory; label: string }[] = [
-    { id: "all", label: `All ${counts.all}` },
-    { id: "TypeScript", label: `TypeScript (${counts.ts})` },
-    { id: "JavaScript", label: `JavaScript (${counts.js})` },
-    { id: "live", label: `Live (${counts.live})` },
+  const filters: { id: FilterCategory; label: string; count: number }[] = [
+    { id: "all", label: "All", count: counts.all },
+    { id: "live", label: "Live", count: counts.live },
+    { id: "TypeScript", label: "TypeScript", count: counts.ts },
+    { id: "JavaScript", label: "JavaScript", count: counts.js },
+    { id: "Java", label: "Java", count: counts.java },
   ];
 
   return (
@@ -33,7 +35,7 @@ export function ProjectFilters({
       aria-label="Project Filters"
       className="flex flex-wrap items-center gap-2"
     >
-      {filters.map(({ id, label }) => {
+      {filters.map(({ id, label, count }) => {
         const isActive = activeFilter === id;
         return (
           <button
@@ -41,16 +43,25 @@ export function ProjectFilters({
             type="button"
             aria-pressed={isActive}
             onClick={() => onFilterChange(id)}
-            className="cursor-pointer rounded border-2 px-3 py-1.5 text-[0.65rem] font-bold uppercase transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
+            className="nb-btn cursor-pointer px-3.5 py-1.5 text-[0.68rem] tabular-nums"
             style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              borderColor: "var(--ink)",
-              backgroundColor: isActive ? "var(--ink)" : "var(--bg)",
+              backgroundColor: isActive
+                ? "var(--ink)"
+                : "var(--surface-elevated)",
               color: isActive ? "var(--bg)" : "var(--ink)",
-              boxShadow: isActive ? "2px 2px 0 var(--ink)" : "none",
             }}
           >
-            {label}
+            <span>{label}</span>
+            <span
+              className="border px-1.5 py-0.2 text-[0.6rem]"
+              style={{
+                borderColor: isActive ? "var(--bg)" : "var(--ink)",
+                background: isActive ? "var(--volt)" : "var(--surface)",
+                color: "#111210",
+              }}
+            >
+              {count}
+            </span>
           </button>
         );
       })}

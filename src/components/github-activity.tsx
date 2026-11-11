@@ -1,11 +1,9 @@
-const BENTO_COLORS = ["mint", "lemon", "coral", "sky", "lilac", "peach"] as const;
-
 const LEVEL_COLORS: Record<number, string> = {
-  0: "rgba(10, 10, 9, 0.08)",
-  1: "rgba(126, 237, 196, 0.6)",
-  2: "var(--mint)",
-  3: "#5FE0B4",
-  4: "#3dd4a0",
+  0: "rgba(17, 18, 16, 0.08)",
+  1: "#8CE99A",
+  2: "#10C982",
+  3: "#D9F938",
+  4: "#FF521B",
 };
 
 interface DayContribution {
@@ -37,10 +35,13 @@ async function fetchGitHubEvents(username: string) {
     if (process.env.GITHUB_TOKEN) {
       headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
-    const res = await fetch(`https://api.github.com/users/${username}/events?per_page=12`, {
-      headers,
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(
+      `https://api.github.com/users/${username}/events?per_page=12`,
+      {
+        headers,
+        next: { revalidate: 60 },
+      }
+    );
     if (!res.ok) return [];
     return res.json();
   } catch {
@@ -50,19 +51,24 @@ async function fetchGitHubEvents(username: string) {
 
 async function fetchContributions(username: string) {
   try {
-    const res = await fetch(`https://github.com/users/${username}/contributions`, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest",
-      },
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(
+      `https://github.com/users/${username}/contributions`,
+      {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "X-Requested-With": "XMLHttpRequest",
+        },
+        next: { revalidate: 60 },
+      }
+    );
 
     if (!res.ok) return null;
     const html = await res.text();
 
     const daysMap: Record<string, DayContribution> = {};
-    const dayRegex = /data-date="(\d{4}-\d{2}-\d{2})"[^>]*id="([^"]+)"[^>]*data-level="(\d+)"/g;
+    const dayRegex =
+      /data-date="(\d{4}-\d{2}-\d{2})"[^>]*id="([^"]+)"[^>]*data-level="(\d+)"/g;
     let match: RegExpExecArray | null;
 
     while ((match = dayRegex.exec(html)) !== null) {
@@ -105,7 +111,10 @@ async function fetchContributions(username: string) {
       .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
       .map((k) => weeksMap[parseInt(k, 10)]);
 
-    const totalContributions = Object.values(daysMap).reduce((acc, d) => acc + d.count, 0);
+    const totalContributions = Object.values(daysMap).reduce(
+      (acc, d) => acc + d.count,
+      0
+    );
 
     return { totalContributions, weeks: weeksList };
   } catch (err) {
@@ -126,158 +135,225 @@ export async function GitHubActivity() {
 
   const display = Array.isArray(events)
     ? events
-        .slice(0, 8)
+        .slice(0, 6)
         .filter((e: { type: string }) =>
-          ["PushEvent", "CreateEvent", "WatchEvent", "ForkEvent", "PublicEvent"].includes(e.type)
+          [
+            "PushEvent",
+            "CreateEvent",
+            "WatchEvent",
+            "ForkEvent",
+            "PublicEvent",
+          ].includes(e.type)
         )
     : [];
 
   return (
-    <div className="border-b px-6 py-6 md:px-8" style={{ borderColor: "var(--ink)" }}>
-      <div className="mb-4 flex items-center justify-between">
+    <div
+      className="border-b-[2.5px] px-4 py-12 md:px-8 md:py-16"
+      style={{ borderColor: "var(--ink)", background: "var(--bg)" }}
+    >
+      <div className="mx-auto max-w-7xl">
+        {/* Header Bar — Heading leads directly */}
         <div
-          className="flex items-center gap-2 text-[0.65rem] font-bold uppercase"
-          style={{
-            fontFamily: "var(--font-jetbrains-mono), monospace",
-            color: "var(--dim)",
-            letterSpacing: "0.1em",
-          }}
+          className="mb-8 flex flex-col items-start justify-between gap-4 border-b-[2.5px] pb-6 sm:flex-row sm:items-end"
+          style={{ borderColor: "var(--ink)" }}
         >
-          <span style={{ color: "rgba(13,13,13,0.2)" }}>//</span> contribution activity
-        </div>
-        <a
-          href={`https://github.com/${username}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-[100px] border px-2.5 py-1 text-[0.68rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]"
-          style={{
-            fontFamily: "var(--font-jetbrains-mono), monospace",
-            borderColor: "var(--ink)",
-            background: "var(--ink)",
-            color: "var(--bg)",
-          }}
-        >
-          @{username}
-        </a>
-      </div>
+          <div>
+            <h2
+              className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black uppercase leading-[0.92]"
+              style={{ color: "var(--ink)" }}
+            >
+              GitHub Activity
+            </h2>
+            <p
+              className="mt-2 font-data text-[0.78rem] font-bold uppercase tabular-nums"
+              style={{ color: "var(--dim)" }}
+            >
+              {totalContributions} contributions in the past year · @{username}
+            </p>
+          </div>
 
-      <div>
-        <div
-          className="mb-3 text-[0.68rem] font-bold"
-          style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}
-        >
-          {totalContributions} contributions in the past year
+          <a
+            href={`https://github.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nb-btn px-4 py-2 text-[0.74rem]"
+            style={{
+              background: "var(--ink)",
+              color: "var(--bg)",
+            }}
+          >
+            <span>@{username} on GitHub</span>
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="square"
+              aria-hidden="true"
+            >
+              <path d="M3 9L9 3M9 3H4M9 3V8" />
+            </svg>
+          </a>
         </div>
 
-        <div className="overflow-x-auto pb-2 pt-4 scrollbar-thin">
-          {contributionWeeks.length > 0 ? (
-            <div className="flex gap-[3px] py-2">
-              {contributionWeeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-[3px]">
-                  {week.map((day, di) => {
-                    const bgColor = LEVEL_COLORS[day?.level ?? 0] || "rgba(10, 10, 9, 0.08)";
-                    return (
-                      <div key={di} className="group relative">
+        {/* Contribution Matrix Chassis (Lightweight single-node cells for 60fps scroll) */}
+        <div className="nb-box p-5" style={{ contain: "content" }}>
+          <div className="overflow-x-auto pb-2 pt-2">
+            {contributionWeeks.length > 0 ? (
+              <div className="flex gap-[3px] py-2">
+                {contributionWeeks.map((week, wi) => (
+                  <div key={wi} className="flex flex-col gap-[3px]">
+                    {week.map((day, di) => {
+                      const bgColor =
+                        LEVEL_COLORS[day?.level ?? 0] ||
+                        "rgba(17, 18, 16, 0.08)";
+                      return (
                         <div
-                          className="h-3 w-3 min-w-3 cursor-pointer rounded-[2px] border border-black/10 transition-all duration-150 hover:z-30 hover:scale-150 hover:border-[#0E0E10] hover:shadow-md hover:ring-2 hover:ring-[#0E0E10]"
+                          key={di}
+                          title={
+                            day?.tooltipText ||
+                            `${day?.count || 0} contributions on ${day?.date}`
+                          }
+                          className="h-3 w-3 min-w-3 border border-black/20"
                           style={{ backgroundColor: bgColor }}
                         />
-
-                        {/* Instant Tooltip on Hover */}
-                        <div
-                          className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded border-[2px] border-[#0E0E10] bg-[#0E0E10] px-2.5 py-1 text-[0.65rem] font-bold text-[#FFFFFF] shadow-[3px_3px_0_#0E0E10] opacity-0 transition-all duration-150 group-hover:-translate-y-1 group-hover:opacity-100"
-                          style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
-                        >
-                          {day?.tooltipText || `${day?.count || 0} contributions on ${day?.date}`}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="py-8 text-center text-[0.8rem]" style={{ color: "var(--muted)" }}>
-              No contribution data available
-            </div>
-          )}
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                className="py-8 text-center font-data text-[0.78rem] font-bold uppercase"
+                style={{ color: "var(--dim)" }}
+              >
+                Visit github.com/srimaniteja19
+              </div>
+            )}
+          </div>
 
           {/* Legend */}
           <div
-            className="mt-4 flex items-center justify-end gap-2 text-[0.58rem] font-bold"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}
+            className="mt-4 flex flex-wrap items-center justify-end gap-2 border-t-2 pt-3 font-data text-[0.64rem] font-bold uppercase"
+            style={{ borderColor: "var(--rule)", color: "var(--dim)" }}
           >
-            <span>Less</span>
-            <div className="flex gap-1">
-              {[0, 1, 2, 3, 4].map((level) => (
-                <div
-                  key={level}
-                  className="h-3 w-3 rounded-[2px] border border-black/10"
-                  style={{ background: LEVEL_COLORS[level] }}
-                />
-              ))}
+            <div className="flex items-center gap-2">
+              <span>Less</span>
+              <div className="flex gap-1">
+                {[0, 1, 2, 3, 4].map((level) => (
+                  <div
+                    key={level}
+                    className="h-3 w-3 border border-black/25"
+                    style={{ background: LEVEL_COLORS[level] }}
+                  />
+                ))}
+              </div>
+              <span>More</span>
             </div>
-            <span>More</span>
           </div>
         </div>
-      </div>
 
-      {/* Event cards */}
-      {display.length > 0 && (
-        <div
-          className="mt-6 grid grid-cols-1 gap-3 border-t pt-6 sm:grid-cols-2 lg:grid-cols-3"
-          style={{ borderColor: "var(--ink)" }}
-        >
-          {display.map((event: { id: string; type: string; repo: { name: string }; created_at: string }, i: number) => {
-            const repoName = event.repo.name.replace(/^[^/]+\//, "");
-            const color = BENTO_COLORS[i % BENTO_COLORS.length];
-            return (
-              <a
-                key={event.id}
-                href={`https://github.com/${event.repo.name}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group relative block border-[2px] border-[#0E0E10] p-5 shadow-[4px_4px_0_#0E0E10] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#0E0E10] bento-${color}`}
+        {/* Recent Repository Event Ledger */}
+        {display.length > 0 && (
+          <div className="mt-8">
+            <div
+              className="nb-box divide-y-2"
+              style={{ borderColor: "var(--ink)" }}
+            >
+              <div
+                className="flex items-center justify-between px-4 py-2.5 font-data text-[0.68rem] font-bold uppercase"
+                style={{
+                  background: "var(--ink)",
+                  color: "var(--bg)",
+                }}
               >
-                <div
-                  className="mb-1 text-[0.58rem] font-bold uppercase"
-                  style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}
-                >
-                  {event.type.replace(/Event$/, "")}
-                </div>
-                <div
-                  className="mb-1 text-[0.95rem] font-black leading-tight"
-                  style={{ fontFamily: "var(--font-fraunces), serif", color: "var(--ink)" }}
-                >
-                  {repoName}
-                </div>
-                <div
-                  className="text-[0.7rem] font-medium"
-                  style={{ color: "var(--muted)" }}
-                >
-                  {formatRelativeTime(event.created_at)}
-                </div>
-                <span
-                  className="absolute right-4 top-4 text-[0.9rem] font-bold opacity-70 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100"
-                  style={{ fontFamily: "var(--font-fraunces), serif", color: "var(--ink)" }}
-                >
-                  ↗
+                <span>Recent Activity</span>
+                <span style={{ color: "var(--volt)" }}>
+                  Latest {display.length}
                 </span>
-              </a>
-            );
-          })}
-        </div>
-      )}
+              </div>
 
-      <a
-        href={`https://github.com/${username}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-6 block text-center text-[0.7rem] font-bold transition hover:opacity-80"
-        style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--ink)" }}
-      >
-        view all activity on github ↗
-      </a>
+              <div
+                className="grid grid-cols-1 divide-y-2 md:grid-cols-2 md:divide-x-2 lg:grid-cols-3"
+                style={{ borderColor: "var(--ink)" }}
+              >
+                {display.map(
+                  (
+                    event: {
+                      id: string;
+                      type: string;
+                      repo: { name: string };
+                      created_at: string;
+                    },
+                    i: number
+                  ) => {
+                    const repoName = event.repo.name.replace(/^[^/]+\//, "");
+                    const isFirst = i === 0;
+                    return (
+                      <a
+                        key={event.id}
+                        href={`https://github.com/${event.repo.name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex flex-col justify-between p-5 transition-colors hover:bg-[var(--volt)]"
+                        style={{
+                          background: isFirst
+                            ? "var(--surface)"
+                            : "var(--surface-elevated)",
+                        }}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span
+                            className="border px-2 py-0.5 font-data text-[0.6rem] font-bold uppercase"
+                            style={{
+                              borderColor: "var(--ink)",
+                              background: "var(--bg)",
+                              color: "var(--ink)",
+                            }}
+                          >
+                            {event.type.replace(/Event$/, "")}
+                          </span>
+                          <span
+                            className="font-data text-[0.64rem] font-semibold tabular-nums group-hover:text-[#111210]"
+                            style={{ color: "var(--dim)" }}
+                          >
+                            {formatRelativeTime(event.created_at)}
+                          </span>
+                        </div>
+
+                        <div className="mt-3 flex items-end justify-between gap-2">
+                          <span
+                            className="truncate font-display text-[1.45rem] font-black uppercase leading-none group-hover:text-[#111210]"
+                            style={{ color: "var(--ink)" }}
+                          >
+                            {repoName}
+                          </span>
+                          <svg
+                            width="13"
+                            height="13"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="square"
+                            className="shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#111210]"
+                            aria-hidden="true"
+                          >
+                            <path d="M3 9L9 3M9 3H4M9 3V8" />
+                          </svg>
+                        </div>
+                      </a>
+                    );
+                  }
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

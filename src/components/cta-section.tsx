@@ -1,157 +1,174 @@
 "use client";
 
+import Link from "next/link";
 import { useContent } from "@/components/content-provider";
 
 export function CTASection() {
   const { cta, contact } = useContent();
   const availItems = cta.availItems;
-  return (
-    <section id="contact" className="scroll-mt-24">
-      <div
-        className="grid border-b lg:grid-cols-2"
-        style={{ borderColor: "var(--ink)" }}
-      >
-        {/* Left - dark */}
-        <div
-          className="relative flex flex-col justify-center overflow-hidden px-8 py-12 lg:px-10"
-          style={{ background: "var(--ink)" }}
-        >
-          <div
-            className="pointer-events-none absolute -bottom-4 -right-4 text-[9rem] font-black italic leading-none"
-            style={{ fontFamily: "var(--font-fraunces), serif", color: "rgba(255,255,255,0.03)" }}
-          >
-            hire.
-          </div>
-          <div className="relative z-10">
-            <div
-              className="mb-4 text-[0.54rem] font-bold uppercase"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace", letterSpacing: "0.14em", color: "rgba(255,255,255,0.28)" }}
-            >
-              // open to opportunities
-            </div>
-            <h2
-              className="mb-6 text-[2.2rem] font-black leading-[1.05]"
-              style={{ fontFamily: "var(--font-fraunces), serif", color: "#F0EDE4", fontStyle: "italic" }}
-            >
-              got a hard
-              <br />
-              problem?
-              <br />
-              <span style={{ color: "var(--lemon)", fontStyle: "normal" }}>{cta.subline}</span>
-            </h2>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="/hire"
-                className="rounded border-2 border-[var(--lemon)] bg-[var(--lemon)] px-4 py-2.5 text-[0.66rem] font-bold uppercase tracking-wide text-[var(--ink)] transition hover:bg-[#EDD800]"
-                style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
-              >
-                recruiter tools ↗
-              </a>
-              <a
-                href={`mailto:${contact.email}`}
-                className="rounded border-2 border-[var(--lemon)] bg-[var(--lemon)] px-4 py-2.5 text-[0.66rem] font-bold uppercase tracking-wide text-[var(--ink)] transition hover:bg-[#EDD800]"
-                style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
-              >
-                email me ↗
-              </a>
-              <a
-                href={contact.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded border-2 border-[rgba(255,255,255,0.2)] px-4 py-2.5 text-[0.66rem] font-bold uppercase tracking-wide transition hover:border-[rgba(255,255,255,0.6)] hover:text-white"
-                style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "rgba(255,255,255,0.55)" }}
-              >
-                github
-              </a>
-            </div>
-          </div>
-          {/* Handshake illustration */}
-          <div className="absolute bottom-0 right-8" style={{ opacity: 0.85 }}>
-            <svg width="260" height="190" viewBox="0 0 260 190" className="max-h-[180px] max-w-[260px]">
-              <style>{`
-                .cta-spark1 { animation: illoFloatB 2s ease-in-out infinite; }
-                .cta-spark2 { animation: illoFloatA 2.5s ease-in-out infinite 0.5s; }
-                .cta-spark3 { animation: illoFloatC 3s ease-in-out infinite 1s; }
-              `}</style>
-              <g transform="translate(18,12)">
-                <ellipse cx="42" cy="48" rx="18" ry="20" fill="var(--skin)" />
-                <ellipse cx="42" cy="30" rx="19" ry="10" fill="var(--coral)" />
-                <rect x="28" y="21" width="9" height="18" rx="4.5" fill="var(--coral)" />
-                <rect x="49" y="21" width="9" height="18" rx="4.5" fill="var(--coral)" />
-                <path d="M31 55 Q42 63 53 55" fill="none" stroke="var(--skin2)" strokeWidth="1.8" strokeLinecap="round" />
-                <circle cx="34" cy="46" r="3" fill="white" />
-                <circle cx="35" cy="47" r="1.8" fill="#2C2C2A" />
-                <circle cx="50" cy="46" r="3" fill="white" />
-                <circle cx="51" cy="47" r="1.8" fill="#2C2C2A" />
-                <rect x="29" y="68" width="30" height="48" rx="8" fill="var(--coral)" />
-                <path d="M29 80 Q16 93 13 106" fill="none" stroke="var(--skin)" strokeWidth="9" strokeLinecap="round" />
-                <path d="M59 80 Q72 93 75 106" fill="none" stroke="var(--skin)" strokeWidth="9" strokeLinecap="round" />
-                <ellipse cx="75" cy="108" rx="7" ry="6" fill="var(--skin)" />
-                <rect x="31" y="116" width="11" height="44" rx="5" fill="#2C2C2A" />
-                <rect x="48" y="116" width="11" height="44" rx="5" fill="#2C2C2A" />
-                <ellipse cx="37" cy="161" rx="10" ry="4.5" fill="var(--ink)" />
-                <ellipse cx="53" cy="161" rx="10" ry="4.5" fill="var(--ink)" />
-              </g>
-              <g transform="translate(155,12)">
-                <ellipse cx="42" cy="48" rx="18" ry="20" fill="var(--skin2)" />
-                <ellipse cx="42" cy="30" rx="19" ry="10" fill="#2C2C2A" />
-                <circle cx="33" cy="32" r="8" fill="#2C2C2A" />
-                <circle cx="42" cy="30" r="8" fill="#2C2C2A" />
-                <circle cx="51" cy="32" r="8" fill="#2C2C2A" />
-                <path d="M31 55 Q42 63 53 55" fill="none" stroke="var(--hair3)" strokeWidth="1.8" strokeLinecap="round" />
-                <circle cx="34" cy="46" r="3" fill="white" />
-                <circle cx="35" cy="47" r="1.8" fill="var(--ink)" />
-                <circle cx="50" cy="46" r="3" fill="white" />
-                <circle cx="51" cy="47" r="1.8" fill="var(--ink)" />
-                <rect x="29" y="68" width="30" height="48" rx="8" fill="var(--mint)" />
-                <path d="M29 80 Q16 93 13 106" fill="none" stroke="var(--skin2)" strokeWidth="9" strokeLinecap="round" />
-                <ellipse cx="13" cy="108" rx="7" ry="6" fill="var(--skin2)" />
-                <path d="M59 80 Q72 93 75 106" fill="none" stroke="var(--skin2)" strokeWidth="9" strokeLinecap="round" />
-                <rect x="31" y="116" width="11" height="44" rx="5" fill="#1a1a18" />
-                <rect x="48" y="116" width="11" height="44" rx="5" fill="#1a1a18" />
-                <ellipse cx="37" cy="161" rx="10" ry="4.5" fill="var(--ink)" />
-                <ellipse cx="53" cy="161" rx="10" ry="4.5" fill="var(--ink)" />
-              </g>
-              <ellipse cx="130" cy="120" rx="16" ry="11" fill="var(--skin)" />
-              <path d="M115 118 Q130 108 145 118" fill="var(--skin)" stroke="none" />
-              <text x="118" y="94" fontSize="13" fill="var(--lemon)" className="cta-spark1">✦</text>
-              <text x="124" y="80" fontSize="9" fill="var(--mint)" className="cta-spark2">✦</text>
-              <text x="131" y="92" fontSize="8" fill="var(--coral)" className="cta-spark3">✦</text>
-              <ellipse cx="60" cy="175" rx="28" ry="4" fill="rgba(240,237,228,0.18)" />
-              <ellipse cx="197" cy="175" rx="28" ry="4" fill="rgba(240,237,228,0.18)" />
-            </svg>
-          </div>
-        </div>
 
-        {/* Right - lemon */}
+  return (
+    <section
+      id="contact"
+      className="scroll-mt-16 border-b-[2.5px]"
+      style={{
+        borderColor: "var(--ink)",
+        background: "var(--surface)",
+      }}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
         <div
-          className="flex flex-col justify-center gap-6 p-8 lg:p-10"
-          style={{ background: "var(--lemon)" }}
+          className="nb-box grid grid-cols-1 lg:grid-cols-[1.2fr_2.5px_0.8fr]"
+          style={{ borderColor: "var(--ink)" }}
         >
+          {/* Left Command Dispatch */}
           <div
-            className="text-[0.54rem] font-bold uppercase"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace", letterSpacing: "0.12em", color: "rgba(10,10,9,0.38)" }}
+            className="flex flex-col justify-between p-8 md:p-10 lg:p-12"
+            style={{
+              background: "#111210",
+              color: "#F4F1EA",
+            }}
           >
-            // i&apos;m available for
-          </div>
-          <div className="flex flex-col gap-2">
-            {availItems.map((item) => (
-              <div
-                key={item}
-                className="flex items-center justify-between rounded border-2 border-[var(--ink)] bg-[rgba(255,255,255,0.52)] px-3 py-2 transition-colors hover:bg-[rgba(255,255,255,0.88)]"
+            <div>
+              <h2
+                className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black uppercase leading-[0.88]"
+                style={{ color: "#F4F1EA" }}
               >
-                <span className="text-[0.63rem] font-bold" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                  {item}
-                </span>
-                <div
-                  className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border-2 border-[var(--ink)]"
+                {cta.headline}{" "}
+                <span
+                  className="mt-1 block"
+                  style={{ color: "#D9F938" }}
                 >
-                  <svg viewBox="0 0 12 12" className="h-1.5 w-1.5" stroke="var(--ink)" fill="none" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="2,6 5,9 10,3" />
+                  {cta.subline}
+                </span>
+              </h2>
+
+              <p
+                className="mt-4 max-w-[60ch] text-[0.95rem] leading-[1.6]"
+                style={{ color: "#D4D1C8" }}
+              >
+                {contact.tagline} Feel free to reach out for roles, open-source
+                collaboration, or engineering conversations.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="nb-btn px-5 py-3 text-[0.74rem]"
+                  style={{
+                    borderColor: "#F4F1EA",
+                    background: "var(--signal)",
+                    color: "#FFFFFF",
+                    boxShadow: "3px 3px 0px #F4F1EA",
+                  }}
+                >
+                  <span>Email: {contact.email}</span>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="square"
+                    aria-hidden="true"
+                  >
+                    <path d="M3 9L9 3M9 3H4M9 3V8" />
                   </svg>
-                </div>
+                </a>
+
+                <Link
+                  href="/hire"
+                  className="nb-btn px-5 py-3 text-[0.74rem]"
+                  style={{
+                    borderColor: "#F4F1EA",
+                    background: "#D9F938",
+                    color: "#111210",
+                    boxShadow: "3px 3px 0px #F4F1EA",
+                  }}
+                >
+                  <span>Resume &amp; Fit Check</span>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="square"
+                    aria-hidden="true"
+                  >
+                    <path d="M3 9L9 3M9 3H4M9 3V8" />
+                  </svg>
+                </Link>
+
+                <a
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nb-btn px-4 py-3 text-[0.74rem]"
+                  style={{
+                    borderColor: "#F4F1EA",
+                    background: "transparent",
+                    color: "#F4F1EA",
+                    boxShadow: "3px 3px 0px #F4F1EA",
+                  }}
+                >
+                  <span>LinkedIn</span>
+                </a>
               </div>
-            ))}
+            </div>
+
+            <div
+              className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t pt-4 font-data text-[0.68rem] font-bold uppercase"
+              style={{ borderColor: "rgba(244, 241, 234, 0.22)", color: "#D4D1C8" }}
+            >
+              <span>{contact.phone}</span>
+              <span>{contact.location}</span>
+            </div>
+          </div>
+
+          {/* Vertical Structural Rule */}
+          <div
+            className="hidden lg:block"
+            style={{ background: "var(--ink)" }}
+          />
+
+          {/* Right Panel */}
+          <div
+            className="flex flex-col justify-between border-t-[2.5px] p-8 lg:border-t-0 lg:p-10"
+            style={{
+              borderColor: "var(--ink)",
+              background: "var(--volt)",
+              color: "#111210",
+            }}
+          >
+            <div>
+              <h3 className="font-display text-[1.75rem] font-black uppercase leading-none">
+                Available For
+              </h3>
+              <p className="mt-2 text-[0.84rem] font-medium leading-relaxed">
+                Open to connecting on:
+              </p>
+
+              <div className="mt-6 flex flex-col gap-2.5">
+                {availItems.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center justify-between border-2 border-[#111210] bg-[#F4F1EA] px-4 py-3 text-[#111210]"
+                    style={{ boxShadow: "3px 3px 0px #111210" }}
+                  >
+                    <span className="font-data text-[0.74rem] font-bold uppercase">
+                      {item}
+                    </span>
+                    <span
+                      className="inline-block h-2.5 w-2.5 border border-[#111210]"
+                      style={{ background: "var(--emerald)" }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

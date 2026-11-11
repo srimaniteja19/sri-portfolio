@@ -6,86 +6,114 @@ import { Project2026 } from "@/data/projects-2026";
 interface ProjectCardProps {
   project: Project2026;
   isHighlighted?: boolean;
+  isFeatured?: boolean;
 }
 
-const ACCENT_BAR_BG: Record<Project2026["accent"], string> = {
-  blue: "var(--sky)",
-  coral: "var(--coral)",
-  lime: "var(--mint)",
-  sun: "var(--lemon)",
+const ACCENT_HEADER: Record<
+  Project2026["accent"],
+  { bg: string; fg: string }
+> = {
+  blue: {
+    bg: "var(--surface)",
+    fg: "var(--ink)",
+  },
+  coral: {
+    bg: "var(--signal)",
+    fg: "#FFFFFF",
+  },
+  lime: {
+    bg: "var(--emerald)",
+    fg: "#111210",
+  },
+  sun: {
+    bg: "var(--volt)",
+    fg: "#111210",
+  },
 };
 
 function formatDate(isoDate: string): string {
   const [year, month, day] = isoDate.split("-");
   const monthNames = [
     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
   ];
   const mIndex = parseInt(month, 10) - 1;
   return `${monthNames[mIndex]} ${parseInt(day, 10)}, ${year}`;
 }
 
 export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
-  function ProjectCard({ project, isHighlighted }, ref) {
-    const accentBg = ACCENT_BAR_BG[project.accent];
+  function ProjectCard({ project, isHighlighted, isFeatured }, ref) {
+    const headerTheme = ACCENT_HEADER[project.accent];
 
     return (
       <article
         ref={ref}
         id={`project-card-${project.id}`}
-        className={`group flex flex-col justify-between rounded border-2 transition-all duration-200 ${
+        className={`nb-box group flex flex-col justify-between transition-all duration-150 ${
+          isFeatured ? "md:col-span-2" : ""
+        } ${
           isHighlighted
-            ? "-translate-x-1 -translate-y-1 shadow-[5px_5px_0_var(--ink)] ring-2 ring-[var(--ink)]"
-            : "hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_var(--ink)]"
+            ? "-translate-x-1 -translate-y-1 ring-4 ring-[var(--signal)]"
+            : "hover:-translate-x-0.5 hover:-translate-y-0.5"
         }`}
-        style={{
-          borderColor: "var(--ink)",
-          background: "var(--bg)",
-        }}
       >
-        {/* Header Bar */}
+        {/* Top Date & Size Bar */}
         <div
-          className="flex items-center justify-between border-b px-4 py-2.5 text-[0.62rem] font-bold uppercase"
+          className="flex items-center justify-between border-b-[2.5px] px-4 py-2.5 font-data text-[0.68rem] font-bold uppercase tracking-wider tabular-nums"
           style={{
-            backgroundColor: accentBg,
-            color: "var(--ink)",
+            backgroundColor: headerTheme.bg,
+            color: headerTheme.fg,
             borderColor: "var(--ink)",
-            fontFamily: "var(--font-jetbrains-mono), monospace",
-            letterSpacing: "0.08em",
           }}
         >
           <span className="truncate">
             {formatDate(project.created)} — {formatDate(project.lastPush)}
           </span>
-          <span
-            className="ml-2 shrink-0 rounded border px-1.5 py-0.5 text-[0.55rem]"
-            style={{
-              borderColor: "var(--ink)",
-              background: "var(--bg)",
-              color: "var(--ink)",
-            }}
-          >
-            {project.size}
-          </span>
+          <div className="ml-2 flex shrink-0 items-center gap-1.5">
+            {isFeatured && (
+              <span
+                className="border px-1.5 py-0.5 text-[0.6rem] font-black"
+                style={{
+                  borderColor: "#111210",
+                  background: "#111210",
+                  color: "#D9F938",
+                }}
+              >
+                Featured
+              </span>
+            )}
+            <span
+              className="border px-1.5 py-0.5 text-[0.6rem] font-bold"
+              style={{
+                borderColor: "var(--ink)",
+                background: "var(--surface-elevated)",
+                color: "var(--ink)",
+              }}
+            >
+              {project.size}
+            </span>
+          </div>
         </div>
 
-        {/* Content Body */}
-        <div className="flex flex-1 flex-col p-5">
-          {/* Title & Live Badge */}
-          <div className="mb-2 flex flex-wrap items-center gap-2">
+        {/* Main Body */}
+        <div className="flex flex-1 flex-col p-6">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h3
-              className="text-[1.3rem] font-black leading-tight text-[var(--ink)]"
-              style={{ fontFamily: "var(--font-fraunces), serif" }}
+              className={`font-display font-black uppercase leading-none tracking-tight ${
+                isFeatured ? "text-[1.75rem]" : "text-[1.45rem]"
+              }`}
+              style={{ color: "var(--ink)" }}
             >
               {project.title}
             </h3>
+
             {project.liveUrl && (
               <span
-                className="rounded border border-[var(--ink)] px-1.5 py-0.5 text-[0.52rem] font-bold uppercase"
+                className="border-2 px-2 py-0.5 font-data text-[0.64rem] font-bold uppercase"
                 style={{
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  background: "var(--lemon)",
-                  color: "var(--ink)",
+                  borderColor: "var(--ink)",
+                  background: "var(--volt)",
+                  color: "#111210",
                 }}
               >
                 Live
@@ -93,84 +121,72 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
             )}
           </div>
 
-          {/* Repo Slug */}
-          <div
-            className="mb-3 text-[0.62rem] font-bold"
-            style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              color: "var(--dim)",
-            }}
-          >
-            // {project.repo}
-          </div>
-
-          {/* Blurb */}
           <p
-            className="mb-4 flex-1 text-[0.74rem] font-light leading-[1.65]"
-            style={{
-              fontFamily: "var(--font-dm-sans), sans-serif",
-              color: "var(--dim)",
-            }}
+            className="mt-3 flex-1 text-[0.95rem] leading-[1.6]"
+            style={{ color: "var(--dim)" }}
           >
             {project.blurb}
           </p>
 
-          {/* Spec Pills Row */}
-          <div className="mb-4 flex flex-wrap gap-1.5">
+          {/* Metadata Row */}
+          <div
+            className="mt-5 flex flex-wrap items-center gap-2 border-t-2 pt-3 font-data text-[0.64rem] font-bold uppercase tabular-nums"
+            style={{ borderColor: "var(--rule)" }}
+          >
             <span
-              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
+              className="border px-2 py-0.5"
               style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                background: "rgba(10,10,9,0.04)",
+                borderColor: "var(--ink)",
+                background: "var(--surface)",
                 color: "var(--ink)",
               }}
             >
               {project.language}
             </span>
             <span
-              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
+              className="border px-2 py-0.5"
               style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                background: "rgba(10,10,9,0.04)",
+                borderColor: "var(--ink)",
+                background: "var(--bg)",
                 color: "var(--dim)",
               }}
             >
-              Start: {project.created}
-            </span>
-            <span
-              className="rounded border border-[var(--ink)] px-2 py-0.5 text-[0.56rem] font-bold uppercase"
-              style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                background: "rgba(10,10,9,0.04)",
-                color: "var(--dim)",
-              }}
-            >
-              Push: {project.lastPush}
+              {project.repo}
             </span>
           </div>
         </div>
 
-        {/* Card Footer Actions */}
+        {/* Action Controls Footer */}
         <div
-          className="flex items-center gap-3 border-t p-4"
+          className="flex flex-wrap items-center justify-between gap-3 border-t-[2.5px] px-5 py-3.5"
           style={{
-            borderColor: "rgba(10,10,9,0.12)",
-            background: "rgba(10,10,9,0.02)",
+            borderColor: "var(--ink)",
+            background: "var(--surface)",
           }}
         >
           <a
             href={project.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded border-2 px-3 py-1 text-[0.62rem] font-bold uppercase transition hover:bg-[var(--ink)] hover:text-[var(--bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
+            className="nb-btn px-3.5 py-1.5 text-[0.68rem]"
             style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              borderColor: "var(--ink)",
-              background: "var(--bg)",
+              background: "var(--surface-elevated)",
               color: "var(--ink)",
             }}
           >
-            View Code ↗
+            <span>View Code</span>
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="square"
+              aria-hidden="true"
+            >
+              <path d="M3 9L9 3M9 3H4M9 3V8" />
+            </svg>
           </a>
 
           {project.liveUrl && (
@@ -178,15 +194,25 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded border-2 px-3 py-1 text-[0.62rem] font-bold uppercase transition hover:bg-[var(--ink)] hover:text-[var(--bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)]"
+              className="nb-btn px-4 py-1.5 text-[0.68rem]"
               style={{
-                fontFamily: "var(--font-jetbrains-mono), monospace",
-                borderColor: "var(--ink)",
-                background: "var(--mint)",
-                color: "var(--ink)",
+                background: isFeatured ? "var(--signal)" : "var(--volt)",
+                color: isFeatured ? "#FFFFFF" : "#111210",
               }}
             >
-              Visit Site ↗
+              <span>Visit Site</span>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="square"
+                aria-hidden="true"
+              >
+                <path d="M3 9L9 3M9 3H4M9 3V8" />
+              </svg>
             </a>
           )}
         </div>

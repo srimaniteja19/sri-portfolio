@@ -3,76 +3,205 @@
 import { useState } from "react";
 
 const IQ_DATA = [
-  { tab: 0, q: "Tell me about yourself", a: "I'm an AI consultant and full-stack engineer with 4+ years building production systems. Currently at RealFlex building LLM-powered ecommerce and finance tools for Goodyear — shipping a RAG-based recommendation engine (+15% conversion) and a GenAI finance suite (-60% manual triage). M.S. Data Science from University at Buffalo." },
-  { tab: 0, q: "Why are you leaving your current role?", a: "I've built two major production AI systems at RealFlex and I'm ready for a bigger stage — a team where I can lead AI architecture, work with more data, and go deeper on LLM engineering." },
-  { tab: 0, q: "What's your biggest achievement?", a: "The Goodyear RAG pipeline. I took a cold problem — 'customers can't find the right tire' — and shipped a full semantic search + personalized ranking system on AWS Bedrock in 8 weeks. +15% ecommerce conversion on a large-scale retailer." },
-  { tab: 0, q: "Describe a challenging project", a: "The GenAI Finance Suite. The hardest part wasn't the AI — it was getting FP&A analysts to trust it. I built explainability layers, human-in-loop review, and shipped incrementally. Went from 0% adoption to replacing 60% of manual triage." },
-  { tab: 1, q: "How does RAG work?", a: "Retrieval-Augmented Generation: chunk documents, embed as vectors, store in a vector DB. At query time, embed the question, find k-nearest chunks, pass as context to the LLM. The model generates answers grounded in retrieved docs rather than hallucinating." },
-  { tab: 1, q: "Next.js vs React — when do you pick which?", a: "Next.js for anything needing SSR, SSG, API routes, or SEO. React standalone only for pure SPAs. I default to Next.js 14 with App Router for server components and smaller bundles." },
-  { tab: 1, q: "How would you optimize a slow API?", a: "Profile first: DB queries, network, compute, or serialization. Add indexes and EXPLAIN for DB. Redis caching for read-heavy. Connection pooling. Queue for compute-heavy. Paginate and compress payloads. Measure with k6 or Artillery." },
-  { tab: 1, q: "TypeScript benefits you've seen?", a: "Caught a critical bug where a string product ID was passed to a function expecting numeric — would have corrupted recommendations in prod. Autocomplete in complex LangChain pipelines saves hours." },
-  { tab: 2, q: "Design a recommendation system", a: "1) Data: product catalog in PostgreSQL, user events in a stream. 2) Embeddings: chunk products, generate embeddings, store in Pinecone. 3) Retrieval: user query → embed → vector search → top-k. 4) Ranking: ML model or LLM reranker. 5) Serving: API route + Redis cache. 6) Feedback loop for retraining." },
-  { tab: 2, q: "Design a real-time chat system", a: "WebSockets for real-time. Messages in PostgreSQL. Redis pub/sub to broadcast across instances. Message queue for delivery guarantees. Shard by room_id for scale." },
-  { tab: 3, q: "What's the difference between LangChain and LangGraph?", a: "LangChain is for linear chains. LangGraph is for stateful, cyclical agent workflows where the graph can loop, branch, and maintain state. I use LangGraph for complex agents and LangChain for simpler RAG pipelines." },
-  { tab: 3, q: "How do you evaluate LLM output quality?", a: "RAGAS for RAG (faithfulness, relevance, context precision). LLM-as-judge for free-form. Pydantic validation for structured outputs. Production: log samples + human spot-check. A/B test prompts with business metrics." },
-  { tab: 3, q: "RAG vs fine-tuning — when to use each?", a: "RAG when knowledge changes frequently or you need citations. Fine-tuning for specific tone/format/domain vocabulary when data is stable. RAG first, always. Fine-tune only after RAG hits a ceiling." },
-  { tab: 3, q: "How do you handle LLM hallucinations in prod?", a: "Structured outputs with Pydantic + retry. Retrieval grounding. Confidence scoring with fallback. Human-in-loop for high-stakes. Production logging + anomaly detection." },
+  {
+    tab: 0,
+    q: "Tell me about yourself",
+    a: "I'm a Software Engineer at Rivian and full-stack AI engineer with 4+ years of production experience and an M.S. in Data Science from the University at Buffalo. Across enterprise work and independent builds like Hoard and Refrainly, I specialize in shipping end-to-end TypeScript/Next.js applications, RAG search pipelines, and distributed backend services.",
+  },
+  {
+    tab: 0,
+    q: "What have you shipped recently?",
+    a: "In 2026 alone I've shipped 12 repositories and 8 live production apps — most notably Hoard (a contextual bookmark manager & creator studio with semantic vector search, Kanban pipeline, and a Chrome extension) and Refrainly (AI-generated daily learning campaigns up to 730 days with spaced repetition and Stripe billing).",
+  },
+  {
+    tab: 0,
+    q: "What's a high-impact system you built in production?",
+    a: "For Goodyear's 10M+ tire catalog, I took the problem 'customers can't find the right tire' and shipped a semantic search and personalized ranking system on AWS Bedrock and LlamaIndex in 8 weeks — driving a +15% lift in ecommerce conversion with sub-800ms p95 latency.",
+  },
+  {
+    tab: 0,
+    q: "Describe a challenging cross-functional problem",
+    a: "When building an automated FP&A variance triage suite with LangGraph, the hardest part wasn't the model — it was earning analyst trust. I added source citations, confidence thresholds, and a human-in-the-loop review step, taking adoption from 0% to automating 60% of daily manual triage.",
+  },
+  {
+    tab: 1,
+    q: "How do you architect RAG in production?",
+    a: "Semantic chunking with document metadata preserved, hybrid retrieval (dense vector embeddings + BM25 lexical search), and a cross-encoder or LLM reranker before passing top-k context to the generator. I enforce structured outputs with Zod/Pydantic and measure faithfulness and recall continuously.",
+  },
+  {
+    tab: 1,
+    q: "Next.js App Router vs SPA — how do you choose?",
+    a: "I default to Next.js 16 with React 19 Server Components and Server Actions so data fetching happens close to the database (Neon Postgres / Drizzle) and client JS stays minimal. Interactive islands like canvas tools or drag-and-drop boards hydrate selectively on the client.",
+  },
+  {
+    tab: 1,
+    q: "How do you diagnose and fix a slow API?",
+    a: "Measure p95/p99 first to isolate DB queries, network I/O, serialization, or LLM token latency. Add composite indexes and inspect EXPLAIN plans in Postgres, cache hot reads in Redis, stream LLM responses incrementally, and verify under load.",
+  },
+  {
+    tab: 1,
+    q: "Where has strict TypeScript saved you in production?",
+    a: "End-to-end schema enforcement from Drizzle ORM tables through Zod API validators to React props catches contract drift at compile time — especially critical when orchestrating multi-step LLM tool calls and Stripe webhook payloads.",
+  },
+  {
+    tab: 2,
+    q: "Design a distributed rate limiter",
+    a: "In Rate Limiter X (Java 21, Spring Boot, Redis), I implemented 5 algorithms — Token Bucket, Sliding Window, Fixed Window, Leaky Bucket, and Composite — backed by atomic Redis Lua scripts to guarantee thread safety across nodes at 50k+ req/sec with <2ms p95 latency.",
+  },
+  {
+    tab: 2,
+    q: "Design a catalog recommendation & search engine",
+    a: "1) Ingest catalog updates into Postgres and generate embeddings asynchronously. 2) Query pipeline: embed user intent -> hybrid vector + keyword retrieval -> business-rule filter (inventory/fitment) -> reranker. 3) Cache frequent queries in Redis and log click-through conversions for evaluation.",
+  },
+  {
+    tab: 3,
+    q: "When do you use LangGraph vs linear chains?",
+    a: "Linear chains work well for single-pass retrieve-and-summarize tasks. I use LangGraph when the workflow requires cycles, state persistence, conditional branching, tool retries, or human-in-the-loop approval gates.",
+  },
+  {
+    tab: 3,
+    q: "How do you evaluate LLM output quality?",
+    a: "Offline golden datasets scored for retrieval recall, groundedness, and schema validity, combined with production sampling, latency/cost tracking, and direct user feedback signals (accepted vs edited outputs).",
+  },
+  {
+    tab: 3,
+    q: "RAG vs fine-tuning — how do you decide?",
+    a: "Start with RAG whenever facts change frequently, access control matters, or you need verifiable citations. Fine-tune only when you need a smaller model to reliably follow a specialized output format or domain style after prompting and retrieval are saturated.",
+  },
+  {
+    tab: 3,
+    q: "How do you prevent hallucinations in user-facing AI?",
+    a: "Strict retrieval grounding, schema-validated structured outputs (Zod), explicit abstention instructions when context is insufficient, and linking every claim back to its source chunk.",
+  },
 ];
 
-const TABS = ["behavioral", "technical", "system design", "ai / llm"];
+const TABS = ["Background", "Full-Stack", "System Design", "AI & LLM"];
 
 export function HireInterviewQA() {
   const [tab, setTab] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number>(0);
+  const [copied, setCopied] = useState(false);
 
   const questions = IQ_DATA.filter((q) => q.tab === tab);
-  const current = selected !== null ? questions[selected] : null;
+  const current = questions[selected] ?? questions[0];
+
+  const copyAnswer = () => {
+    if (!current) return;
+    navigator.clipboard?.writeText(current.a);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
 
   return (
-    <div className="border-b" style={{ borderColor: "var(--ink)" }}>
-      <div className="flex overflow-x-auto border-b-2" style={{ borderColor: "var(--ink)" }}>
-        {TABS.map((t, i) => (
-          <button
-            key={t}
-            onClick={() => { setTab(i); setSelected(null); }}
-            className="whitespace-nowrap border-r-2 border-[var(--ink)] px-5 py-3 text-[0.62rem] font-bold uppercase transition"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace", background: i === tab ? "var(--ink)" : "transparent", color: i === tab ? "var(--bg)" : "var(--ink)" }}
+    <section
+      className="border-b-[2.5px] px-4 py-12 md:px-8 md:py-16"
+      style={{ borderColor: "var(--ink)", background: "var(--bg)" }}
+    >
+      <div className="mx-auto max-w-7xl">
+        <div
+          className="nb-box"
+          style={{
+            borderColor: "var(--ink)",
+            background: "var(--surface-elevated)",
+          }}
+        >
+          {/* Category Tabs */}
+          <div
+            className="flex flex-wrap border-b-[2.5px]"
+            style={{
+              borderColor: "var(--ink)",
+              background: "var(--surface)",
+            }}
           >
-            {t}
-          </button>
-        ))}
-      </div>
-      <div className="grid lg:grid-cols-[260px_1fr]" style={{ minHeight: 220 }}>
-        <div className="max-h-[280px] overflow-y-auto border-r-2" style={{ borderColor: "var(--ink)" }}>
-          {questions.map((q, i) => (
-            <button
-              key={i}
-              onClick={() => setSelected(i)}
-              className="w-full border-b p-4 text-left text-[0.72rem] font-medium leading-snug transition hover:bg-[rgba(10,10,9,0.04)]"
-              style={{ fontFamily: "var(--font-jetbrains-mono), monospace", borderColor: "rgba(10,10,9,.07)", background: selected === i ? "rgba(10,10,9,.06)" : "transparent" }}
-            >
-              {q.q}
-            </button>
-          ))}
+            {TABS.map((t, i) => {
+              const isActive = i === tab;
+              return (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => {
+                    setTab(i);
+                    setSelected(0);
+                  }}
+                  className="cursor-pointer border-r-2 px-6 py-3.5 font-data text-[0.74rem] font-bold uppercase transition-colors"
+                  style={{
+                    borderColor: "var(--ink)",
+                    background: isActive ? "var(--ink)" : "transparent",
+                    color: isActive ? "var(--bg)" : "var(--ink)",
+                  }}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Split Question List & Answer Pane */}
+          <div
+            className="grid grid-cols-1 divide-y-[2.5px] lg:grid-cols-[360px_1fr] lg:divide-x-[2.5px] lg:divide-y-0"
+            style={{ borderColor: "var(--ink)" }}
+          >
+            <div className="divide-y-2" style={{ borderColor: "var(--rule)" }}>
+              {questions.map((q, i) => {
+                const isSelected = selected === i;
+                return (
+                  <button
+                    key={q.q}
+                    type="button"
+                    onClick={() => setSelected(i)}
+                    className="cursor-pointer flex w-full items-center justify-between gap-3 p-4 text-left font-data text-[0.74rem] font-bold leading-snug transition-colors"
+                    style={{
+                      background: isSelected ? "var(--volt)" : "var(--bg)",
+                      color: isSelected ? "#111210" : "var(--ink)",
+                    }}
+                  >
+                    <span>{q.q}</span>
+                    <span className="shrink-0 tabular-nums">0{i + 1}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="flex flex-col justify-between p-6 md:p-8">
+              {current && (
+                <>
+                  <div>
+                    <h3
+                      className="font-display text-[1.75rem] font-black uppercase leading-none"
+                      style={{ color: "var(--ink)" }}
+                    >
+                      {current.q}
+                    </h3>
+                    <p
+                      className="mt-4 max-w-[68ch] border-l-[3px] pl-4 text-[0.95rem] leading-[1.65]"
+                      style={{
+                        borderColor: "var(--signal)",
+                        color: "var(--ink)",
+                      }}
+                    >
+                      {current.a}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 flex items-center justify-end border-t pt-4" style={{ borderColor: "var(--rule)" }}>
+                    <button
+                      type="button"
+                      onClick={copyAnswer}
+                      className="nb-btn cursor-pointer px-3.5 py-1.5 text-[0.68rem]"
+                      style={{
+                        background: copied ? "var(--emerald)" : "var(--surface)",
+                        color: "#111210",
+                      }}
+                    >
+                      {copied ? "Copied Answer" : "Copy Answer"}
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="p-5 text-[0.76rem] leading-relaxed" style={{ color: "var(--dim)" }}>
-          {current ? (
-            <>
-              <div className="mb-2 text-[0.56rem] font-bold uppercase tracking-wider" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}>Q: {current.q}</div>
-              <div className="border-l-[3px] border-[var(--mint)] pl-4" style={{ color: "var(--ink)" }}>{current.a}</div>
-              <button
-                onClick={() => navigator.clipboard?.writeText(current.a)}
-                className="mt-3 rounded border-[1.5px] border-[var(--ink)] px-2.5 py-1 text-[0.54rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]"
-                style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}
-              >
-                copy answer
-              </button>
-            </>
-          ) : (
-            "← click a question"
-          )}
-        </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -2,7 +2,49 @@
 
 import { useState } from "react";
 
-const MY_SKILLS = ["next.js", "nextjs", "typescript", "node.js", "nodejs", "react", "python", "postgresql", "postgres", "redis", "langchain", "langgraph", "llamaindex", "aws", "bedrock", "rag", "retrieval augmented", "vector", "embedding", "semantic search", "ai agent", "gpt", "openai", "claude", "llm", "docker", "kubernetes", "k8s", "ci/cd", "rest api", "graphql", "tailwind", "vercel", "full stack", "fullstack"];
+const MY_SKILLS = [
+  "next.js",
+  "nextjs",
+  "typescript",
+  "node.js",
+  "nodejs",
+  "react",
+  "python",
+  "java",
+  "spring boot",
+  "postgresql",
+  "postgres",
+  "neon",
+  "drizzle",
+  "redis",
+  "langchain",
+  "langgraph",
+  "llamaindex",
+  "aws",
+  "bedrock",
+  "rag",
+  "retrieval augmented",
+  "vector",
+  "embedding",
+  "semantic search",
+  "ai agent",
+  "gpt",
+  "openai",
+  "claude",
+  "gemini",
+  "llm",
+  "docker",
+  "kubernetes",
+  "k8s",
+  "ci/cd",
+  "rest api",
+  "graphql",
+  "tailwind",
+  "vercel",
+  "stripe",
+  "full stack",
+  "fullstack",
+];
 
 type MatchResult = { pct: number; text: string; matched: string[] };
 
@@ -10,15 +52,16 @@ export function HireJDMatcher() {
   const [jd, setJd] = useState("");
   const [result, setResult] = useState<MatchResult | null>(null);
   const [pitch, setPitch] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState<string | null>(null);
 
   const analyze = async () => {
     if (!jd.trim()) return;
-    setLoading("analyze");
+    setLoading("Analyzing JD");
     setResult(null);
     const jdLower = jd.toLowerCase();
-    const matched = MY_SKILLS.filter((s) => jdLower.includes(s));
-    const pct = Math.min(98, 50 + matched.length * 4);
+    const matched = Array.from(new Set(MY_SKILLS.filter((s) => jdLower.includes(s))));
+    const pct = Math.min(98, 52 + matched.length * 4);
     try {
       const res = await fetch("/api/llm", {
         method: "POST",
@@ -26,12 +69,14 @@ export function HireJDMatcher() {
         body: JSON.stringify({ type: "jd-analyze", jd }),
       });
       const data = await res.json();
-      const text = data.text || `Matched skills: ${matched.slice(0, 8).join(", ") || "no direct matches"}`;
+      const text =
+        data.text ||
+        `Matched core skills: ${matched.slice(0, 10).join(", ") || "full-stack & AI engineering"}`;
       setResult({ pct, text, matched });
     } catch {
       setResult({
         pct,
-        text: "",
+        text: `Matched core skills: ${matched.slice(0, 10).join(", ") || "full-stack & AI engineering"}`,
         matched,
       });
     } finally {
@@ -41,7 +86,7 @@ export function HireJDMatcher() {
 
   const generatePitch = async () => {
     if (!jd.trim()) return;
-    setLoading("pitch");
+    setLoading("Drafting intro");
     setPitch(null);
     try {
       const res = await fetch("/api/llm", {
@@ -50,9 +95,9 @@ export function HireJDMatcher() {
         body: JSON.stringify({ type: "jd-pitch", jd }),
       });
       const data = await res.json();
-      setPitch(data.text || "Could not generate. Try again.");
+      setPitch(data.text || "Could not generate pitch. Try again.");
     } catch {
-      setPitch("API error. Add GEMINI_API_KEY to .env.local for AI pitch.");
+      setPitch("Add GEMINI_API_KEY to .env.local to generate AI-tailored cover intros.");
     } finally {
       setLoading(null);
     }
@@ -64,58 +109,246 @@ export function HireJDMatcher() {
     setPitch(null);
   };
 
+  const copyPitch = () => {
+    if (!pitch) return;
+    navigator.clipboard?.writeText(pitch);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const activeBlocks = result ? Math.round(result.pct / 10) : 0;
+
   return (
-    <div className="border-b" style={{ borderColor: "var(--ink)" }}>
-      <div className="grid border-b-2 lg:grid-cols-2" style={{ borderColor: "var(--ink)" }}>
-        <div className="border-r-2" style={{ borderColor: "var(--ink)" }}>
-          <div className="border-b-2 px-4 py-2 text-[0.56rem] font-bold uppercase tracking-wider" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)", borderColor: "var(--ink)" }}>// paste job description</div>
-          <textarea
-            value={jd}
-            onChange={(e) => setJd(e.target.value)}
-            placeholder="paste the full job description here..."
-            className="h-[140px] w-full resize-none border-none bg-transparent p-4 text-[0.68rem] outline-none"
-            style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--ink)", lineHeight: 1.7 }}
-          />
-        </div>
-        <div>
-          <div className="border-b-2 px-4 py-2 text-[0.56rem] font-bold uppercase tracking-wider" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)", borderColor: "var(--ink)" }}>// match analysis</div>
-          <div className="min-h-[140px] p-4 text-[0.74rem] leading-relaxed" style={{ color: "var(--dim)" }}>
-            {result ? (
-              <>
-                <div className="mb-3 flex items-center gap-3">
-                  <span className="font-serif text-2xl font-black italic" style={{ color: "var(--mint)" }}>{result.pct}%</span>
-                  <div className="h-2 flex-1 rounded border" style={{ background: "rgba(10,10,9,.07)", borderColor: "rgba(10,10,9,.12)" }}>
-                    <div className="h-full rounded transition-all" style={{ background: "var(--mint)", width: `${result.pct}%` }} />
+    <section
+      className="border-b-[2.5px] px-4 py-12 md:px-8 md:py-16"
+      style={{ borderColor: "var(--ink)", background: "var(--surface)" }}
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="nb-box" style={{ borderColor: "var(--ink)" }}>
+          <div
+            className="grid grid-cols-1 divide-y-[2.5px] lg:grid-cols-2 lg:divide-x-[2.5px] lg:divide-y-0"
+            style={{ borderColor: "var(--ink)" }}
+          >
+            {/* Left: JD Input */}
+            <div className="flex flex-col" style={{ background: "var(--surface-elevated)" }}>
+              <div
+                className="flex items-center justify-between border-b-2 px-5 py-3 font-data text-[0.68rem] font-bold uppercase"
+                style={{
+                  borderColor: "var(--ink)",
+                  background: "var(--ink)",
+                  color: "var(--bg)",
+                }}
+              >
+                <span>Paste Job Description</span>
+                <span style={{ color: "var(--volt)" }}>Input</span>
+              </div>
+              <textarea
+                value={jd}
+                onChange={(e) => setJd(e.target.value)}
+                placeholder="Paste the job description or required stack here to evaluate overlap..."
+                aria-label="Job description input"
+                className="min-h-[210px] w-full flex-1 resize-none bg-transparent p-5 font-body text-[0.95rem] leading-[1.6] outline-none"
+                style={{ color: "var(--ink)" }}
+              />
+            </div>
+
+            {/* Right: Match Analysis */}
+            <div className="flex flex-col" style={{ background: "var(--bg)" }}>
+              <div
+                className="flex items-center justify-between border-b-2 px-5 py-3 font-data text-[0.68rem] font-bold uppercase"
+                style={{
+                  borderColor: "var(--ink)",
+                  background: "var(--surface)",
+                  color: "var(--ink)",
+                }}
+              >
+                <span>Match Breakdown</span>
+                <span className="tabular-nums">
+                  {result ? `${result.pct}% Fit` : "Ready"}
+                </span>
+              </div>
+
+              <div className="flex flex-1 flex-col justify-between p-6">
+                {result ? (
+                  <div>
+                    <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 pb-4" style={{ borderColor: "var(--rule)" }}>
+                      <div className="flex items-baseline gap-2.5">
+                        <span
+                          className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black leading-none tabular-nums"
+                          style={{ color: "var(--ink)" }}
+                        >
+                          {result.pct}%
+                        </span>
+                        <span
+                          className="border-2 px-2 py-0.5 font-data text-[0.64rem] font-bold uppercase"
+                          style={{
+                            borderColor: "var(--ink)",
+                            background: "var(--volt)",
+                            color: "#111210",
+                          }}
+                        >
+                          Strong Alignment
+                        </span>
+                      </div>
+
+                      {/* 10-Block Stepped Gauge */}
+                      <div className="flex gap-1">
+                        {Array.from({ length: 10 }).map((_, idx) => (
+                          <span
+                            key={idx}
+                            className="h-4 w-3 border"
+                            style={{
+                              borderColor: "var(--ink)",
+                              background:
+                                idx < activeBlocks
+                                  ? "var(--emerald)"
+                                  : "var(--surface)",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <div
+                      className="mt-4 text-[0.95rem] leading-[1.6]"
+                      style={{ color: "var(--ink)" }}
+                    >
+                      {result.text.split("\n").map((line, i) => (
+                        <p key={i} className={i > 0 ? "mt-2" : ""}>
+                          {line}
+                        </p>
+                      ))}
+                    </div>
+
+                    {result.matched.length > 0 && (
+                      <div className="mt-4 flex flex-wrap gap-1.5 border-t pt-3" style={{ borderColor: "var(--rule)" }}>
+                        {result.matched.slice(0, 10).map((skill) => (
+                          <span
+                            key={skill}
+                            className="border-2 px-2 py-0.5 font-data text-[0.64rem] font-bold uppercase"
+                            style={{
+                              borderColor: "var(--ink)",
+                              background: "var(--surface-elevated)",
+                              color: "var(--ink)",
+                            }}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="text-[0.72rem] leading-relaxed">
-                  {result.text.split("\n").map((line, i) => (
-                    <span key={i}>{i > 0 && <br />}{line}</span>
-                  ))}
-                </div>
-                <div className="mt-2 text-[0.58rem]" style={{ color: "var(--mint)", fontFamily: "var(--font-jetbrains-mono)" }}>
-                  matched: {result.matched.slice(0, 6).join(" · ") || "none"}
-                </div>
-              </>
-            ) : (
-              "waiting for job description..."
+                ) : (
+                  <p
+                    className="my-auto text-[0.95rem]"
+                    style={{ color: "var(--dim)" }}
+                  >
+                    Paste a job description on the left and click{" "}
+                    <strong>Analyze Match</strong> to compute skill overlap and
+                    generate a role-specific summary.
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Action Toolbar */}
+          <div
+            className="flex flex-wrap items-center gap-3 border-t-[2.5px] px-5 py-4"
+            style={{
+              borderColor: "var(--ink)",
+              background: "var(--surface)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={analyze}
+              disabled={loading !== null}
+              className="nb-btn cursor-pointer px-5 py-2.5 text-[0.74rem] disabled:opacity-50"
+              style={{
+                background: "var(--signal)",
+                color: "#FFFFFF",
+              }}
+            >
+              <span>Analyze Match</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={generatePitch}
+              disabled={loading !== null}
+              className="nb-btn cursor-pointer px-5 py-2.5 text-[0.74rem] disabled:opacity-50"
+              style={{
+                background: "var(--volt)",
+                color: "#111210",
+              }}
+            >
+              <span>Generate Tailored Intro</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={clear}
+              className="nb-btn cursor-pointer px-4 py-2.5 text-[0.68rem]"
+              style={{
+                background: "var(--surface-elevated)",
+                color: "var(--ink)",
+              }}
+            >
+              <span>Clear</span>
+            </button>
+
+            {loading && (
+              <span
+                className="ml-auto font-data text-[0.68rem] font-bold uppercase"
+                style={{ color: "var(--ink)" }}
+              >
+                {loading}...
+              </span>
             )}
           </div>
+
+          {/* Generated Pitch Panel */}
+          {pitch && (
+            <div
+              className="border-t-[2.5px] p-6"
+              style={{
+                borderColor: "var(--ink)",
+                background: "var(--surface-elevated)",
+              }}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b-2 pb-3" style={{ borderColor: "var(--ink)" }}>
+                <span
+                  className="font-display text-[1.25rem] font-extrabold uppercase"
+                  style={{ color: "var(--ink)" }}
+                >
+                  Tailored Introduction
+                </span>
+                <button
+                  type="button"
+                  onClick={copyPitch}
+                  className="nb-btn cursor-pointer px-3 py-1 text-[0.64rem]"
+                  style={{
+                    background: copied ? "var(--emerald)" : "var(--bg)",
+                    color: "#111210",
+                  }}
+                >
+                  {copied ? "Copied" : "Copy Intro"}
+                </button>
+              </div>
+              <p
+                className="mt-4 max-w-[72ch] border-l-[3px] pl-4 text-[0.95rem] leading-[1.6]"
+                style={{
+                  borderColor: "var(--signal)",
+                  color: "var(--ink)",
+                }}
+              >
+                {pitch}
+              </p>
+            </div>
+          )}
         </div>
       </div>
-      <div className="flex flex-wrap border-b-2" style={{ borderColor: "var(--ink)" }}>
-        <button onClick={analyze} disabled={loading !== null} className="rounded-none border-r-2 border-[var(--ink)] bg-[var(--mint)] px-5 py-2.5 text-[0.62rem] font-bold uppercase disabled:opacity-50" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>analyze match →</button>
-        <button onClick={generatePitch} disabled={loading !== null} className="rounded-none border-r-2 border-[var(--ink)] px-5 py-2.5 text-[0.62rem] font-bold uppercase transition hover:bg-[rgba(10,10,9,.04)] disabled:opacity-50" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>generate cover pitch →</button>
-        <button onClick={clear} className="rounded-none px-5 py-2.5 text-[0.62rem] font-bold uppercase transition hover:bg-[rgba(10,10,9,.04)]" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>clear</button>
-        {loading && <span className="ml-auto flex items-center px-4 py-2.5 text-[0.56rem]" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}>⟳ {loading}...</span>}
-      </div>
-      {pitch && (
-        <div className="border-b-2 p-4" style={{ borderColor: "var(--ink)" }}>
-          <div className="mb-2 text-[0.56rem] font-bold uppercase tracking-wider" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}>// generated pitch — copy and customize</div>
-          <div className="border-l-[3px] border-[var(--mint)] pl-4 text-[0.75rem] leading-relaxed">{pitch}</div>
-          <button onClick={() => { navigator.clipboard?.writeText(pitch); }} className="mt-2 rounded border-[1.5px] border-[var(--ink)] px-2.5 py-1 text-[0.56rem] font-bold transition hover:bg-[var(--ink)] hover:text-[var(--bg)]" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>copy text</button>
-        </div>
-      )}
-    </div>
+    </section>
   );
 }

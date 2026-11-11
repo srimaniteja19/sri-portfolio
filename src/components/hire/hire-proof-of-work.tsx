@@ -1,37 +1,115 @@
 "use client";
 
-const CARDS = [
-  { tag: "RAG / LLM", color: "var(--mint)", title: "Built production RAG pipeline for 10M+ product catalog", desc: "Designed semantic search system indexing Goodyear's full tire catalog with chunking, embedding, reranking on AWS Bedrock + LlamaIndex.", metrics: [{ label: "retrieval accuracy", value: "+15% conversion", bar: 88, barColor: "var(--mint)" }, { label: "latency p95", value: "< 800ms", bar: 92, barColor: "var(--sky)" }] },
-  { tag: "Full-Stack", color: "var(--lemon)", title: "Cut bundle size 40% on ecommerce frontend", desc: "Audited and refactored Next.js 14 app — code splitting, dynamic imports, image optimization. Measured with Lighthouse + WebPageTest.", metrics: [{ label: "bundle reduction", value: "-40%", bar: 95, barColor: "var(--lemon)" }, { label: "lighthouse score", value: "94 / 100", bar: 94, barColor: "var(--peach)" }] },
-  { tag: "AI Automation", color: "var(--coral)", title: "Automated 60% of FP&A manual finance triage", desc: "Built LangGraph agent pipeline that classifies, explains, routes budget variance reports. Replaced 3 hours of daily analyst work with 12-minute run.", metrics: [{ label: "manual work cut", value: "-60%", bar: 85, barColor: "var(--coral)" }, { label: "analyst hours saved/wk", value: "21 hrs", bar: 78, barColor: "var(--lilac)" }] },
+const CASE_STUDIES = [
+  {
+    tag: "Enterprise RAG / LLM",
+    accent: "var(--volt)",
+    fg: "#111210",
+    title: "10M+ Product Catalog Semantic Search",
+    desc: "Architected an end-to-end RAG recommendation pipeline indexing Goodyear's full tire catalog with chunking, vector embeddings, and hybrid reranking on AWS Bedrock and LlamaIndex.",
+    metrics: [
+      { label: "Ecommerce Conversion", value: "+15% Lift" },
+      { label: "P95 Query Latency", value: "< 800ms" },
+    ],
+  },
+  {
+    tag: "Multi-Agent Automation",
+    accent: "var(--emerald)",
+    fg: "#111210",
+    title: "LangGraph FP&A Variance Triage",
+    desc: "Built a stateful LangGraph agent pipeline that classifies, explains, and routes budget variance reports with human-in-the-loop verification — reducing daily analyst work from 3 hours to 12 minutes.",
+    metrics: [
+      { label: "Manual Triage Cut", value: "-60%" },
+      { label: "Analyst Time Saved", value: "21 hrs / wk" },
+    ],
+  },
+  {
+    tag: "Web Performance",
+    accent: "var(--signal)",
+    fg: "#FFFFFF",
+    title: "Next.js Production Bundle Optimization",
+    desc: "Audited and refactored a high-traffic Next.js ecommerce storefront with route-level code splitting, server components, and asset pipeline tuning verified via Lighthouse and WebPageTest.",
+    metrics: [
+      { label: "JS Bundle Size", value: "-40%" },
+      { label: "Lighthouse Score", value: "94 / 100" },
+    ],
+  },
 ];
 
 export function HireProofOfWork() {
   return (
-    <div className="grid border-b lg:grid-cols-3" style={{ borderColor: "var(--ink)" }}>
-      {CARDS.map((c) => (
-        <div key={c.tag} className="group border-r-2 p-5 transition-colors last:border-r-0 hover:bg-[rgba(10,10,9,0.03)]" style={{ borderColor: "var(--ink)" }}>
-          <div className="mb-3 flex items-start justify-between">
-            <span className="rounded border-2 border-[var(--ink)] px-2.5 py-1 text-[0.54rem] font-bold" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", background: c.color }}>{c.tag}</span>
-            <span className="text-[0.58rem]" style={{ fontFamily: "var(--font-jetbrains-mono), monospace", color: "var(--dim)" }}>verified ✓</span>
-          </div>
-          <h3 className="mb-2 font-serif text-base font-black leading-tight">{c.title}</h3>
-          <p className="mb-4 text-[0.72rem] font-light leading-relaxed" style={{ color: "var(--dim)" }}>{c.desc}</p>
-          <div className="flex flex-col gap-2">
-            {c.metrics.map((m) => (
-              <div key={m.label}>
-                <div className="mb-1 flex justify-between text-[0.6rem]" style={{ fontFamily: "var(--font-jetbrains-mono), monospace" }}>
-                  <span style={{ color: "var(--dim)" }}>{m.label}</span>
-                  <span className="font-bold">{m.value}</span>
+    <section
+      className="border-b-[2.5px] px-4 py-12 md:px-8 md:py-16"
+      style={{ borderColor: "var(--ink)", background: "var(--bg)" }}
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {CASE_STUDIES.map((c) => (
+            <article
+              key={c.title}
+              className="nb-box flex flex-col justify-between"
+              style={{
+                borderColor: "var(--ink)",
+                background: "var(--surface-elevated)",
+              }}
+            >
+              <div>
+                <div
+                  className="flex items-center justify-between border-b-[2.5px] px-5 py-2.5 font-data text-[0.68rem] font-bold uppercase"
+                  style={{
+                    borderColor: "var(--ink)",
+                    background: c.accent,
+                    color: c.fg,
+                  }}
+                >
+                  <span>{c.tag}</span>
+                  <span>Production</span>
                 </div>
-                <div className="h-1.5 rounded border" style={{ background: "rgba(10,10,9,.07)", borderColor: "rgba(10,10,9,.12)" }}>
-                  <div className="h-full rounded" style={{ width: `${m.bar}%`, background: m.barColor }} />
+
+                <div className="p-6">
+                  <h3
+                    className="font-display text-[1.75rem] font-black uppercase leading-none"
+                    style={{ color: "var(--ink)" }}
+                  >
+                    {c.title}
+                  </h3>
+                  <p
+                    className="mt-3 text-[0.95rem] leading-[1.6]"
+                    style={{ color: "var(--dim)" }}
+                  >
+                    {c.desc}
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
+
+              <div
+                className="grid grid-cols-2 divide-x-2 border-t-[2.5px]"
+                style={{
+                  borderColor: "var(--ink)",
+                  background: "var(--surface)",
+                }}
+              >
+                {c.metrics.map((m) => (
+                  <div key={m.label} className="p-4">
+                    <div
+                      className="font-data text-[0.6rem] font-bold uppercase"
+                      style={{ color: "var(--dim)" }}
+                    >
+                      {m.label}
+                    </div>
+                    <div
+                      className="mt-1 font-display text-[1.45rem] font-black uppercase leading-none tabular-nums"
+                      style={{ color: "var(--ink)" }}
+                    >
+                      {m.value}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 }

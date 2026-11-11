@@ -9,11 +9,14 @@ interface ProjectTimelineProps {
   activeProjectId?: string | null;
 }
 
-const ACCENT_COLORS: Record<Project2026["accent"], string> = {
-  blue: "var(--sky)",
-  coral: "var(--coral)",
-  lime: "var(--mint)",
-  sun: "var(--lemon)",
+const ACCENT_STYLE: Record<
+  Project2026["accent"],
+  { bg: string; fg: string }
+> = {
+  blue: { bg: "var(--surface-elevated)", fg: "var(--ink)" },
+  coral: { bg: "var(--signal)", fg: "#FFFFFF" },
+  lime: { bg: "var(--emerald)", fg: "#111210" },
+  sun: { bg: "var(--volt)", fg: "#111210" },
 };
 
 const MONTHS = [
@@ -24,6 +27,8 @@ const MONTHS = [
   { name: "JUN", date: "2026-06-01" },
   { name: "JUL", date: "2026-07-01" },
   { name: "AUG", date: "2026-08-01" },
+  { name: "SEP", date: "2026-09-01" },
+  { name: "OCT", date: "2026-10-01" },
 ];
 
 export function ProjectTimeline({
@@ -36,19 +41,25 @@ export function ProjectTimeline({
     []
   );
   const timelineEndMs = useMemo(
-    () => new Date("2026-08-31T23:59:59Z").getTime(),
+    () => new Date("2026-10-15T23:59:59Z").getTime(),
     []
   );
   const totalDuration = timelineEndMs - timelineStartMs;
 
   const pins = useMemo(() => {
-    return projects.map((p) => {
-      const createdMs = new Date(`${p.created}T00:00:00Z`).getTime();
+    const sorted = [...projects].sort((a, b) =>
+      a.lastPush.localeCompare(b.lastPush)
+    );
+    return sorted.map((p, index) => {
+      const targetDate = p.id === "Hoard" ? p.lastPush : p.created;
+      const createdMs = new Date(`${targetDate}T00:00:00Z`).getTime();
       const rawPercent = ((createdMs - timelineStartMs) / totalDuration) * 100;
-      const leftPercent = Math.min(Math.max(rawPercent, 4), 96);
+      const leftPercent = Math.min(Math.max(rawPercent, 5), 95);
+      const tier = index % 3;
       return {
         ...p,
         leftPercent,
+        tier,
       };
     });
   }, [projects, timelineStartMs, totalDuration]);
@@ -59,151 +70,143 @@ export function ProjectTimeline({
       const rawPercent = ((ms - timelineStartMs) / totalDuration) * 100;
       return {
         name: m.name,
-        leftPercent: Math.min(Math.max(rawPercent, 2), 98),
+        leftPercent: Math.min(Math.max(rawPercent, 3), 97),
       };
     });
   }, [timelineStartMs, totalDuration]);
 
   return (
-    <div className="w-full overflow-x-auto pb-4 pt-2 scrollbar-thin">
+    <div className="w-full overflow-x-auto pb-3 pt-1">
       <div
-        className="relative min-w-[660px] rounded border-2 p-6 transition-colors"
+        className="nb-box relative min-w-[780px]"
         style={{
           borderColor: "var(--ink)",
-          background: "var(--bg)",
-          boxShadow: "4px 4px 0 var(--ink)",
+          background: "var(--surface-elevated)",
         }}
       >
-        {/* Header label */}
+        {/* Top Bar */}
         <div
-          className="mb-8 flex items-center justify-between border-b pb-3"
-          style={{ borderColor: "var(--ink)" }}
+          className="flex items-center justify-between border-b-2 px-5 py-2.5 font-data text-[0.68rem] font-bold uppercase"
+          style={{
+            borderColor: "var(--ink)",
+            background: "var(--ink)",
+            color: "var(--bg)",
+          }}
         >
-          <span
-            className="text-[0.62rem] font-bold uppercase tracking-wider"
-            style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              color: "var(--dim)",
-            }}
-          >
-            {"// Release Timeline (Feb — Aug)"}
-          </span>
-          <span
-            className="text-[0.58rem] font-bold uppercase tracking-wider"
-            style={{
-              fontFamily: "var(--font-jetbrains-mono), monospace",
-              color: "var(--dim)",
-            }}
-          >
+          <span>Release Timeline (Feb — Oct 2026)</span>
+          <span style={{ color: "var(--volt)" }}>
             Click pin to focus project
           </span>
         </div>
 
-        {/* Pins container area */}
-        <div className="relative mb-6 h-28">
-          {pins.map((pin, idx) => {
-            const isTop = idx % 2 === 0;
-            const isSelected = activeProjectId === pin.id;
-            const accentBg = ACCENT_COLORS[pin.accent];
+        <div className="p-6">
+          {/* Staggered Pins Area */}
+          <div className="relative mb-4 h-36">
+            {pins.map((pin) => {
+              const isSelected = activeProjectId === pin.id;
+              const style = ACCENT_STYLE[pin.accent];
+              const topPx = pin.tier === 0 ? 0 : pin.tier === 1 ? 42 : 84;
+              const stemHeight = 128 - topPx;
 
-            return (
-              <div
-                key={pin.id}
-                className="absolute flex flex-col items-center transition-transform duration-200 hover:z-30"
-                style={{
-                  left: `${pin.leftPercent}%`,
-                  transform: "translateX(-50%)",
-                  top: isTop ? "0px" : "44px",
-                  zIndex: isSelected ? 20 : 10,
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => onPinClick(pin.id)}
-                  aria-label={`Jump to project ${pin.title}`}
-                  className={`group relative flex items-center gap-1.5 rounded border-2 px-2.5 py-1 text-[0.65rem] font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ink)] ${
-                    isSelected
-                      ? "scale-105 shadow-[3px_3px_0_var(--ink)]"
-                      : "hover:-translate-y-0.5 hover:shadow-[3px_3px_0_var(--ink)]"
-                  }`}
+              return (
+                <div
+                  key={pin.id}
+                  className="absolute flex flex-col items-center transition-transform duration-150 hover:z-40"
                   style={{
-                    backgroundColor: accentBg,
-                    color: "var(--ink)",
-                    borderColor: "var(--ink)",
-                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    left: `${pin.leftPercent}%`,
+                    transform: "translateX(-50%)",
+                    top: `${topPx}px`,
+                    zIndex: isSelected ? 35 : 20 - pin.tier,
                   }}
                 >
-                  <span>{pin.title}</span>
-                  {pin.liveUrl && (
-                    <span
-                      className="rounded border px-1 text-[0.52rem] font-black"
-                      style={{
-                        borderColor: "var(--ink)",
-                        background: "var(--lemon)",
-                        color: "var(--ink)",
-                      }}
-                      title="Live project"
-                    >
-                      LIVE
-                    </span>
-                  )}
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => onPinClick(pin.id)}
+                    aria-label={`Jump to project ${pin.title}`}
+                    className={`cursor-pointer flex items-center gap-1.5 border-2 px-2.5 py-1 font-data text-[0.68rem] font-bold uppercase whitespace-nowrap transition-all ${
+                      isSelected ? "scale-105" : "hover:-translate-y-0.5"
+                    }`}
+                    style={{
+                      backgroundColor: style.bg,
+                      color: style.fg,
+                      borderColor: "var(--ink)",
+                      boxShadow: isSelected
+                        ? "3.5px 3.5px 0px var(--ink)"
+                        : "2px 2px 0px var(--ink)",
+                    }}
+                  >
+                    <span>{pin.title}</span>
+                    {pin.liveUrl && (
+                      <span
+                        className="border px-1 text-[0.6rem] font-black"
+                        style={{
+                          borderColor: "#111210",
+                          background: "var(--volt)",
+                          color: "#111210",
+                        }}
+                      >
+                        Live
+                      </span>
+                    )}
+                  </button>
 
-                {/* Vertical stem line pointing to axis */}
-                <div
-                  className="w-[2px]"
-                  style={{
-                    height: isTop ? "26px" : "18px",
-                    background: "var(--ink)",
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
+                  <div
+                    className="w-[2px]"
+                    style={{
+                      height: `${stemHeight}px`,
+                      background: "var(--ink)",
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
 
-        {/* Timeline main axis track */}
-        <div
-          className="relative my-4 h-[4px] w-full rounded"
-          style={{ background: "var(--ink)" }}
-        >
-          {/* Axis pins ticks */}
-          {pins.map((pin) => (
-            <div
-              key={`tick-${pin.id}`}
-              className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
-              style={{
-                left: `${pin.leftPercent}%`,
-                backgroundColor: ACCENT_COLORS[pin.accent],
-                borderColor: "var(--ink)",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Month tick marks & labels */}
-        <div className="relative mt-2 h-6 w-full">
-          {monthPositions.map((m) => (
-            <div
-              key={m.name}
-              className="absolute flex flex-col items-center"
-              style={{
-                left: `${m.leftPercent}%`,
-                transform: "translateX(-50%)",
-              }}
-            >
-              <div className="h-2 w-[2px]" style={{ background: "var(--ink)" }} />
-              <span
-                className="mt-1 text-[0.58rem] font-bold"
+          {/* Main Axis Track */}
+          <div
+            className="relative my-2 h-[6px] w-full border"
+            style={{
+              background: "var(--ink)",
+              borderColor: "var(--ink)",
+            }}
+          >
+            {pins.map((pin) => (
+              <div
+                key={`tick-${pin.id}`}
+                className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 border-2"
                 style={{
-                  fontFamily: "var(--font-jetbrains-mono), monospace",
-                  color: "var(--dim)",
+                  left: `${pin.leftPercent}%`,
+                  backgroundColor: ACCENT_STYLE[pin.accent].bg,
+                  borderColor: "var(--ink)",
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Month Labels */}
+          <div className="relative mt-3 h-7 w-full">
+            {monthPositions.map((m) => (
+              <div
+                key={m.name}
+                className="absolute flex flex-col items-center"
+                style={{
+                  left: `${m.leftPercent}%`,
+                  transform: "translateX(-50%)",
                 }}
               >
-                {m.name}
-              </span>
-            </div>
-          ))}
+                <div
+                  className="h-2.5 w-[2px]"
+                  style={{ background: "var(--ink)" }}
+                />
+                <span
+                  className="mt-1 font-data text-[0.64rem] font-bold uppercase tabular-nums"
+                  style={{ color: "var(--ink)" }}
+                >
+                  {m.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

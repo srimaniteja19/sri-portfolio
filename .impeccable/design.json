@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-11T17:53:00Z",
+  "title": "Design System: Sri Maniteja Chinnam — Flight Logbook & Release Archive",
+  "extensions": {
+    "colorMeta": {
+      "signal-orange": {
+        "role": "primary",
+        "displayName": "Signal Orange",
+        "canonical": "#FF521B",
+        "tonalRamp": ["#3A0E00", "#5C1802", "#852305", "#B33009", "#E03F10", "#FF521B", "#FF855E", "#FFC4B0"]
+      },
+      "telemetry-volt": {
+        "role": "secondary",
+        "displayName": "Telemetry Volt",
+        "canonical": "#D9F938",
+        "tonalRamp": ["#232B00", "#3B4700", "#596B00", "#7D9605", "#A8C718", "#D9F938", "#E6FC73", "#F4FEB8"]
+      },
+      "field-emerald": {
+        "role": "tertiary",
+        "displayName": "Field Emerald",
+        "canonical": "#10C982",
+        "tonalRamp": ["#032919", "#06452B", "#096640", "#0C8A57", "#0EAA6C", "#10C982", "#52E6AC", "#A8F5D6"]
+      },
+      "blueprint-cobalt": {
+        "role": "tertiary",
+        "displayName": "Blueprint Cobalt",
+        "canonical": "#2B5CE6",
+        "tonalRamp": ["#08153A", "#102460", "#17358A", "#2047B8", "#2B5CE6", "#5982F2", "#8FA9F8", "#C7D5FC"]
+      },
+      "titanium-paper": {
+        "role": "neutral",
+        "displayName": "Titanium Paper",
+        "canonical": "#F4F1EA",
+        "tonalRamp": ["#1F1E1B", "#3B3934", "#5C5952", "#827E75", "#ABA69C", "#D4CFC5", "#ECE7DC", "#F4F1EA"]
+      },
+      "anodized-stone": {
+        "role": "neutral",
+        "displayName": "Anodized Stone",
+        "canonical": "#ECE7DC",
+        "tonalRamp": ["#1C1B18", "#36342F", "#545149", "#78746A", "#A19C90", "#C9C4B7", "#E2DDD0", "#ECE7DC"]
+      },
+      "elevated-sheet": {
+        "role": "neutral",
+        "displayName": "Elevated Sheet",
+        "canonical": "#FAF8F3",
+        "tonalRamp": ["#21201E", "#3D3B37", "#5E5B55", "#858179", "#B0ABA2", "#D9D5CC", "#F0EDE6", "#FAF8F3"]
+      },
+      "carbon-chassis": {
+        "role": "neutral",
+        "displayName": "Carbon Chassis",
+        "canonical": "#111210",
+        "tonalRamp": ["#111210", "#262724", "#3D3E3A", "#575953", "#757870", "#989B92", "#C2C4BC", "#EAECE6"]
+      },
+      "graphite-secondary": {
+        "role": "neutral",
+        "displayName": "Graphite Secondary",
+        "canonical": "#3D3E3A",
+        "tonalRamp": ["#141413", "#282926", "#3D3E3A", "#565852", "#73756E", "#94968E", "#B9BBB3", "#E2E3DF"]
+      },
+      "slate-muted": {
+        "role": "neutral",
+        "displayName": "Slate Muted",
+        "canonical": "#4A4B46",
+        "tonalRamp": ["#171716", "#2E2F2C", "#4A4B46", "#666861", "#85877F", "#A6A8A0", "#CACBC5", "#ECECE9"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Banner (Big Shoulders 900)",
+        "purpose": "Hero identity banner, uppercase with tight -0.03em tracking."
+      },
+      "headline": {
+        "displayName": "Section Headline (Big Shoulders 900)",
+        "purpose": "Primary chapter headings across the logbook."
+      },
+      "title": {
+        "displayName": "Specification Title (Big Shoulders 900)",
+        "purpose": "Project card titles, career roles, and subsystem headers."
+      },
+      "body": {
+        "displayName": "Technical Prose (Chivo 400/500)",
+        "purpose": "Readable descriptions, blurbs, and architectural summaries at 65-75ch."
+      },
+      "label": {
+        "displayName": "Telemetry & Controls Mono (JetBrains Mono 700)",
+        "purpose": "Tabular timestamps, commit hashes, bezel headers, and interactive buttons."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-hard",
+        "value": "4px 4px 0px #111210",
+        "purpose": "Primary structural offset on specification cards, timeline chassis, and oscilloscope modules."
+      },
+      {
+        "name": "shadow-hard-sm",
+        "value": "2.5px 2.5px 0px #111210",
+        "purpose": "Resting mechanical offset on buttons, filter chips, and rail items."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-mechanical",
+        "value": "150ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Snappy exponential ease-out for button press/lift and card elevation."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Signal Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-priority action trigger in Signal Orange with mechanical press states.",
+      "html": "<button class=\"ds-btn-primary\"><span>INSPECT 2026 FLIGHT LOG</span><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\"><path d=\"M3 9L9 3M9 3H4M9 3V8\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; background: #FF521B; color: #FFFFFF; border: 2.5px solid #111210; padding: 12px 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; box-shadow: 2.5px 2.5px 0px #111210; cursor: pointer; transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0px #111210; } .ds-btn-primary:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #111210; } .ds-btn-primary:focus-visible { outline: 2.5px solid #FF521B; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Volt Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary action control in Telemetry Volt with high-contrast carbon ink.",
+      "html": "<button class=\"ds-btn-volt\"><span>RECRUITER & FIT BRIEF</span><svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\"><path d=\"M3 9L9 3M9 3H4M9 3V8\"/></svg></button>",
+      "css": ".ds-btn-volt { display: inline-flex; align-items: center; gap: 8px; background: #D9F938; color: #111210; border: 2.5px solid #111210; padding: 12px 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; box-shadow: 2.5px 2.5px 0px #111210; cursor: pointer; transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-btn-volt:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0px #111210; } .ds-btn-volt:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0px #111210; } .ds-btn-volt:focus-visible { outline: 2.5px solid #FF521B; outline-offset: 2px; }"
+    },
+    {
+      "name": "Filter Matrix Chip",
+      "kind": "chip",
+      "refersTo": "button-surface",
+      "description": "Filter toggle with tabular counter badge for repository slices.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\"><span>LIVE ENDPOINTS</span><span class=\"ds-chip-count\">5</span></button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 8px; background: #111210; color: #F4F1EA; border: 2.5px solid #111210; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; box-shadow: 2.5px 2.5px 0px #111210; font-variant-numeric: tabular-nums; cursor: pointer; transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-chip:hover { transform: translate(-1.5px, -1.5px); } .ds-chip-count { background: #D9F938; color: #111210; border: 1px solid #F4F1EA; padding: 1px 6px; font-size: 0.6rem; }"
+    },
+    {
+      "name": "Project Specification Card",
+      "kind": "card",
+      "refersTo": "card-chassis",
+      "description": "Neobrutalist project specification module with top date-window bar and tabular metadata.",
+      "html": "<article class=\"ds-card\"><div class=\"ds-card-hdr\"><span>JUL 27, 2026 → AUG 03, 2026</span><span class=\"ds-card-size\">2.7 MB</span></div><div class=\"ds-card-body\"><h3 class=\"ds-card-title\">REFRAINLY</h3><p class=\"ds-card-desc\">Daily learning campaigns: AI-generated study plans up to 730 days and spaced repetition on a 7/30/90/180 ladder.</p></div></article>",
+      "css": ".ds-card { border: 2.5px solid #111210; background: #FAF8F3; box-shadow: 4px 4px 0px #111210; color: #111210; max-width: 420px; transition: transform 150ms ease; } .ds-card:hover { transform: translate(-2px, -2px); } .ds-card-hdr { display: flex; justify-content: space-between; align-items: center; background: #10C982; color: #111210; border-bottom: 2.5px solid #111210; padding: 10px 16px; font-family: 'JetBrains Mono', monospace; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; font-variant-numeric: tabular-nums; } .ds-card-size { background: #FAF8F3; border: 1px solid #111210; padding: 2px 6px; font-size: 0.6rem; } .ds-card-body { padding: 20px; } .ds-card-title { margin: 0; font-family: 'Big Shoulders', sans-serif; font-size: 1.7rem; font-weight: 900; text-transform: uppercase; line-height: 1; } .ds-card-desc { margin: 12px 0 0; font-family: 'Chivo', sans-serif; font-size: 0.9rem; line-height: 1.6; color: #3D3E3A; }"
+    },
+    {
+      "name": "Stepped Subsystem Readiness Bar",
+      "kind": "custom",
+      "refersTo": "card-chassis",
+      "description": "10-block discrete mechanical readiness indicator replacing rounded progress bars.",
+      "html": "<div class=\"ds-stepped\"><div class=\"ds-stepped-meta\"><span>campaign-planner.ts</span><span class=\"ds-stepped-badge\">PRODUCTION (9/10)</span></div><div class=\"ds-stepped-grid\"><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-on\"></span><span class=\"ds-cell-off\"></span></div></div>",
+      "css": ".ds-stepped { background: #FAF8F3; border: 2px solid #111210; padding: 14px; font-family: 'JetBrains Mono', monospace; } .ds-stepped-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; font-weight: 700; color: #111210; margin-bottom: 8px; } .ds-stepped-badge { background: #10C982; color: #111210; border: 1px solid #111210; padding: 2px 6px; font-size: 0.58rem; } .ds-stepped-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; border: 2px solid #111210; padding: 4px; background: #F4F1EA; } .ds-cell-on { height: 12px; background: #D9F938; border: 1px solid #111210; } .ds-cell-off { height: 12px; background: rgba(17, 18, 16, 0.08); border: 1px solid #111210; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Industrial Telemetry Flight Logbook",
+    "overview": "This design system treats a software engineer's portfolio not as a promotional brochure or pastel sticker wall, but as a calibrated flight-test dossier and living release manifest. Inspired by Rivian hardware-software field specifications, NASA Apollo mission flight plans, and Swiss railway timetables, every surface is locked into an exposed structural chassis with crisp mechanical borders, high-visibility signal colors, and real-time operational telemetry.\n\nDensity is deliberate and architectural: sections interlock through exposed 2.5px structural rules, tabular coordinate readouts, discrete block-stepped readiness gauges, and a sticky companion index rail that tracks scroll depth across the document. Instead of using monospace as a decorative costume for the entire website, three distinct typographic voices divide labor strictly between condensed industrial headlines, humanist-grotesk prose, and tabular telemetry data.",
+    "keyCharacteristics": [
+      "Exposed 2.5px carbon-ink structural chassis with crisp 4px 4px 0px mechanical offset shadows.",
+      "Warm titanium ledger stock paired with high-visibility industrial signal accents (Signal Orange, Telemetry Volt, Field Emerald).",
+      "Strict three-voice typography: condensed industrial display (Big Shoulders), high-legibility technical sans (Chivo), and tabular instrumentation mono (JetBrains Mono).",
+      "Real interactive telemetry instrumentation (<canvas> oscilloscope waveform bench and stepped 10-block readiness matrices)."
+    ],
+    "rules": [
+      {
+        "name": "The High-Contrast Signal Rule",
+        "body": "Text placed over Telemetry Volt (#D9F938) or Field Emerald (#10C982) must always use Carbon Chassis (#111210), never white; text placed over Signal Orange (#FF521B) or Carbon Chassis (#111210) must use crisp white (#FFFFFF) or Titanium Paper (#F4F1EA).",
+        "section": "colors"
+      },
+      {
+        "name": "The Surface Role Rule",
+        "body": "Color owns whole structural strips, headers, and interactive states rather than floating as decorative blobs or gradients.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Eyebrow Rule",
+        "body": "Headings (h1, h2, h3) never carry a small monospace kicker or eyebrow label stacked directly above them. The heading leads on its own weight; metadata belongs in structural bezel bars, sidebars, or inline badges beside the heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Monospace Discipline Rule",
+        "body": "JetBrains Mono is reserved strictly for code identifiers, commit hashes, ISO dates, coordinates, and interactive controls—never for paragraphs or display headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Mechanical Press Rule",
+        "body": "Interactive buttons (.nb-btn) rest at 2.5px 2.5px 0px var(--ink), lift to translate(-2px, -2px) with 4px 4px 0px var(--ink) on :hover, and depress to translate(1px, 1px) with 1px 1px 0px var(--ink) on :active.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do lead every section and card directly with its Big Shoulders heading (h1, h2, h3) without placing a small eyebrow or kicker label above it.",
+      "Do use font-variant-numeric: tabular-nums (.tabular-nums / .font-data) on all dates, commit hashes, counts, percentages, and coordinates.",
+      "Do represent readiness, scroll depth, and subsystem completion with discrete stepped block grids (5 or 10 cells) rather than arbitrary percentage bars.",
+      "Do maintain a minimum 4.5:1 contrast ratio on all body copy and badges (#111210 ink on #D9F938 volt and #10C982 emerald; #FFFFFF on #FF521B signal orange)."
+    ],
+    "donts": [
+      "Don't use JetBrains Mono for body paragraphs or display headlines; keep prose in Chivo and headlines in Big Shoulders.",
+      "Don't use Unicode symbols (↗, ☰, ◐) or emojis (🧠, 🚢, ⚡) as UI icons; always use inline SVGs with 2px square-capped strokes.",
+      "Don't apply decorative CSS background grids (.graticule-bg), glassmorphic blurs, or gradient text to layout containers; reserve graticule lines strictly for the <canvas> oscilloscope instrument.",
+      "Don't create uniform grids of identical icon-heading-text cards; give flagship artifacts (Refrainly) asymmetric multi-column prominence (md:col-span-2)."
+    ]
+  }
+}
+
