@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import { Project2026 } from "@/data/projects-2026";
 
 interface ProjectCardProps {
@@ -43,7 +43,9 @@ function formatDate(isoDate: string): string {
 
 export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
   function ProjectCard({ project, isHighlighted, isFeatured }, ref) {
+    const [expanded, setExpanded] = useState(false);
     const headerTheme = ACCENT_HEADER[project.accent];
+    const hasHighlights = Boolean(project.highlights && project.highlights.length > 0);
 
     return (
       <article
@@ -128,66 +130,126 @@ export const ProjectCard = forwardRef<HTMLElement, ProjectCardProps>(
             {project.blurb}
           </p>
 
-          {/* Metadata Row */}
-          <div
-            className="mt-5 flex flex-wrap items-center gap-2 border-t-2 pt-3 font-data text-[0.64rem] font-bold uppercase tabular-nums"
-            style={{ borderColor: "var(--rule)" }}
-          >
-            <span
-              className="border px-2 py-0.5"
-              style={{
-                borderColor: "var(--ink)",
-                background: "var(--surface)",
-                color: "var(--ink)",
-              }}
-            >
-              {project.language}
-            </span>
-            <span
-              className="border px-2 py-0.5"
+          {/* Expandable Architecture Drawer */}
+          {expanded && project.highlights && (
+            <div
+              className="mt-4 border-2 p-4"
               style={{
                 borderColor: "var(--ink)",
                 background: "var(--bg)",
-                color: "var(--dim)",
+                boxShadow: "var(--shadow-hard-sm)",
               }}
             >
-              {project.repo}
-            </span>
+              <div
+                className="border-b pb-2 font-data text-[0.64rem] font-bold uppercase"
+                style={{ borderColor: "var(--rule)", color: "var(--ink)" }}
+              >
+                System Architecture &amp; Highlights
+              </div>
+              <ul className="mt-3 space-y-2.5">
+                {project.highlights.map((item, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-2.5 text-[0.84rem] leading-relaxed"
+                    style={{ color: "var(--ink)" }}
+                  >
+                    <span
+                      className="mt-1 inline-block h-2 w-2 shrink-0 border"
+                      style={{
+                        borderColor: "var(--ink)",
+                        background: "var(--signal)",
+                      }}
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Stack & Metadata Row */}
+          <div
+            className="mt-5 flex flex-wrap items-center gap-1.5 border-t-2 pt-3 font-data text-[0.64rem] font-bold uppercase tabular-nums"
+            style={{ borderColor: "var(--rule)" }}
+          >
+            {project.stack && project.stack.length > 0 ? (
+              project.stack.map((tech) => (
+                <span
+                  key={tech}
+                  className="border px-2 py-0.5"
+                  style={{
+                    borderColor: "var(--ink)",
+                    background: "var(--surface)",
+                    color: "var(--ink)",
+                  }}
+                >
+                  {tech}
+                </span>
+              ))
+            ) : (
+              <span
+                className="border px-2 py-0.5"
+                style={{
+                  borderColor: "var(--ink)",
+                  background: "var(--surface)",
+                  color: "var(--ink)",
+                }}
+              >
+                {project.language}
+              </span>
+            )}
           </div>
         </div>
 
         {/* Action Controls Footer */}
         <div
-          className="flex flex-wrap items-center justify-between gap-3 border-t-[2.5px] px-5 py-3.5"
+          className="flex flex-wrap items-center justify-between gap-2 border-t-[2.5px] px-5 py-3.5"
           style={{
             borderColor: "var(--ink)",
             background: "var(--surface)",
           }}
         >
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nb-btn px-3.5 py-1.5 text-[0.68rem]"
-            style={{
-              background: "var(--surface-elevated)",
-              color: "var(--ink)",
-            }}
-          >
-            <span>View Code</span>
-            <svg
-              width="11"
-              height="11"
-              viewBox="0 0 12 12"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="square"
-              aria-hidden="true"
+          <div className="flex flex-wrap items-center gap-2">
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nb-btn px-3 py-1.5 text-[0.68rem]"
+              style={{
+                background: "var(--surface-elevated)",
+                color: "var(--ink)",
+              }}
             >
-              <path d="M3 9L9 3M9 3H4M9 3V8" />
-            </svg>
-          </a>
+              <span>View Code</span>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 12 12"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="square"
+                aria-hidden="true"
+              >
+                <path d="M3 9L9 3M9 3H4M9 3V8" />
+              </svg>
+            </a>
+
+            {hasHighlights && (
+              <button
+                type="button"
+                aria-expanded={expanded}
+                onClick={() => setExpanded((prev) => !prev)}
+                className="nb-btn cursor-pointer px-3 py-1.5 text-[0.68rem]"
+                style={{
+                  background: expanded ? "var(--ink)" : "var(--bg)",
+                  color: expanded ? "var(--bg)" : "var(--ink)",
+                }}
+              >
+                <span>{expanded ? "Hide Details" : "Architecture"}</span>
+              </button>
+            )}
+          </div>
 
           {project.liveUrl && (
             <a

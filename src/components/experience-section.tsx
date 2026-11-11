@@ -16,10 +16,10 @@ export function ExperienceSection() {
       }}
     >
       <div
-        className="grid grid-cols-1 lg:grid-cols-[320px_2.5px_1fr]"
+        className="grid grid-cols-1 lg:grid-cols-[340px_2.5px_1fr]"
         style={{ borderColor: "var(--ink)" }}
       >
-        {/* Left Specification Column */}
+        {/* Left Column: Heading & Education */}
         <div
           className="flex flex-col justify-between border-b-[2.5px] p-6 md:p-8 lg:border-b-0"
           style={{
@@ -32,7 +32,7 @@ export function ExperienceSection() {
               className="font-display text-[clamp(2.2rem,4vw,3.4rem)] font-black uppercase leading-[0.9]"
               style={{ color: "var(--ink)" }}
             >
-              Work History
+              Work History &amp; Education
             </h2>
             <p
               className="mt-3 text-[0.95rem] leading-relaxed"
@@ -41,9 +41,12 @@ export function ExperienceSection() {
               Enterprise software engineering across EV &amp; energy platforms,
               distributed cloud backends, and production AI/LLM systems.
             </p>
+          </div>
 
+          {/* Education Box */}
+          {education && education.length > 0 && (
             <div
-              className="mt-6 border-2 p-4"
+              className="mt-8 border-2 p-4"
               style={{
                 borderColor: "var(--ink)",
                 background: "var(--surface-elevated)",
@@ -51,49 +54,16 @@ export function ExperienceSection() {
               }}
             >
               <div
-                className="border-b pb-2 font-data text-[0.64rem] font-bold uppercase tracking-wider"
+                className="border-b pb-2 font-data text-[0.64rem] font-bold uppercase"
                 style={{ borderColor: "var(--rule)", color: "var(--dim)" }}
               >
-                Highlights
+                Academic Degrees
               </div>
-              <ul className="mt-2.5 space-y-2">
-                {experience.sidebarStats.map((line) => (
-                  <li
-                    key={line}
-                    className="flex items-center gap-2 font-data text-[0.74rem] font-bold"
-                    style={{ color: "var(--ink)" }}
-                  >
-                    <span
-                      className="inline-block h-2 w-2 shrink-0"
-                      style={{ background: "var(--signal)" }}
-                    />
-                    <span>{line}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Academic Specification Box */}
-          {education && education.length > 0 && (
-            <div
-              className="mt-6 border-2 p-4"
-              style={{
-                borderColor: "var(--ink)",
-                background: "var(--surface-elevated)",
-              }}
-            >
-              <div
-                className="border-b pb-1.5 font-data text-[0.64rem] font-bold uppercase"
-                style={{ borderColor: "var(--rule)", color: "var(--dim)" }}
-              >
-                Education
-              </div>
-              <div className="mt-2.5 space-y-3">
+              <div className="mt-3 space-y-3.5">
                 {education.map((ed) => (
                   <div key={ed.school}>
                     <div
-                      className="font-display text-[1.08rem] font-extrabold uppercase leading-tight"
+                      className="font-display text-[1.1rem] font-extrabold uppercase leading-tight"
                       style={{ color: "var(--ink)" }}
                     >
                       {ed.degree}
@@ -147,12 +117,12 @@ export function ExperienceSection() {
                         className="inline-block h-2 w-2"
                         style={{ background: "var(--signal)" }}
                       />
-                      Current
+                      Current Role
                     </div>
                   )}
                 </div>
 
-                {/* Role & Scope Column (h3 leads directly) */}
+                {/* Role & Scope Column */}
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <h3

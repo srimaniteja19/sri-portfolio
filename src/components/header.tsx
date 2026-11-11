@@ -29,9 +29,18 @@ function ArrowUpRightIcon() {
   );
 }
 
+const NAV_ITEMS = [
+  { href: "#shipped-so-far", label: "Projects" },
+  { href: "#devlog", label: "Builds" },
+  { href: "#experience", label: "Experience" },
+  { href: "#github", label: "GitHub" },
+  { href: "#skills", label: "Skills" },
+  { href: "#contact", label: "Contact" },
+  { href: "/hire", label: "Hire / Fit" },
+];
+
 export function Header() {
-  const { header: content } = useContent();
-  const navLinks = content.navLinks;
+  const { header: content, contact } = useContent();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
   const themeDropdownRef = useRef<HTMLDivElement>(null);
@@ -59,12 +68,15 @@ export function Header() {
         borderColor: "var(--ink)",
       }}
     >
-      <div className="flex items-center justify-between px-4 py-2.5 md:px-8">
-        {/* Left Identity */}
-        <div className="flex items-center gap-3">
+      <div className="flex items-stretch justify-between">
+        {/* Left Identity — aligns with 210px left rail on xl screens */}
+        <div
+          className="flex shrink-0 items-center px-4 py-2.5 md:px-6 xl:w-[210px] xl:border-r-[2.5px]"
+          style={{ borderColor: "var(--ink)" }}
+        >
           <Link
             href="#top"
-            className="group flex items-center gap-2 border-2 px-3 py-1 transition-transform hover:-translate-y-0.5"
+            className="group flex w-full items-center justify-center gap-2 border-2 px-3 py-1 transition-transform hover:-translate-y-0.5"
             style={{
               borderColor: "var(--ink)",
               background: "var(--ink)",
@@ -72,53 +84,56 @@ export function Header() {
             }}
           >
             <span
-              className="inline-block h-2.5 w-2.5"
+              className="inline-block h-2.5 w-2.5 shrink-0"
               style={{ background: "var(--signal)" }}
             />
             <span className="font-display text-[1.1rem] font-black uppercase tracking-wider">
               {content.name}
             </span>
           </Link>
-
-          <div
-            className="hidden items-center gap-2 border-2 px-2.5 py-1 lg:flex"
-            style={{
-              borderColor: "var(--ink)",
-              background: "var(--volt)",
-              color: "#111210",
-            }}
-          >
-            <span
-              className="h-2 w-2 animate-pulse-dot"
-              style={{ background: "#111210" }}
-            />
-            <span className="font-data text-[0.68rem] font-bold uppercase tracking-wider">
-              {content.openToRolesText}
-            </span>
-          </div>
         </div>
 
-        {/* Navigation & Controls */}
-        <div className="flex items-center gap-2 md:gap-3">
-          <nav
-            aria-label="Primary navigation"
-            className="hidden items-center gap-1 md:flex"
+        {/* Center Primary Navigation */}
+        <nav
+          aria-label="Primary navigation"
+          className="hidden flex-1 items-center justify-center gap-1 px-4 md:flex lg:gap-2"
+        >
+          {NAV_ITEMS.map((link) => {
+            const isHire = link.href === "/hire";
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="border-2 px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#111210]"
+                style={{
+                  borderColor: isHire ? "var(--ink)" : "transparent",
+                  background: isHire ? "var(--surface-elevated)" : "transparent",
+                  color: "var(--ink)",
+                }}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Right Controls */}
+        <div
+          className="flex shrink-0 items-center gap-2 px-4 py-2.5 md:px-6 xl:border-l-[2.5px]"
+          style={{ borderColor: "var(--ink)" }}
+        >
+          <a
+            href={contact.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nb-btn hidden px-2.5 py-1 text-[0.68rem] lg:inline-flex"
+            style={{
+              background: "var(--surface-elevated)",
+              color: "var(--ink)",
+            }}
           >
-            {navLinks.map((link) => {
-              const href =
-                link.href === "#work" ? "#shipped-so-far" : link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={href}
-                  className="border-2 border-transparent px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--surface-elevated)]"
-                  style={{ color: "var(--ink)" }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
+            <span>GitHub</span>
+          </a>
 
           {/* Theme Switcher */}
           <div className="relative" ref={themeDropdownRef}>
@@ -244,25 +259,21 @@ export function Header() {
           }}
         >
           <div className="flex flex-col gap-2">
-            {navLinks.map((link) => {
-              const href =
-                link.href === "#work" ? "#shipped-so-far" : link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={href}
-                  onClick={() => setMobileOpen(false)}
-                  className="border-2 px-3 py-2 font-data text-[0.78rem] font-bold uppercase"
-                  style={{
-                    borderColor: "var(--ink)",
-                    background: "var(--bg)",
-                    color: "var(--ink)",
-                  }}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+            {NAV_ITEMS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="border-2 px-3 py-2 font-data text-[0.78rem] font-bold uppercase"
+                style={{
+                  borderColor: "var(--ink)",
+                  background: "var(--bg)",
+                  color: "var(--ink)",
+                }}
+              >
+                {link.label}
+              </Link>
+            ))}
             <a
               href={`mailto:${content.email}`}
               className="nb-btn mt-1 py-2.5 text-[0.78rem]"

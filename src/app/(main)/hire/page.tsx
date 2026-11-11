@@ -3,7 +3,6 @@ import { SectionDivider } from "@/components/section-divider";
 import { HireAIChat } from "@/components/hire/hire-ai-chat";
 import { HireJDMatcher } from "@/components/hire/hire-jd-matcher";
 import { HireProofOfWork } from "@/components/hire/hire-proof-of-work";
-import { HireGitHub } from "@/components/hire/hire-github";
 import { HireResumeShare } from "@/components/hire/hire-resume-share";
 import { HireStackChecker } from "@/components/hire/hire-stack-checker";
 import { HireInterviewQA } from "@/components/hire/hire-interview-qa";
@@ -14,8 +13,7 @@ const JUMP_LINKS = [
   { href: "#proof-of-work", label: "Case Studies" },
   { href: "#stack-check", label: "Stack Check" },
   { href: "#interview-qa", label: "Q&A" },
-  { href: "#github-live", label: "GitHub" },
-  { href: "#share-contact", label: "Contact & Share" },
+  { href: "#share-contact", label: "Share & Contact" },
 ];
 
 export default function HirePage() {
@@ -56,22 +54,23 @@ export default function HirePage() {
               </svg>
               <span>Back to Portfolio</span>
             </Link>
-
-            <div
-              className="hidden items-center gap-2 border-2 px-3 py-1 font-data text-[0.68rem] font-bold uppercase sm:flex"
-              style={{
-                borderColor: "var(--ink)",
-                background: "var(--surface)",
-                color: "var(--ink)",
-              }}
-            >
-              <span
-                className="h-2 w-2"
-                style={{ background: "var(--emerald)" }}
-              />
-              <span>Software Engineer @ Rivian</span>
-            </div>
           </div>
+
+          <nav
+            aria-label="Hire page sections"
+            className="hidden flex-1 items-center justify-center gap-1.5 lg:flex"
+          >
+            {JUMP_LINKS.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="border-2 border-transparent px-2.5 py-1 font-data text-[0.74rem] font-bold uppercase tracking-wider transition-colors hover:border-[var(--ink)] hover:bg-[var(--volt)] hover:text-[#111210]"
+                style={{ color: "var(--ink)" }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
           <div className="flex items-center gap-2.5">
             <a
@@ -201,32 +200,6 @@ export default function HirePage() {
               </div>
             </div>
           </div>
-
-          {/* Quick Jump Bar */}
-          <div
-            className="mt-8 flex flex-wrap items-center gap-2 border-t-2 pt-5"
-            style={{ borderColor: "var(--ink)" }}
-          >
-            <span
-              className="mr-1 font-data text-[0.68rem] font-bold uppercase"
-              style={{ color: "var(--dim)" }}
-            >
-              Jump to:
-            </span>
-            {JUMP_LINKS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="nb-btn px-3 py-1.5 text-[0.68rem]"
-                style={{
-                  background: "var(--surface-elevated)",
-                  color: "var(--ink)",
-                }}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -249,7 +222,7 @@ export default function HirePage() {
       <div id="proof-of-work" className="scroll-mt-16">
         <SectionDivider
           label="Production Impact & Case Studies"
-          right="Enterprise systems & shipped products"
+          right="Enterprise systems & measurable outcomes"
         />
         <HireProofOfWork />
       </div>
@@ -268,14 +241,6 @@ export default function HirePage() {
           right="14 common interview questions & direct answers"
         />
         <HireInterviewQA />
-      </div>
-
-      <div id="github-live" className="scroll-mt-16">
-        <SectionDivider
-          label="GitHub Overview"
-          right="Live repositories · @srimaniteja19"
-        />
-        <HireGitHub />
       </div>
 
       <div id="share-contact" className="scroll-mt-16">

@@ -4,20 +4,20 @@
     "email": "srimaniteja.ch@gmail.com",
     "navLinks": [
       {
-        "href": "#work",
-        "label": "work"
+        "href": "#shipped-so-far",
+        "label": "projects"
       },
       {
-        "href": "#skills",
-        "label": "skills"
+        "href": "#experience",
+        "label": "experience"
       },
       {
         "href": "#github",
         "label": "github"
       },
       {
-        "href": "#about",
-        "label": "about"
+        "href": "#skills",
+        "label": "skills"
       },
       {
         "href": "#contact",
@@ -31,7 +31,7 @@
     "openToRolesText": "Software Engineer @ Rivian"
   },
   "hero": {
-    "subtitle": "Software Engineer @ Rivian · full-stack & AI",
+    "subtitle": "Software Engineer @ Rivian · Full-Stack & AI",
     "name": "Maniteja",
     "role": "full-stack engineer",
     "statusComment": "Software Engineer @ Rivian",
@@ -75,24 +75,24 @@
     ],
     "focusItems": [
       {
-        "label": "Building",
-        "value": "Hoard & Refrainly",
-        "color": "var(--mint)"
-      },
-      {
-        "label": "Learning",
-        "value": "LangGraph, streaming UX",
-        "color": "var(--lemon)"
-      },
-      {
-        "label": "Status",
+        "label": "Current Role",
         "value": "Software Engineer @ Rivian",
         "color": "var(--coral)"
       },
       {
-        "label": "Reach",
-        "value": "hire page · email below",
+        "label": "Education",
+        "value": "M.S. Data Science · SUNY Buffalo",
         "color": "var(--sky)"
+      },
+      {
+        "label": "Active Builds",
+        "value": "Hoard & Refrainly",
+        "color": "var(--mint)"
+      },
+      {
+        "label": "Core Focus",
+        "value": "Full-Stack Web, RAG & AI Agents",
+        "color": "var(--lemon)"
       }
     ],
     "stats": [
@@ -117,38 +117,7 @@
         "bar": "var(--sky)"
       }
     ],
-    "proficiency": [
-      {
-        "label": "LangChain",
-        "pct": 92,
-        "col": "var(--mint)"
-      },
-      {
-        "label": "Next.js",
-        "pct": 95,
-        "col": "var(--lemon)"
-      },
-      {
-        "label": "TypeScript",
-        "pct": 90,
-        "col": "var(--sky)"
-      },
-      {
-        "label": "PostgreSQL",
-        "pct": 85,
-        "col": "var(--coral)"
-      },
-      {
-        "label": "AWS Bedrock",
-        "pct": 80,
-        "col": "var(--lilac)"
-      },
-      {
-        "label": "Docker/K8s",
-        "pct": 75,
-        "col": "var(--peach)"
-      }
-    ],
+    "proficiency": [],
     "terminalWhoami": "maniteja — full-stack engineer",
     "terminalStack": "{ next, ts, node, postgres, langchain, bedrock }",
     "terminalCommit1": "a3f9 feat(rag): +15% retrieval accuracy",
@@ -159,131 +128,69 @@
   "experience": {
     "items": [
       {
-        "date": "Aug 2026 – present",
+        "date": "Aug 2026 – Present",
         "role": "Software Engineer",
-        "meta": "Rivian · full-time",
-        "desc": "Software Engineer at Rivian."
+        "meta": "Rivian · Full-Time",
+        "desc": "Building scalable software systems, backend services, and full-stack web applications across Rivian's EV and energy platforms."
       },
       {
         "date": "2023 – 2026",
-        "role": "Full-Stack Engineer",
-        "meta": "backend + AI/ML",
-        "desc": "Building AI-powered products. Next.js, TypeScript, LangChain, RAG pipelines, production systems."
+        "role": "Full-Stack & AI Engineer",
+        "meta": "Enterprise AI & Web",
+        "desc": "Architected production RAG search pipelines on AWS Bedrock (+15% ecommerce conversion across a 10M+ catalog), built LangGraph multi-agent workflows (-60% manual finance triage), and optimized Next.js storefronts (-40% bundle size)."
       },
       {
         "date": "2019 – 2023",
         "role": "Software Engineer",
-        "meta": "backend + cloud · 4+ yrs",
-        "desc": "Production backend systems. REST APIs, distributed systems, cloud infrastructure. Full pivot into LLM/AI."
-      },
-      {
-        "date": "2022 – 2023",
-        "role": "M.S. Data Science",
-        "meta": "graduate studies",
-        "desc": "Foundation for current AI/ML and LLM engineering work."
+        "meta": "Backend & Cloud",
+        "desc": "Designed and maintained distributed backend services, REST APIs, relational data models, and cloud infrastructure across production deployments."
       }
     ],
     "sidebarStats": [
-      "Software Engineer @ Rivian",
-      "4+ yrs engineering",
-      "M.S. Data Science"
+      "4+ Years Production Experience",
+      "Enterprise RAG & Distributed Systems",
+      "12 Repositories Shipped in 2026"
     ]
   },
   "education": [
     {
       "school": "University at Buffalo, SUNY",
       "degree": "Master of Science, Data Science",
-      "period": "Aug 2022 - Dec 2023",
+      "period": "Aug 2022 – Dec 2023",
       "location": "Buffalo, NY"
     },
     {
       "school": "Bharath Institute of Technology and Research",
       "degree": "Bachelor of Technology, Computer Science",
-      "period": "Jun 2018 - Jun 2022",
+      "period": "Jun 2018 – Jun 2022",
       "location": "Chennai, India"
     }
   ],
   "about": {
-    "cells": [
-      {
-        "label": "who i am",
-        "title": "Software Engineer @ Rivian",
-        "body": "Based in the US. Software Engineer at Rivian building high-performance systems and AI-powered tools.",
-        "color": "mint"
-      },
-      {
-        "label": "what i build",
-        "title": "LLM apps that ship",
-        "body": "RAG pipelines, ecommerce integrations, AI agents, semantic search — things that actually work.",
-        "color": "lemon"
-      },
-      {
-        "label": "side project",
-        "title": "Refrainly",
-        "body": "Daily learning campaigns: AI-generated study plans up to 730 days, spaced repetition on 7/30/90/180 ladder, XP & badges. Next.js 16 + React 19.",
-        "color": "coral"
-      },
-      {
-        "label": "current role",
-        "title": "Software Engineer @ Rivian",
-        "body": "Software Engineer at Rivian building scalable EV and energy software platforms.",
-        "color": "sky"
-      }
-    ]
+    "cells": []
   },
-  "projects": [
-    {
-      "num": "01",
-      "label": "featured",
-      "name": "AI Bookmarking",
-      "desc": "AI-powered bookmark manager. Organize and search your saved links with intelligent tagging and recommendations.",
-      "tags": [
-        "next.js",
-        "typescript",
-        "ai",
-        "vercel"
-      ],
-      "url": "https://ai-bookmarking.vercel.app",
-      "color": "mint"
-    },
-    {
-      "num": "02",
-      "label": "refrainly",
-      "name": "Refrainly",
-      "desc": "Daily learning campaigns: AI-generated study plans up to 730 days, spaced repetition, XP & badges, Field Kit for notes & bookmarks.",
-      "tags": [
-        "next.js 16",
-        "react 19",
-        "neon",
-        "drizzle",
-        "stripe"
-      ],
-      "url": "https://refrainly.dev",
-      "color": "lemon",
-      "active": true
-    }
-  ],
+  "projects": [],
   "contact": {
     "email": "srimaniteja.ch@gmail.com",
     "phone": "(716) 923-5404",
     "github": "https://github.com/srimaniteja19",
     "linkedin": "https://www.linkedin.com/in/sri-maniteja-chinnam/",
     "location": "United States",
-    "tagline": "I'm always open to interesting conversations and collaborations. Feel free to reach out!"
+    "tagline": "Always open to interesting engineering problems and collaborations."
   },
   "footer": {
-    "name": "maniteja",
-    "location": "united states",
-    "statusText": "systems nominal"
+    "name": "Sri Maniteja Chinnam",
+    "location": "United States",
+    "statusText": "Software Engineer @ Rivian"
   },
   "cta": {
     "availItems": [
-      "Software Engineer @ Rivian",
-      "open source collab",
-      "ai consulting",
-      "systems engineering"
+      "Full-Stack & AI Engineering",
+      "RAG & Search Architecture",
+      "Open Source Collaboration",
+      "Systems & Backend Advisory"
     ],
-    "headline": "got a hard problem?",
+    "headline": "Got a hard problem?",
     "subline": "Let's build something."
   },
   "process": {
@@ -291,66 +198,32 @@
       {
         "num": "01",
         "title": "Discover",
-        "desc": "Deep dive into requirements, understand the problem space, define success.",
+        "desc": "Clarify user and system constraints, define latency and accuracy targets, and scope the smallest high-value release.",
         "color": "mint",
         "stripe": "rgba(13,13,13,0.2)"
       },
       {
         "num": "02",
         "title": "Design",
-        "desc": "Architect the system, wireframe UX, plan data model and API contracts.",
+        "desc": "Model relational and vector schemas, API contracts, and retrieval pipelines before writing application glue code.",
         "color": "lemon",
         "stripe": "rgba(13,13,13,0.15)"
       },
       {
         "num": "03",
         "title": "Build",
-        "desc": "Write clean, tested code. Ship incrementally with CI/CD. Review and iterate.",
+        "desc": "Ship type-safe TypeScript, React Server Components, and tested backend services incrementally through CI/CD.",
         "color": "coral",
         "stripe": "rgba(13,13,13,0.15)"
       },
       {
         "num": "04",
-        "title": "Launch",
-        "desc": "Deploy to production, monitor, iterate based on real user feedback.",
+        "title": "Iterate",
+        "desc": "Measure production p95 latency, retrieval quality, and real user behavior to guide the next iteration.",
         "color": "sky",
         "stripe": "rgba(13,13,13,0.15)"
       }
     ]
   },
-  "funFacts": [
-    {
-      "icon": "🧠",
-      "title": "Thinks in systems",
-      "text": "Every problem is a distributed system problem. Even lunch."
-    },
-    {
-      "icon": "🚢",
-      "title": "Ships first, perfects later",
-      "text": "v1 in production beats v∞ in Figma every single time.",
-      "accent": "lemon"
-    },
-    {
-      "icon": "📍",
-      "title": "US-based",
-      "text": "Open to relocation. Anywhere the work is good."
-    },
-    {
-      "icon": "🤝",
-      "title": "Code + product",
-      "text": "Knows both the implementation and how it fits the bigger picture.",
-      "accent": "mint"
-    },
-    {
-      "icon": "📚",
-      "title": "M.S. Data Science",
-      "text": "Theory meets production every day at work."
-    },
-    {
-      "icon": "⚡",
-      "title": "Learning by doing",
-      "text": "DevPath AI, side projects — all built, not just studied.",
-      "accent": "coral"
-    }
-  ]
+  "funFacts": []
 }

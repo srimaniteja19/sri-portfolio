@@ -5,11 +5,10 @@ import { useEffect, useRef, useState } from "react";
 const SECTIONS = [
   { id: "top", label: "Overview" },
   { id: "shipped-so-far", label: "Projects" },
-  { id: "devlog", label: "Refrainly" },
+  { id: "devlog", label: "Builds" },
   { id: "experience", label: "Experience" },
   { id: "github", label: "GitHub" },
   { id: "skills", label: "Skills" },
-  { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
 
